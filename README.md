@@ -1,4 +1,4 @@
-# Room8
+# Room8 [![Build Status](https://travis-ci.com/ubclaunchpad/Room8.svg?branch=master)](https://travis-ci.com/ubclaunchpad/Room8)
 1. User stories
   - As a user, I want to be able to log in to the app
   - As a user, I want to be able to make an account (name, phone number, email, contacts)
