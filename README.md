@@ -1,4 +1,7 @@
 # Room8 [![Build Status](https://travis-ci.com/ubclaunchpad/Room8.svg?branch=master)](https://travis-ci.com/ubclaunchpad/Room8)
+
+[Getting Started](https://docs.google.com/document/d/1CVaAKaMRLd4syWPMctv8GJbbIl-Sb4rZhWvvKKH_XtQ/edit)
+
 1. User stories
   - As a user, I want to be able to log in to the app
   - As a user, I want to be able to make an account (name, phone number, email, contacts)
