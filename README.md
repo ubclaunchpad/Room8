@@ -1,6 +1,12 @@
 # Room8 [![Build Status](https://travis-ci.com/ubclaunchpad/Room8.svg?branch=master)](https://travis-ci.com/ubclaunchpad/Room8)
 
-[Getting Started](https://docs.google.com/document/d/1CVaAKaMRLd4syWPMctv8GJbbIl-Sb4rZhWvvKKH_XtQ/edit)
+Room8 is a WIP roommate organization platform on Android. The app will allow roommates to organize themselves into a group and assign tasks to each other. The app itself will assist them in creating a schedule and rotating tasks for each roommate.
+
+# Contributing
+
+Go to this [document](https://docs.google.com/document/d/1CVaAKaMRLd4syWPMctv8GJbbIl-Sb4rZhWvvKKH_XtQ/edit) for a guide on how to get started with the project and your task.
+
+# Requirements
 
 1. User stories
   - As a user, I want to be able to log in to the app
