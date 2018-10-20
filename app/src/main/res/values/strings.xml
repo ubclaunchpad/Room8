@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Room8</string>
+    <string name="title_activity_create_group">createGroup</string>
+    <string name="Create_New_Group">Create New Group</string>
 </resources>
