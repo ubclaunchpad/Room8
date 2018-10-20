@@ -1,6 +1,7 @@
 package com.ubclaunchpad.room8;
 
 import android.content.Intent;
+import android.os.PatternMatcher;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,27 +14,32 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText mEmail, mPassword;
+
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_up);
+
+        mEmail = (EditText) findViewById(R.id.sign_up_et_email);
+        mPassword = (EditText) findViewById(R.id.sign_up_et_password);
 
         mAuth = FirebaseAuth.getInstance();
 
-        mEmail = (EditText) findViewById(R.id.login_et_email);
-        mPassword = (EditText) findViewById(R.id.login_et_password);
+        findViewById(R.id.sign_up_btn_sign_up).setOnClickListener(this);
+        findViewById(R.id.sign_up_btn_login).setOnClickListener(this);
 
-        findViewById(R.id.login_btn_login).setOnClickListener(this);
-        findViewById(R.id.login_btn_signup).setOnClickListener(this);
     }
 
-    private void userLogin() {
+
+    private void registerUser() {
         final String email = mEmail.getText().toString().trim();
         final String password = mPassword.getText().toString().trim();
 
@@ -55,13 +61,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                if(task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), email + " " + password, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), email + " " + password ,Toast.LENGTH_SHORT).show();
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                        Toast.makeText(getApplicationContext(), "Already Registered", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -70,13 +80,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login_btn_login:
-                userLogin();
+            case R.id.sign_up_btn_sign_up:
+                registerUser();
                 break;
-            case R.id.login_btn_signup:
-                startActivity(new Intent(this, SignUpActivity.class));
+            case R.id.sign_up_btn_login:
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
-            case R.id.login_btn_forgot_password:
+            case R.id.sign_up_btn_google:
                 break;
         }
     }

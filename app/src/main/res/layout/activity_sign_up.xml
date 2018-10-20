@@ -4,13 +4,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
+    tools:context=".SignUpActivity"
     android:gravity="center_horizontal">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Sign Up"
         android:textAlignment="center"
         android:padding="15dp"
         android:textSize="25dp"/>
@@ -29,7 +29,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/login_et_email"/>
+            android:id="@+id/sign_up_et_email"/>
     </LinearLayout>
 
     <LinearLayout
@@ -46,29 +46,23 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/login_et_password"/>
+            android:id="@+id/sign_up_et_password"/>
     </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Sign Up"
         android:paddingRight="30dp"
         android:paddingLeft="30dp"
         android:layout_margin="20dp"
-        android:id="@+id/login_btn_login"/>
+        android:id="@+id/sign_up_btn_sign_up"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Forgot Password"
-        android:id="@+id/login_btn_forgot_password"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:id="@+id/login_btn_signup"/>
+        android:text="Login"
+        android:id="@+id/sign_up_btn_login"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -77,6 +71,6 @@
         android:paddingRight="30dp"
         android:paddingLeft="30dp"
         android:layout_margin="20dp"
-        android:id="@+id/login_btn_google"/>
+        android:id="@+id/sign_up_btn_google"/>
 
 </android.support.v7.widget.LinearLayoutCompat>
