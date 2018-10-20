@@ -6,6 +6,8 @@ Room8 is a WIP roommate organization platform on Android. The app will allow roo
 
 Go to this [document](https://docs.google.com/document/d/1CVaAKaMRLd4syWPMctv8GJbbIl-Sb4rZhWvvKKH_XtQ/edit) for a guide on how to get started with the project and your task.
 
+Shared Google Drive Folder: [folder](https://drive.google.com/drive/folders/16reWL5_upOOyzsVwl5tIUWsOwNiytIKA)
+
 # Requirements
 
 1. User stories
