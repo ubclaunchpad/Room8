@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "579843548424",
+    "firebase_url": "https://room8-95a2b.firebaseio.com",
+    "project_id": "room8-95a2b",
+    "storage_bucket": "room8-95a2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579843548424:android:e1fcb9e8743fb86e",
+        "android_client_info": {
+          "package_name": "com.ubclaunchpad.room8"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579843548424-j04a70brskfbbp4g5g39s7u24fvr187d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ubclaunchpad.room8",
+            "certificate_hash": "0b7eac7970bf907b97dde739c8ab3db4925d2929"
+          }
+        },
+        {
+          "client_id": "579843548424-ou2ll3kcmats8ck9hjge0lcltng6h3co.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ubclaunchpad.room8",
+            "certificate_hash": "94045346187dfd5cd45e55f72e87d86bdb0eb1bc"
+          }
+        },
+        {
+          "client_id": "579843548424-u5tf6kdmcamka325llmfesu9jkc2mjn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbNBMZdVvPuJNyEFOeUiaSn_wg_k3bBrg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579843548424-u5tf6kdmcamka325llmfesu9jkc2mjn0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
