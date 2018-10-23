@@ -31,7 +31,7 @@ Shared Google Drive Folder: [folder](https://drive.google.com/drive/folders/16re
   - Task notifications
 
 3. Stretch goals
-  - Favors (non recurring/required)
+  - Favors (non-recurring/required)
   - Integrating with Google Calendar
   - Reports
     - weekly/monthly basis
