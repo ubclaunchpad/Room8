@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText mEmail, mPassword;
+    EditText mEmail, mPassword, mFirstName, mLastName;
 
     private FirebaseAuth mAuth;
 
@@ -30,6 +30,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         mEmail = (EditText) findViewById(R.id.sign_up_et_email);
         mPassword = (EditText) findViewById(R.id.sign_up_et_password);
+        mFirstName = findViewById(R.id.sign_up_et_firstname);
+        mLastName = findViewById(R.id.sign_up_et_lastname);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -42,6 +44,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void registerUser() {
         final String email = mEmail.getText().toString().trim();
         final String password = mPassword.getText().toString().trim();
+        final String firstName = mFirstName.getText().toString().trim();
+        final String lastName = mLastName.getText().toString().trim();
 
         if (email.isEmpty()) {
             mEmail.setError("Email is required");
