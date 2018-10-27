@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
@@ -79,6 +81,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
+
+        createUser(firstName, lastName, email);
+    }
+
+    private void createUser(String firstName, String lastName, String email) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        DatabaseReference userRef = myRef.child("Users");
+        userRef.push().setValue(new User(firstName, lastName, email));
     }
 
     @Override
