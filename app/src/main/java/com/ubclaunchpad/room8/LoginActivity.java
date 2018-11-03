@@ -1,12 +1,14 @@
 package com.ubclaunchpad.room8;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,11 +28,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth = FirebaseAuth.getInstance();
 
-        mEmail = (EditText) findViewById(R.id.login_et_email);
-        mPassword = (EditText) findViewById(R.id.login_et_password);
+        mEmail = findViewById(R.id.login_et_email);
+        mPassword = findViewById(R.id.login_et_password);
 
         findViewById(R.id.login_btn_login).setOnClickListener(this);
-        findViewById(R.id.login_btn_signup).setOnClickListener(this);
+
+        // Hook up "Sign In" TextView to an OnClickListener, underline the TextView
+        TextView txtSignIn = findViewById(R.id.txtSignIn);
+        txtSignIn.setPaintFlags(txtSignIn.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+        txtSignIn.setOnClickListener(this);
+
+        TextView txtSignUp = findViewById(R.id.txtSignUp);
+        txtSignUp.setOnClickListener(this);
     }
 
     private void userLogin() {
@@ -73,10 +82,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.login_btn_login:
                 userLogin();
                 break;
-            case R.id.login_btn_signup:
+            case R.id.txtSignUp:
                 startActivity(new Intent(this, SignUpActivity.class));
-                break;
-            case R.id.login_btn_forgot_password:
                 break;
         }
     }
