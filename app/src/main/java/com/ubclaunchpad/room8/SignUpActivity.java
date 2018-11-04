@@ -46,12 +46,25 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.txtSignIn).setOnClickListener(this);
     }
 
-
+    // Take values of sign-up fields, validate them and try to create Firebase Authentication for user
     private void registerUser() {
         final String email = mEmail.getText().toString().trim();
         final String password = mPassword.getText().toString().trim();
         final String firstName = mFirstName.getText().toString().trim();
         final String lastName = mLastName.getText().toString().trim();
+
+        // Validate sign-up fields
+        if (firstName.isEmpty()) {
+            mFirstName.setError("First name is required");
+            mFirstName.requestFocus();
+            return;
+        }
+
+        if (lastName.isEmpty()) {
+            mLastName.setError("Last name is required");
+            mLastName.requestFocus();
+            return;
+        }
 
         if (email.isEmpty()) {
             mEmail.setError("Email is required");
@@ -71,30 +84,37 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
+        // Attempt to create Firebase Authentication for user
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), email + " " + password, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "DEBUG\nUID: " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+
+                    // Proceed with creating a user in the "Users" child in Firebase
+                    String uid = mAuth.getCurrentUser().getUid();
+                    createUser(uid, firstName, lastName, email);
+                    Toast.makeText(getApplicationContext(), "You've successfully created an account!\nPlease login.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 } else {
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                        Toast.makeText(getApplicationContext(), "Already Registered", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "You've already registered!\nPlease login.", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "DEBUG\n" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Something went wrong.\nPlease try again.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
-
-        createUser(firstName, lastName, email);
     }
 
-    private void createUser(String firstName, String lastName, String email) {
+    // Creates a new user object in the "Users" child in Firebase
+    private void createUser(String uid, String firstName, String lastName, String email) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
-        DatabaseReference userRef = myRef.child("Users");
-        userRef.push().setValue(new User(firstName, lastName, email));
+        DatabaseReference userRef = myRef.child("Users").child(uid);
+        userRef.setValue(new User(uid, firstName, lastName, email));
     }
 
     @Override
