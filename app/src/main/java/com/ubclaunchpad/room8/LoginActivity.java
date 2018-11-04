@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -67,10 +68,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                Toast.makeText(getApplicationContext(), "DEBUG\n"+ email + " " + password ,Toast.LENGTH_SHORT).show();
+
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "User uid: " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                    FirebaseUser currUser = mAuth.getCurrentUser();
+                    String uid = (currUser != null ? currUser.getUid() : "");
+
+                    if (uid.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Unable to get user from Firebase.\nPlease try again.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    Toast.makeText(getApplicationContext(), "Success!\nYou're now logged in.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), CreateGroupViewInvitesActivity.class));
+
                 } else {
-                    Toast.makeText(getApplicationContext(), email + " " + password ,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Oops! Log in attempt failed.\nPlease try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
