@@ -27,7 +27,7 @@ public class GroupPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_page);
 
-//        Log.DEBUG("Creating Group Activitiy");
+        Log.d("GroupPage","Creating Group Activitiy");
         groupNameText = findViewById(R.id.textView_groupName);
 
         mAuth = FirebaseAuth.getInstance();

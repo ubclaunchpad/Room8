@@ -3,6 +3,7 @@ package com.ubclaunchpad.room8;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.main_btn_group_page:
+                Log.d("MainActivity","Creating Group activity from main activity");
                 startActivity(new Intent(this, GroupPageActivity.class));
                 break;
         }
