@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,14 +20,22 @@ public class GroupPageActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private DatabaseReference groupReference;
     private Group currentGroup;
+    TextView groupNameText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_page);
+        groupNameText = findViewById(R.id.textView_groupName);
+
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         getCurrentUsersGroup();
+        setGroupName();
+    }
+
+    private void setGroupName() {
+        groupNameText.setText(currentGroup.name);
     }
 
     // Get the group that the currentUser is in

@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.main_btn_login:
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
+            case R.id.main_btn_group_page:
+                startActivity(new Intent(this, GroupPageActivity.class));
+                break;
         }
     }
 }

@@ -7,7 +7,7 @@
     tools:context=".GroupPageActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_rulesAndBoundaries"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Rules and Boundaries"
@@ -17,4 +17,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.116" />
+
+    <TextView
+        android:id="@+id/textView_groupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/group_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </android.support.constraint.ConstraintLayout>
