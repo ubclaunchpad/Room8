@@ -15,10 +15,4 @@ public class User {
         this.Group = null;
     }
 
-    public void setGroup(Group newGroup){
-        this.Group = newGroup;
-        if (!newGroup.getMembers().contains(this)) {
-            newGroup.addUser(this);
-        }
-    }
 }
