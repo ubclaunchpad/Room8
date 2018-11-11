@@ -5,6 +5,8 @@ public class User {
     String LastName;
     String Email;
 
+    public User(){}
+
     public User(String firstName, String lastName, String email) {
         this.FirstName = firstName;
         this.LastName = lastName;

@@ -3,4 +3,5 @@
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">com.ubclaunchpad.room8</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fbcom.ubclaunchpad.room8</string>
+    <string name="title_activity_create_group">CreateGroup</string>
 </resources>
