@@ -96,7 +96,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 userLogin();
                 break;
             case R.id.txtSignUp:
-                startActivity(new Intent(this, SignUpActivity.class));
+                Intent signUpActivityIntent = new Intent(this, SignUpActivity.class);
+                signUpActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(signUpActivityIntent);
                 break;
         }
     }

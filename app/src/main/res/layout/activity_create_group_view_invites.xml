@@ -16,6 +16,7 @@
         android:text="You're logged in!\n\n You can now create a group or view your invites."/>
 
     <Button
+        android:id="@+id/btnCreateGroup"
         android:text="Create Group"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
