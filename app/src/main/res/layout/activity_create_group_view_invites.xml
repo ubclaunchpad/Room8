@@ -16,10 +16,18 @@
         android:text="You're logged in!\n\n You can now create a group or view your invites."/>
 
     <Button
-        android:text="Create Group"
-        android:layout_marginTop="20dp"
+        android:id="@+id/create_group"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Create Group" />
+
+    <Button
+        android:id="@+id/edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Edit Profile" />
 
     <TextView
         android:text="Invites"
