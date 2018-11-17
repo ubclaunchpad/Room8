@@ -14,13 +14,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class CreateGroup extends AppCompatActivity {
+public class SendInvitesActivity extends AppCompatActivity {
     Boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_group);
+        setContentView(R.layout.activity_send_invites);
 
         Button addMemberButton = (Button) findViewById(R.id.AddMemberButton);
         addMemberButton.setOnClickListener(new View.OnClickListener() {
@@ -33,7 +33,6 @@ public class CreateGroup extends AppCompatActivity {
     }
 
     private void existUser() {
-
         EditText mEdit = (EditText) findViewById(R.id.UsernameEmailEditText);
         final String emailInField = mEdit.getText().toString();
 

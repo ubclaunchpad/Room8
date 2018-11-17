@@ -17,7 +17,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class CreateGroupViewInvitesActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     FirebaseAuth mAuth;
 
     @Override
@@ -74,6 +73,8 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         newGroup.UserUIds.add(mAuth.getCurrentUser().getUid());
 
         groupsRef.setValue(newGroup);
+
+        startActivity(new Intent(this, SendInvitesActivity.class));
     }
 
     @Override

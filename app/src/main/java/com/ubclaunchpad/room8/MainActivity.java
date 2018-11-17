@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.main_btn_creategroup:
-                startActivity(new Intent(this, CreateGroup.class));
+                startActivity(new Intent(this, SendInvitesActivity.class));
         }
     }
 }
