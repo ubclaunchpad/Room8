@@ -8,12 +8,14 @@
 
     <Button
         android:id="@+id/button_rulesAndBoundaries"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="50dp"
         android:text="Rules and Boundaries"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.116" />
@@ -28,6 +30,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView-announcements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:text="@string/announcements"
+        app:layout_constraintTop_toBottomOf="@+id/button_rulesAndBoundaries"
+        tools:layout_editor_absoluteX="55dp" />
+
+    <HorizontalScrollView
+        android:layout_width="0dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_groupName">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+
+
+    </HorizontalScrollView>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.main_btn_sign_up).setOnClickListener(this);
         findViewById(R.id.main_btn_login).setOnClickListener(this);
         findViewById(R.id.main_btn_group_page).setOnClickListener(this);
+        findViewById(R.id.main_btn_creategroup).setOnClickListener(this);
     }
 
     @Override
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("MainActivity","Creating Group activity from main activity");
                 startActivity(new Intent(this, GroupPageActivity.class));
                 break;
+            case R.id.main_btn_creategroup:
+                startActivity(new Intent(this, CreateGroup.class));
         }
     }
 }

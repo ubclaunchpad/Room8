@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="300px"
+    tools:context=".CreateGroup">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/CreateGroupTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CREATE A NEW GROUP"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <EditText
+            android:id="@+id/GroupNameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Group Name" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <EditText
+            android:id="@+id/UsernameEmailEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Username/Email" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/AddMemberButton"
+            android:layout_width="216dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
+            android:text="+ Add member" />
+    </LinearLayout>
+
+
+</android.widget.LinearLayout>

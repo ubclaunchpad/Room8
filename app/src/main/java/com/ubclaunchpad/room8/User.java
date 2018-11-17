@@ -7,6 +7,8 @@ public class User {
     String Email;
     Group Group;
 
+    public User(){}
+
     public User(String uid, String firstName, String lastName, String email) {
         this.Uid = uid;
         this.FirstName = firstName;
