@@ -35,10 +35,13 @@
         android:id="@+id/textView-announcements"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
         android:layout_marginTop="27dp"
+        android:layout_marginEnd="228dp"
         android:text="@string/announcements"
-        app:layout_constraintTop_toBottomOf="@+id/button_rulesAndBoundaries"
-        tools:layout_editor_absoluteX="55dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_rulesAndBoundaries" />
 
     <HorizontalScrollView
         android:layout_width="0dp"

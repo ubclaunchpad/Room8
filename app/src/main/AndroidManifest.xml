@@ -18,13 +18,9 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
-<<<<<<< HEAD
         <activity android:name=".GroupPageActivity"></activity>
-        <activity android:name=".CreateGroup"></activity>
-=======
         <activity android:name=".SendInvitesActivity" />
         <activity android:name=".EditProfileActivity" />
->>>>>>> 803a44072312fe6cb569c134c96e84af712ddb97
         <activity android:name=".CreateGroupViewInvitesActivity" />
     </application>
 

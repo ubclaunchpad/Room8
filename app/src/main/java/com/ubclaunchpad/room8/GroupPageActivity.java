@@ -23,31 +23,36 @@ public class GroupPageActivity extends AppCompatActivity implements View.OnClick
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private DatabaseReference userGroupReference;
+    private DatabaseReference usersReference;
     private DatabaseReference groupMembersReference;
     private String currentGroupName;
     TextView groupNameText;
     private List<String> usersInGroup;
+    private List<String> firstNamesInGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_page);
 
-        Log.d("GroupPage","Creating Group Activity");
+        Log.d("GroupPage", "Creating Group Activity");
         groupNameText = findViewById(R.id.textView_groupName);
         findViewById(R.id.button_rulesAndBoundaries).setOnClickListener(this);
 
+        usersInGroup = new ArrayList<>();
+        firstNamesInGroup = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         startRetrievingGroupInformation();
     }
 
-    private void retrievingUserIDs() {
-        // Get list of users from Group
-        usersInGroup = new ArrayList<>();
-        groupMembersReference = mDatabase.child("Groups").child(currentGroupName).child("UserUuids");
-        groupMembersReference.addListenerForSingleValueEvent(groupListener());
+    // Get the group that the currentUser is in
+    private void startRetrievingGroupInformation() {
+        String testUid = "geEWrV4DmIZuwtJXmol2HBtD53U2"; // Hardcoded User
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        usersReference = mDatabase.child("Users").child(currentUser.getUid()).child("Group"); // Dynamic Version
+        usersReference = mDatabase.child("Users"); // Hardcoded version
+        usersReference.child(testUid).addListenerForSingleValueEvent(userGroupListener());
     }
 
     private void setGroupName() {
@@ -55,14 +60,10 @@ public class GroupPageActivity extends AppCompatActivity implements View.OnClick
         groupNameText.setText(currentGroupName);
     }
 
-    // Get the group that the currentUser is in
-    private void startRetrievingGroupInformation() {
-        String testUid = "geEWrV4DmIZuwtJXmol2HBtD53U2"; // Hardcoded User
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        userGroupReference = mDatabase.child("Users").child(currentUser.getUid()).child("Group"); // Dynamic Version
-        userGroupReference = mDatabase.child("Users").child(testUid); // Hardcoded version
-        userGroupReference.addListenerForSingleValueEvent(userGroupListener());
-
+    private void retrievingUserIDs() {
+        // Get list of users from Group
+        groupMembersReference = mDatabase.child("Groups").child(currentGroupName).child("UserUIds");
+        groupMembersReference.addListenerForSingleValueEvent(groupListener());
     }
 
     // Listener that sets this GroupPage's group
@@ -80,13 +81,14 @@ public class GroupPageActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                Log.w("Group page", "loadPost:onCancelled", databaseError.toException());
             }
         };
     }
 
-    // Listener that sets this GroupPage's group
+    // Listener that gets list of members of group
     private ValueEventListener groupListener() {
+        Log.d("Group page", "Got to groupListener");
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -95,15 +97,32 @@ public class GroupPageActivity extends AppCompatActivity implements View.OnClick
                     Log.d("Group page", "Inside the userID retriever, users: " + usersInGroup);
                     Toast.makeText(GroupPageActivity.this, ds.getValue(String.class), Toast.LENGTH_SHORT).show();
                 }
+                getListOfFirstNames();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                Log.w("Group page", "loadPost:onCancelled", databaseError.toException());
             }
         };
     }
 
+    private void getListOfFirstNames() {
+        for (String userID : usersInGroup) {
+            usersReference.child(userID).child("FirstName").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    firstNamesInGroup.add(dataSnapshot.getValue(String.class));
+                    Toast.makeText(GroupPageActivity.this, dataSnapshot.getValue(String.class), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w("Group page", "loadPost:onCancelled", databaseError.toException());
+                }
+            });
+        }
+    }
 
     @Override
     public void onClick(View view) {
