@@ -8,6 +8,10 @@ Go to this [document](https://docs.google.com/document/d/1CVaAKaMRLd4syWPMctv8GJ
 
 Shared Google Drive Folder: [folder](https://drive.google.com/drive/folders/16reWL5_upOOyzsVwl5tIUWsOwNiytIKA)
 
+# Design
+
+Go to this [link](https://www.figma.com/file/JEO6nLmGolGJdoW51rV5T33c/roommate-wireframes?node-id=0%3A1) for our designer's wireframes.
+
 # Requirements
 
 1. User stories
