@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".CreateGroup"></activity>
+        <activity android:name=".SendInvitesActivity" />
         <activity android:name=".CreateGroupViewInvitesActivity" />
     </application>
 
