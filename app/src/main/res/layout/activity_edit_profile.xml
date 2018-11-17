@@ -10,6 +10,24 @@
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:id="@+id/show_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/black_border"
+            android:hint="Email"
+            android:padding="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
@@ -29,40 +47,6 @@
             android:layout_marginLeft="20dp"
             android:background="@drawable/black_border"
             android:hint="Last"
-            android:padding="5dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
-
-        <EditText
-            android:id="@+id/edit_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/black_border"
-            android:hint="Email"
-            android:padding="5dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
-
-        <EditText
-            android:id="@+id/current_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/black_border"
-            android:hint="Current Password"
             android:padding="5dp" />
     </LinearLayout>
 
