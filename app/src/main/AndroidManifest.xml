@@ -19,7 +19,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".EditProfileActivity" />
-        <activity android:name=".CreateGroupViewInvitesActivity"></activity>
+        <activity android:name=".CreateGroup"></activity>
+        <activity android:name=".CreateGroupViewInvitesActivity" />
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         findViewById(R.id.main_btn_sign_up).setOnClickListener(this);
         findViewById(R.id.main_btn_login).setOnClickListener(this);
+        findViewById(R.id.main_btn_creategroup).setOnClickListener(this);
     }
 
     @Override
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.main_btn_login:
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
+            case R.id.main_btn_creategroup:
+                startActivity(new Intent(this, CreateGroup.class));
         }
     }
 }
