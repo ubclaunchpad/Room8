@@ -72,8 +72,10 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         newGroup.UserUIds.add(mAuth.getCurrentUser().getUid());
 
         groupsRef.setValue(newGroup);
+        Intent intent = new Intent(this, SendInvitesActivity.class);
 
-        startActivity(new Intent(this, SendInvitesActivity.class));
+        intent.putExtra("name", groupName);
+        startActivity(intent);
     }
 
     @Override

@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
@@ -20,22 +20,27 @@
             android:id="@+id/CreateGroupTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CREATE A NEW GROUP"
+            android:text="CREATE YOUR NEW GROUP"
             android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="211dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/GroupNameEditText"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/GroupNameTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Group Name" />
+            android:text="Test Name"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="24sp" />
 
     </LinearLayout>
 
@@ -47,11 +52,12 @@
         <EditText
             android:id="@+id/UsernameEmailEditText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="8dp"
+            android:contentDescription="Enter Username/Email"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Username/Email" />
+            android:hint="New member's email"
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout
