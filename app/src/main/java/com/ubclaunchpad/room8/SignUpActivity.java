@@ -117,11 +117,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
-        HashMap<String, String> pendingInvites = new HashMap<>();
-        pendingInvites.put("empty","");
-
         DatabaseReference userRef = myRef.child("Users").child(uid);
-        userRef.setValue(new User(uid, firstName, lastName, email, pendingInvites));
+        userRef.setValue(new User(uid, firstName, lastName, email, null));
     }
 
     @Override
