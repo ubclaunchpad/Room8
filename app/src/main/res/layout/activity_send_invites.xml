@@ -38,9 +38,8 @@
             android:inputType="textPersonName"
             android:text="Test Name"
             android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="28sp" />
 
     </LinearLayout>
 

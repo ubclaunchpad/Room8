@@ -70,11 +70,11 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         DatabaseReference groupsRef = databaseReference.child("Groups").child(groupName);
         Group newGroup = new Group(groupName);
         newGroup.UserUIds.add(mAuth.getCurrentUser().getUid());
-
         groupsRef.setValue(newGroup);
-        Intent intent = new Intent(this, SendInvitesActivity.class);
 
+        Intent intent = new Intent(this, SendInvitesActivity.class);
         intent.putExtra("name", groupName);
+
         startActivity(intent);
     }
 
