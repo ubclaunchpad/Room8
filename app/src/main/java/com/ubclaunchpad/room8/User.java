@@ -5,6 +5,7 @@ public class User {
     String FirstName;
     String LastName;
     String Email;
+    Group Group;
 
     public User(){}
 
@@ -13,5 +14,7 @@ public class User {
         this.FirstName = firstName;
         this.LastName = lastName;
         this.Email = email;
+        this.Group = null;
     }
+
 }

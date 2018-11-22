@@ -10,7 +10,6 @@ public class Group {
 
     public Group(String GroupName) {
         this.GroupName = GroupName;
-
         this.UserUIds = new ArrayList<>();
     }
 }
