@@ -2,9 +2,9 @@ package com.ubclaunchpad.room8;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,10 +71,12 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         DatabaseReference groupsRef = databaseReference.child("Groups").child(groupName);
         Group newGroup = new Group(groupName);
         newGroup.UserUIds.add(mAuth.getCurrentUser().getUid());
-
         groupsRef.setValue(newGroup);
 
-        startActivity(new Intent(this, SendInvitesActivity.class));
+        Intent intent = new Intent(this, SendInvitesActivity.class);
+        intent.putExtra("name", groupName);
+
+        startActivity(intent);
     }
 
     @Override
