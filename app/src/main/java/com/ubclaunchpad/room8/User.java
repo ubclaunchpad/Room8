@@ -8,6 +8,7 @@ public class User {
     String LastName;
     String Email;
     HashMap<String, String> PendingInvites;
+    Group Group;
 
     public User(){}
 
@@ -17,5 +18,6 @@ public class User {
         this.LastName = lastName;
         this.Email = email;
         this.PendingInvites = pendingInvites;
+        this.Group = null;
     }
 }
