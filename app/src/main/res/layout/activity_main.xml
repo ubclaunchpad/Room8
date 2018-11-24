@@ -14,14 +14,15 @@
         android:id="@+id/main_btn_sign_up"/>
 
     <Button
+        android:id="@+id/main_btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/main_btn_login"/>
+        android:text="Login" />
+
     <Button
+        android:id="@+id/main_btn_creategroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Group"
-        android:id="@+id/main_btn_creategroup"/>
+        android:text="Create Group" />
 
 </android.support.v7.widget.LinearLayoutCompat>
