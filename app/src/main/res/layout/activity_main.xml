@@ -25,4 +25,10 @@
         android:layout_height="wrap_content"
         android:text="Create Group" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Group Page"
+        android:id="@+id/main_btn_group_page"/>
+
 </android.support.v7.widget.LinearLayoutCompat>

@@ -2,10 +2,9 @@ package com.ubclaunchpad.room8;
 
 import android.content.Intent;
 import android.graphics.Paint;
-import android.os.PatternMatcher;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -114,7 +113,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         DatabaseReference myRef = database.getReference();
 
         DatabaseReference userRef = myRef.child("Users").child(uid);
-        userRef.setValue(new User(uid, firstName, lastName, email));
+        userRef.setValue(new User(uid, firstName, lastName, email, null));
     }
 
     @Override
