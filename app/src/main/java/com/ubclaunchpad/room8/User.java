@@ -20,4 +20,12 @@ public class User {
         this.PendingInvites = pendingInvites;
         this.Group = null;
     }
+
+    //For editing the profile.
+    public User(String uid, String firstName, String lastName, String email) {
+        this.Uid = uid;
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.Email = email;
+    }
 }

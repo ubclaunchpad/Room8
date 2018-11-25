@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/black_border"
-            android:hint="Enter Password"
+            android:hint="Enter new Password"
             android:padding="5dp" />
     </LinearLayout>
 
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/black_border"
-            android:hint="Re-enter Password"
+            android:hint="Re-enter new Password"
             android:padding="5dp" />
     </LinearLayout>
 
