@@ -21,28 +21,7 @@ Go to this [document](https://docs.google.com/document/d/1CVaAKaMRLd4syWPMctv8GJ
 
 Team Google Drive Folder: [folder](https://drive.google.com/drive/folders/16reWL5_upOOyzsVwl5tIUWsOwNiytIKA)
 
-# Wireframes
-
-Go to this [link](https://www.figma.com/file/JEO6nLmGolGJdoW51rV5T33c/roommate-wireframes?node-id=0%3A1) for our designer's wireframes.
-
-# Design
-
-<p align="center">
-  <img src="/img/room8design1.png"
-      alt="Design Main Page" />
-      
-  <img src="/img/room8design2.png"
-        alt="Design Login Page" />
-        
-  <img src="/img/room8design3.png"
-        alt="Design Forgot Password Page" />
-        
-  <img src="/img/room8design4.png"
-        alt="Design Group Page" />
-</p>
-
 # Progress
-
 1. Authentication
   - Sign-up
   - Log-in
@@ -53,7 +32,6 @@ Go to this [link](https://www.figma.com/file/JEO6nLmGolGJdoW51rV5T33c/roommate-w
   - Sending invites to join a group
   
 # In Development
-
 1. Groups
   - Joining a group
   - Finalizing a group
@@ -66,3 +44,13 @@ Go to this [link](https://www.figma.com/file/JEO6nLmGolGJdoW51rV5T33c/roommate-w
 3. Roommate chat
 
 4. Notifications/Reminders
+
+# Wireframes
+
+Go to this [link](https://www.figma.com/file/JEO6nLmGolGJdoW51rV5T33c/roommate-wireframes?node-id=0%3A1) for our designer's wireframes.
+
+# Design
+
+![Main Page](/img/room8design1.png "Main Page") ![Login Page](/img/room8design2.png "Login Page")
+
+![ForgotPass Page](/img/room8design3.png "Forgot Pass Page") ![Group Page](/img/room8design4.png "Group Page")
