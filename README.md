@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="/img/Room8Logo.png" width="30%" alt="Room8"/>
+</p>
+
 # Room8 [![Build Status](https://travis-ci.com/ubclaunchpad/Room8.svg?branch=master)](https://travis-ci.com/ubclaunchpad/Room8)
 
 Room8 is a WIP roommate organization platform on Android. The app will allow roommates to organize themselves into a group and assign tasks to each other. The app itself will assist them in creating a schedule and rotating tasks for each roommate.
