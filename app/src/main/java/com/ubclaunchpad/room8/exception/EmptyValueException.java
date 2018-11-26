@@ -1,8 +1,8 @@
-package com.ubclaunchpad.room8;
+package com.ubclaunchpad.room8.exception;
 
 import android.widget.TextView;
 
-class EmptyValueException extends Exception {
+public class EmptyValueException extends Exception {
 
     public EmptyValueException(String errorMessage, TextView textView) {
         textView.setError(errorMessage);

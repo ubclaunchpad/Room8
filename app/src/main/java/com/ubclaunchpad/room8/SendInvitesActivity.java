@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ubclaunchpad.room8.model.User;
 
 public class SendInvitesActivity extends AppCompatActivity {
     Boolean flag = false;

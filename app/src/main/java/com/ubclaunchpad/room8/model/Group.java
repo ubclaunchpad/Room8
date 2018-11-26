@@ -1,4 +1,4 @@
-package com.ubclaunchpad.room8;
+package com.ubclaunchpad.room8.model;
 
 import java.util.ArrayList;
 import java.util.List;
