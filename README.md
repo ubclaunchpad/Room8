@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/img/Room8Logo.png" width="30%" alt="Room8"/>
+  <img src="/img/Room8LogoSquish.png" width="30%" alt="Room8"/>
 </p>
 
 <p align="center">

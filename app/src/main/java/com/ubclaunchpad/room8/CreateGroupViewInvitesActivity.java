@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.ubclaunchpad.room8.model.Group;
 
 public class CreateGroupViewInvitesActivity extends AppCompatActivity implements View.OnClickListener {
 

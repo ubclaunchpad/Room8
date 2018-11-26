@@ -1,14 +1,14 @@
-package com.ubclaunchpad.room8;
+package com.ubclaunchpad.room8.model;
 
 import java.util.HashMap;
 
 public class User {
-    String Uid;
-    String FirstName;
-    String LastName;
-    String Email;
-    HashMap<String, String> PendingInvites;
-    Group Group;
+    public String Uid;
+    public String FirstName;
+    public String LastName;
+    public String Email;
+    public HashMap<String, String> PendingInvites;
+    public Group Group;
 
     public User(){}
 
@@ -21,7 +21,7 @@ public class User {
         this.Group = null;
     }
 
-    //For editing the profile.
+    // For editing the profile.
     public User(String uid, String firstName, String lastName, String email) {
         this.Uid = uid;
         this.FirstName = firstName;

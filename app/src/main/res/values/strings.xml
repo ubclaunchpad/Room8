@@ -6,4 +6,12 @@
     <string name="group_name">Your Group</string>
     <string name="title_activity_create_group">CreateGroup</string>
     <string name="announcements">Announcements</string>
+
+    <!-- Button Text -->
+    <string name="btn_text_sign_up">Sign Up</string>
+    <string name="btn_text_log_in">Log In</string>
+
+    <!-- Content Descriptors -->
+    <string name="desc_app_logo">The App Logo</string>
+    <string name="desc_app_splash_art">The App Splash Art</string>
 </resources>
