@@ -5,9 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,63 +25,90 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private DatabaseReference userRef;
 
     private FirebaseAuth mAuth;
-    private String currUserUID;
     private FirebaseUser currUser;
+    private String currUserUID;
     private String firstName;
     private String lastName;
     private String email;
     private TextView show_email;
     private TextView edit_first_name;
     private TextView edit_last_name;
+    private TextView enter_password;
+    private TextView re_enter_password;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+        findViewById(R.id.edit_confirm).setOnClickListener(this);
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
         userRef = myRef.child("Users");
         mAuth = FirebaseAuth.getInstance();
+        currUser = mAuth.getCurrentUser();
         currUserUID = mAuth.getCurrentUser().getUid();
 
         show_email = (TextView) findViewById(R.id.show_email);
         edit_first_name = (TextView) findViewById(R.id.edit_first_name);
         edit_last_name = (TextView) findViewById(R.id.edit_last_name);
+        enter_password = (TextView) findViewById(R.id.enter_password);
+        re_enter_password = (TextView) findViewById(R.id.re_enter_password);
+
         displayUserInfo();
-
-
-    }
-
-    private ValueEventListener temporaryName() {
-        return new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (ds.getKey().toString().equals(mAuth.getCurrentUser().getUid())) {
-
-                        String afirstName = ds.child("FirstName").getValue(String.class);
-                        String alastName = ds.child("LastName").getValue(String.class);
-                        String aemail = ds.child("Email").getValue(String.class);
-                        System.out.println(afirstName);
-                        System.out.println(alastName);
-                        System.out.println(aemail);
-                    }
-
-                    //should store data -> settext on the layout
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.edit_confirm:
+                try {
+                    editUserProfile();
+                } catch (EmptyValueException | PasswordsNotMatch e) {}
+                break;
+            }
+        }
 
+    private void editUserProfile() throws EmptyValueException, PasswordsNotMatch {
+        String firstName = edit_first_name.getText().toString().trim();
+        String lastName = edit_last_name.getText().toString().trim();
+        String firstPassword = enter_password.getText().toString().trim();
+        String secondPassword = re_enter_password.getText().toString().trim();
+
+        User currentUser = new User(currUserUID, firstName, lastName, email);
+
+        if (firstName.isEmpty()) {
+            throw new EmptyValueException("First name is required.", edit_first_name);
+        }
+
+        if (lastName.isEmpty()) {
+            throw new EmptyValueException("Last name is required.", edit_last_name);
+        }
+
+        if (firstPassword.isEmpty()) {
+            throw new EmptyValueException("Input the new password.", enter_password);
+        }
+
+        if (secondPassword.isEmpty()) {
+            throw new EmptyValueException("Input the same password with the above.", re_enter_password);
+        }
+
+        if (!firstPassword.equals(secondPassword)) {
+            throw new PasswordsNotMatch("Your Passwords doesn't match!", enter_password);
+        }
+
+
+        userRef.child(currUserUID).setValue(currentUser);
+        currUser.updatePassword(firstPassword)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Successfully changed your profile.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void displayUserInfo() {
