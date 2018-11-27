@@ -22,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ubclaunchpad.room8.model.Group;
 
-import java.util.HashMap;
 
 public class CreateGroupViewInvitesActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView mRecyclerView;
@@ -129,8 +128,5 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
                 startActivity(new Intent(this, EditProfileActivity.class));
                 break;
         }
-    }
-
-    public static class RecyclerViewAdapter {
     }
 }

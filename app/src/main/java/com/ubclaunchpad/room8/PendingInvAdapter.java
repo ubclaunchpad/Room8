@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,19 +23,16 @@ public class PendingInvAdapter extends
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
         public TextView groupNameTextView;
 
-        // We also create a constructor that accepts the entire item row
+        // We create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
         public ViewHolder(View itemView) {
             // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
+            // to access the context from any ViewHolder instance
             super(itemView);
 
             groupNameTextView = (TextView) itemView.findViewById(R.id.group_name);
-//            acceptButton = (Button) itemView.findViewById(R.id.);
         }
     }
 
