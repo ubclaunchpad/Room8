@@ -19,10 +19,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
- HEAD
 import com.google.firebase.database.ValueEventListener;
 import com.ubclaunchpad.room8.model.Group;
- 5b8f779c7feb62ac75a4755ac0a2f1daac65bc0d
 
 import java.util.HashMap;
 
