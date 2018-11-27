@@ -9,8 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PendingInvAdapter extends
     RecyclerView.Adapter<PendingInvAdapter.ViewHolder> {
@@ -18,15 +19,14 @@ public class PendingInvAdapter extends
     private List<String> mPendingInvites;
 
     // Pass in the contact array into the constructor
-    public PendingInvAdapter(HashMap<String,String> pendingInvites) {
-        mPendingInvites = (List<String>) pendingInvites.values();
+    public PendingInvAdapter(Map<String,String> pendingInvites) {
+        mPendingInvites = new ArrayList<String>(pendingInvites.values());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView groupNameTextView;
-//        public Button acceptButton;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -70,9 +70,4 @@ public class PendingInvAdapter extends
     public int getItemCount() {
         return mPendingInvites.size();
     }
-}
-
-    // Provide a direct reference to each of the views within a data item
-        // Used to cache the views within the item layout for fast access
-
 }

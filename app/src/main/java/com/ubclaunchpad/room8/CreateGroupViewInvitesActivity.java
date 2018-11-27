@@ -21,10 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class CreateGroupViewInvitesActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -37,12 +38,20 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        // RecyclerView to display pending invites
+        setRecyclerView();
+    }
+
+    private void setRecyclerView() {
+        mRecyclerView = (RecyclerView) findViewById(R.id.rvPendingInvites);
         DatabaseReference userRef = mDatabase.child("Users").child(mAuth.getCurrentUser().getUid());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-
+                mAdapter = new PendingInvAdapter(user.PendingInvites);
+                mRecyclerView.setAdapter(mAdapter);
             }
 
             @Override
@@ -51,19 +60,12 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
             }
         });
 
-        // RecyclerView to display pending invites
-        mRecyclerView = (RecyclerView) findViewById(R.id.rvPendingInvites);
-        // changes in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter
-        mAdapter = new PendingInvAdapter(myDataset);
-        mRecyclerView.setAdapter(mAdapter);
-
+        // changes in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
     }
 
     private void triggerCreateGroupFlow() {
