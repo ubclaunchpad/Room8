@@ -19,7 +19,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+ HEAD
 import com.google.firebase.database.ValueEventListener;
+import com.ubclaunchpad.room8.model.Group;
+ 5b8f779c7feb62ac75a4755ac0a2f1daac65bc0d
 
 import java.util.HashMap;
 
@@ -35,6 +38,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_create_group_view_invites);
 
         findViewById(R.id.btnCreateGroup).setOnClickListener(this);
+        findViewById(R.id.edit_profile).setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -121,6 +125,10 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         switch (v.getId()) {
             case R.id.btnCreateGroup:
                 triggerCreateGroupFlow();
+                break;
+
+            case R.id.edit_profile:
+                startActivity(new Intent(this, EditProfileActivity.class));
                 break;
         }
     }

@@ -1,4 +1,4 @@
-package com.ubclaunchpad.room8;
+package com.ubclaunchpad.room8.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,6 @@ public class Group {
 
     public Group(String GroupName) {
         this.GroupName = GroupName;
-
         this.UserUIds = new ArrayList<>();
     }
 }

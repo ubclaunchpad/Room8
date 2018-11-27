@@ -1,7 +1,6 @@
 package com.ubclaunchpad.room8;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class User {
     String Uid;
