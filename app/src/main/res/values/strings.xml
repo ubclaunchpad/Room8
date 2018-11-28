@@ -11,7 +11,19 @@
     <string name="btn_text_sign_up">Sign Up</string>
     <string name="btn_text_log_in">Log In</string>
 
+    <!-- TextView Text -->
+    <string name="txt_create_account">Create an account</string>
+    <string name="txt_underlined_login"><u>Log In</u></string>
+    <string name="txt_or">or</string>
+
     <!-- Content Descriptors -->
     <string name="desc_app_logo">The App Logo</string>
     <string name="desc_app_splash_art">The App Splash Art</string>
+
+    <!-- Hint Text -->
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_email">E-mail</string>
+    <string name="hint_password">Password</string>
+
 </resources>

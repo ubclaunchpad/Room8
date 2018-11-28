@@ -29,7 +29,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_sign_up_new);
 
         mEmail = findViewById(R.id.sign_up_et_email);
         mPassword = findViewById(R.id.sign_up_et_password);
@@ -38,12 +38,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         mAuth = FirebaseAuth.getInstance();
 
-        TextView txtSignUp = findViewById(R.id.txtSignUp);
-        txtSignUp.setOnClickListener(this);
-        txtSignUp.setPaintFlags(txtSignUp.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
-
-        findViewById(R.id.sign_up_btn_sign_up).setOnClickListener(this);
-        findViewById(R.id.txtSignIn).setOnClickListener(this);
+        findViewById(R.id.btnSignUp).setOnClickListener(this);
+        findViewById(R.id.txtLogin).setOnClickListener(this);
     }
 
     // Take values of sign-up fields, validate them and try to create Firebase Authentication for user
@@ -120,10 +116,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.sign_up_btn_sign_up:
+            case R.id.btnSignUp:
                 registerUser();
                 break;
-            case R.id.txtSignIn:
+            case R.id.txtLogin:
                 Intent loginActivityIntent = new Intent(this, LoginActivity.class);
                 loginActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(loginActivityIntent);

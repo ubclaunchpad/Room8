@@ -81,7 +81,7 @@
             android:background="@drawable/black_border"
             android:padding="5dp"
             android:hint="Email"
-            android:id="@+id/sign_up_et_email"/>
+            android:id="@+id/sign_up_et_firstname"/>
     </LinearLayout>
 
     <LinearLayout
