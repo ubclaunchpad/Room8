@@ -13,8 +13,13 @@
 
     <!-- TextView Text -->
     <string name="txt_create_account">Create an account</string>
+    <string name="txt_underlined_signup"><u>Sign Up</u></string>
+    <string name="txt_login">Log in to Room8</string>
     <string name="txt_underlined_login"><u>Log In</u></string>
     <string name="txt_or">or</string>
+
+    <string name="txt_youre_logged_in">You\'re logged in!</string>
+    <string name="txt_create_group_view_invite_instruction">You can now create a group or view your invites.</string>
 
     <!-- Content Descriptors -->
     <string name="desc_app_logo">The App Logo</string>
