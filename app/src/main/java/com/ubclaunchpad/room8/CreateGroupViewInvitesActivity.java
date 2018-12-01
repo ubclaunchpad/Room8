@@ -26,7 +26,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_create_group_view_invites);
 
         findViewById(R.id.btnCreateGroup).setOnClickListener(this);
-        findViewById(R.id.edit_profile).setOnClickListener(this);
+        findViewById(R.id.btnEditProfile).setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
     }
@@ -87,7 +87,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
                 triggerCreateGroupFlow();
                 break;
 
-            case R.id.edit_profile:
+            case R.id.btnEditProfile:
                 startActivity(new Intent(this, EditProfileActivity.class));
                 break;
         }
