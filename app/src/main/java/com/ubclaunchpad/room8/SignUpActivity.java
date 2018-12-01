@@ -24,6 +24,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     EditText mEmail, mPassword, mFirstName, mLastName;
     private FirebaseAuth mAuth;
+    final int neededPassLength = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,57 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             mPassword.requestFocus();
             return;
         }
+        // check the password meets correct requirements
+        boolean capitalFlag = false;
+        boolean lowerCaseFlag = false;
+        boolean numberFlag = false;
+        boolean specialCharFlag = false;
+        boolean requiredNumber = false;
+        char currentchar;
+        String specialCharacters = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+        for (int i = 0; i < password.length(); i++) {
+            currentchar = password.charAt(i);
+            requiredNumber = i + 1 >= neededPassLength;
+            if (Character.isDigit(currentchar)) {
+                numberFlag = true;
+            }
+            else if (Character.isUpperCase(currentchar)) {
+                capitalFlag = true;
+            }
+            else if (Character.isLowerCase(currentchar)) {
+                lowerCaseFlag = true;
+            }
+            for (int n = 0; n < specialCharacters.length(); n++) {
+                if (specialCharacters.charAt(n) == currentchar) {
+                    specialCharFlag = true;
+                }
+            }
+        }
+        if (!requiredNumber) {
+            mPassword.setError("Password must be at least eight characters long");
+            return;
+        }
+        if (!numberFlag || !capitalFlag || !lowerCaseFlag || !specialCharFlag) {
+            mPassword.setError("Must contain a number, capital letter, " +
+                    "lowercase letter, and special character. e.g: !#$%&");
+            return;
+        }
+//        if (!numberFlag) {
+//            mPassword.setError("Password must contain a number");
+//            return;
+//        }
+//        else if (!capitalFlag) {
+//            mPassword.setError("Password must contain a capital letter");
+//            return;
+//        }
+//        else if (!lowerCaseFlag) {
+//            mPassword.setError("Password must contain a lowercase letter");
+//            return;
+//        }
+//        else if (!specialCharFlag) {
+//            mPassword.setError("Password must contain a special character e.g.!#$%&");
+//            return;
+//        }
 
         // Attempt to create Firebase Authentication for user
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
