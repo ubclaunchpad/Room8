@@ -83,6 +83,7 @@
             android:background="@drawable/black_border"
             android:inputType="textPassword"
             android:hint="Re-enter Password"
+            android:hint="Re-enter new Password"
             android:padding="5dp" />
     </LinearLayout>
 

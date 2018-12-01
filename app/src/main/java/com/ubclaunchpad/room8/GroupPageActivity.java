@@ -127,10 +127,10 @@ public class GroupPageActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.main_btn_sign_up:
-//                startActivity(new Intent(this, SignUpActivity.class));
-                Log.d("Group Page", "Clicked the Rules and Boundaries button");
-                break;
+//            case R.id.main_btn_sign_up:
+////                startActivity(new Intent(this, SignUpActivity.class));
+//                Log.d("Group Page", "Clicked the Rules and Boundaries button");
+//                break;
         }
     }
 }
