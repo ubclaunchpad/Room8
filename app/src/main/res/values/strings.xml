@@ -10,6 +10,8 @@
     <!-- Button Text -->
     <string name="btn_text_sign_up">Sign Up</string>
     <string name="btn_text_log_in">Log In</string>
+    <string name="btn_text_create_group">Create Group</string>
+    <string name="btn_text_edit_profile">Edit Profile</string>
 
     <!-- TextView Text -->
     <string name="txt_create_account">Create an account</string>
@@ -17,6 +19,7 @@
     <string name="txt_login">Log in to Room8</string>
     <string name="txt_underlined_login"><u>Log In</u></string>
     <string name="txt_or">or</string>
+    <string name="txt_invites">Invites</string>
 
     <string name="txt_youre_logged_in">You\'re logged in!</string>
     <string name="txt_create_group_view_invite_instruction">You can now create a group or view your invites.</string>
