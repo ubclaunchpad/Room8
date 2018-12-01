@@ -83,7 +83,8 @@ public class SendInvitesActivity extends AppCompatActivity {
 
     private void sendInvite(User user, DatabaseReference userRef) {
         DatabaseReference invitesRef = userRef.child(user.Uid).child("PendingInvites");
-        if (user.PendingInvites.containsValue(groupNameText)) {
+        // Check if an invite has already been sent
+        if (user.PendingInvites != null && user.PendingInvites.containsValue(groupNameText)) {
             return;
         }
         DatabaseReference newPendingInvRef = invitesRef.push();

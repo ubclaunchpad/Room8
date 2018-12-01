@@ -1,7 +1,6 @@
 package com.ubclaunchpad.room8;
 
 import android.content.Intent;
-import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,11 +32,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mPassword = findViewById(R.id.login_et_password);
 
         findViewById(R.id.login_btn_login).setOnClickListener(this);
-
-        // Hook up "Sign In" TextView to an OnClickListener, underline the TextView
-        TextView txtSignIn = findViewById(R.id.txtSignIn);
-        txtSignIn.setPaintFlags(txtSignIn.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
-        txtSignIn.setOnClickListener(this);
 
         TextView txtSignUp = findViewById(R.id.txtSignUp);
         txtSignUp.setOnClickListener(this);
