@@ -1,9 +1,9 @@
 package com.ubclaunchpad.room8;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +30,6 @@ public class SendInvitesActivity extends AppCompatActivity {
         email = findViewById(R.id.UsernameEmailEditText);
         groupName = findViewById(R.id.GroupNameTextView);
 
-        // Get group name string
         Intent intent = getIntent();
         groupNameText = intent.getStringExtra("name");
         groupName.setText(groupNameText);
@@ -56,7 +55,7 @@ public class SendInvitesActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Check for existing user by email, invite if existing
+                // Check for existing user by email and invite
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
                     if (user.Email.equalsIgnoreCase(invitedEmail)) {
@@ -88,7 +87,6 @@ public class SendInvitesActivity extends AppCompatActivity {
         if (user.PendingInvites != null && user.PendingInvites.containsValue(groupNameText)) {
             return;
         }
-        // Push new invite with unique key and group name
         DatabaseReference newPendingInvRef = invitesRef.push();
         newPendingInvRef.setValue(groupNameText);
     }
