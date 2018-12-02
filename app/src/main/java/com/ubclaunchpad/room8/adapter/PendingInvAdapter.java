@@ -1,4 +1,4 @@
-package com.ubclaunchpad.room8;
+package com.ubclaunchpad.room8.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.ubclaunchpad.room8.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,7 @@ public class PendingInvAdapter extends
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View pendingInviteView = inflater.inflate(R.layout.item_pendinginvite, parent, false);
+        View pendingInviteView = inflater.inflate(R.layout.item_pending_invite, parent, false);
 
         // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(pendingInviteView);

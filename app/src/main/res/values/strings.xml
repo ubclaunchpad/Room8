@@ -18,6 +18,7 @@
     <string name="txt_underlined_signup"><u>Sign Up</u></string>
     <string name="txt_login">Log in to Room8</string>
     <string name="txt_underlined_login"><u>Log In</u></string>
+    <string name="txt_edit_account">Edit your account</string>
     <string name="txt_or">or</string>
     <string name="txt_invites">Invites</string>
 
@@ -33,5 +34,6 @@
     <string name="hint_last_name">Last Name</string>
     <string name="hint_email">E-mail</string>
     <string name="hint_password">Password</string>
+    <string name="hint_reenter_password">Re-enter Password</string>
 
 </resources>

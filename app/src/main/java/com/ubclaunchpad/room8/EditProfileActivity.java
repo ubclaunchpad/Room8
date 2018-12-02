@@ -31,18 +31,17 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private String firstName;
     private String lastName;
     private String email;
-    private TextView show_email;
-    private TextView edit_first_name;
-    private TextView edit_last_name;
+    private TextView edit_et_email;
+    private TextView edit_et_firstname;
+    private TextView edit_et_lastname;
     private TextView enter_password;
     private TextView re_enter_password;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        findViewById(R.id.edit_confirm).setOnClickListener(this);
+        findViewById(R.id.btnEditProfile).setOnClickListener(this);
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
@@ -51,11 +50,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         currUser = mAuth.getCurrentUser();
         currUserUID = mAuth.getCurrentUser().getUid();
 
-        show_email = (TextView) findViewById(R.id.show_email);
-        edit_first_name = (TextView) findViewById(R.id.edit_first_name);
-        edit_last_name = (TextView) findViewById(R.id.edit_last_name);
-        enter_password = (TextView) findViewById(R.id.enter_password);
-        re_enter_password = (TextView) findViewById(R.id.re_enter_password);
+        edit_et_email = findViewById(R.id.edit_et_email);
+        edit_et_firstname = findViewById(R.id.edit_et_firstname);
+        edit_et_lastname = findViewById(R.id.edit_et_lastname);
+        enter_password = findViewById(R.id.edit_et_password);
+        re_enter_password = findViewById(R.id.edit_et_password2);
 
         displayUserInfo();
     }
@@ -63,7 +62,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.edit_confirm:
+            case R.id.btnEditProfile:
                 try {
                     editUserProfile();
                 } catch (EmptyValueException | PasswordsNotMatch e) {}
@@ -72,19 +71,19 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
 
     private void editUserProfile() throws EmptyValueException, PasswordsNotMatch {
-        String firstName = edit_first_name.getText().toString().trim();
-        String lastName = edit_last_name.getText().toString().trim();
+        String firstName = edit_et_firstname.getText().toString().trim();
+        String lastName = edit_et_lastname.getText().toString().trim();
         String firstPassword = enter_password.getText().toString().trim();
         String secondPassword = re_enter_password.getText().toString().trim();
 
         User currentUser = new User(currUserUID, firstName, lastName, email);
 
         if (firstName.isEmpty()) {
-            throw new EmptyValueException("First name is required.", edit_first_name);
+            throw new EmptyValueException("First name is required.", edit_et_firstname);
         }
 
         if (lastName.isEmpty()) {
-            throw new EmptyValueException("Last name is required.", edit_last_name);
+            throw new EmptyValueException("Last name is required.", edit_et_lastname);
         }
 
         if (firstPassword.isEmpty()) {
@@ -124,18 +123,14 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         lastName = user.LastName;
                     }
                 }
-                show_email.setText(email);
-                edit_first_name.setText(firstName);
-                edit_last_name.setText(lastName);
-
-
+                edit_et_email.setText(email);
+                edit_et_firstname.setText(firstName);
+                edit_et_lastname.setText(lastName);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-
     }
 }
