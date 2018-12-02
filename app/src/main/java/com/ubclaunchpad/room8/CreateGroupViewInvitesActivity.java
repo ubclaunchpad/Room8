@@ -20,7 +20,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ubclaunchpad.room8.adapter.PendingInvAdapter;
 import com.ubclaunchpad.room8.model.Group;
+import com.ubclaunchpad.room8.model.User;
+
+import java.util.HashMap;
 
 
 public class CreateGroupViewInvitesActivity extends AppCompatActivity implements View.OnClickListener {
@@ -45,13 +49,15 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
     }
 
     private void setRecyclerView() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.rvPendingInvites);
+        mRecyclerView = findViewById(R.id.rvPendingInvites);
         DatabaseReference userRef = mDatabase.child("Users").child(mAuth.getCurrentUser().getUid());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                mAdapter = new PendingInvAdapter(user.PendingInvites);
+                HashMap<String, String> pendingInvites = (user.PendingInvites == null) ? new HashMap<String, String>() : user.PendingInvites;
+
+                mAdapter = new PendingInvAdapter(pendingInvites);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
