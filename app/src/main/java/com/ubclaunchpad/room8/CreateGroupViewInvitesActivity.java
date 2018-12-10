@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.ubclaunchpad.room8.adapter.PendingInvAdapter;
 import com.ubclaunchpad.room8.model.Group;
 import com.ubclaunchpad.room8.model.User;
+import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
+import com.ubclaunchpad.room8.Room8Utility.UserStatus;
 
 import java.util.HashMap;
 
@@ -50,7 +52,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
 
     private void setRecyclerView() {
         mRecyclerView = findViewById(R.id.rvPendingInvites);
-        DatabaseReference userRef = mDatabase.child("Users").child(mAuth.getCurrentUser().getUid());
+        DatabaseReference userRef = mDatabase.child(FirebaseEndpoint.USERS).child(mAuth.getCurrentUser().getUid());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -112,9 +114,16 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
     }
 
     private void writeGroupToDatabase(String groupName) {
-        DatabaseReference groupsRef = mDatabase.child("Groups").child(groupName);
+        String currUserUid = mAuth.getCurrentUser().getUid();
+
+        // Update user status
+        UserService.updateUserStatus(mDatabase, currUserUid, UserStatus.CREATING);
+        UserService.updateUserGroup(mDatabase, currUserUid, groupName);
+
+        // Create the group
+        DatabaseReference groupsRef = mDatabase.child(FirebaseEndpoint.GROUPS).child(groupName);
         Group newGroup = new Group(groupName);
-        newGroup.UserUIds.add(mAuth.getCurrentUser().getUid());
+        newGroup.UserUIds.add(currUserUid);
         groupsRef.setValue(newGroup);
 
         Intent intent = new Intent(this, SendInvitesActivity.class);

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -18,11 +17,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ubclaunchpad.room8.model.User;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-
+import com.ubclaunchpad.room8.Room8Utility.UserStatus;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -112,8 +107,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
-        DatabaseReference userRef = myRef.child("Users").child(uid);
-        userRef.setValue(new User(uid, firstName, lastName, email, null));
+        User newUser = new User(uid, firstName, lastName, email, Room8Utility.UserStatus.NO_GROUP);
+        UserService.writeUser(myRef, newUser);
     }
 
     @Override

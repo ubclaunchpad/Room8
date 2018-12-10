@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ubclaunchpad.room8.model.User;
+import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 
 public class SendInvitesActivity extends AppCompatActivity {
     Boolean flag = false;
@@ -44,13 +45,13 @@ public class SendInvitesActivity extends AppCompatActivity {
     }
 
     private void inviteExistingUser() {
-        EditText mEdit = (EditText) findViewById(R.id.UsernameEmailEditText);
+        EditText mEdit = findViewById(R.id.UsernameEmailEditText);
         final String invitedEmail = mEdit.getText().toString();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference();
 
-        final DatabaseReference userRef = myRef.child("Users");
+        final DatabaseReference userRef = myRef.child(FirebaseEndpoint.USERS);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -69,7 +70,6 @@ public class SendInvitesActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Email not associated with an user,\nPlease try again.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
-                    finish();
                 }
                 flag = false;
             }

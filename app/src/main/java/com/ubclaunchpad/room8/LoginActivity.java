@@ -15,6 +15,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.ubclaunchpad.room8.model.User;
+import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
+import com.ubclaunchpad.room8.Room8Utility.UserStatus;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -74,11 +82,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
 
                     Toast.makeText(getApplicationContext(), "Success!\nYou're now logged in.", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), CreateGroupViewInvitesActivity.class));
-
+                    String currUserUid = mAuth.getCurrentUser().getUid();
+                    startNextActivityAfterSuccessfulLogin(currUserUid);
                 } else {
                     Toast.makeText(getApplicationContext(), "Oops! Log in attempt failed.\nPlease try again", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+    // Handle the next Activity that opens after the user logs in. Can be one of:
+    //  - CreateGroupViewInvitesActivity (if user has status of NO_GROUP)
+    //  - SendInvitesActivity (if user has status of CREATING)
+    //  - TODO: GroupPageActivity (if user has status of IN_GROUP)
+    private void startNextActivityAfterSuccessfulLogin(final String currUserUid) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(FirebaseEndpoint.USERS);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    if (user.Uid.equals(currUserUid)) {
+                        if (user.Status.equals(UserStatus.NO_GROUP)) {
+                            startActivity(new Intent(LoginActivity.this, CreateGroupViewInvitesActivity.class));
+                        } else if (user.Status.equals(UserStatus.CREATING)) {
+                            Intent intent = new Intent(LoginActivity.this, SendInvitesActivity.class);
+                            intent.putExtra("name", user.Group);
+
+                            startActivity(intent);
+                        } else if (user.Status.equals(UserStatus.IN_GROUP)) {
+                            // TODO: Proceed to group page
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }
