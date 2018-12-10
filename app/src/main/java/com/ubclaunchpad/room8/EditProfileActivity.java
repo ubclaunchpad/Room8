@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.ubclaunchpad.room8.exception.EmptyValueException;
 import com.ubclaunchpad.room8.exception.PasswordsNotMatch;
 import com.ubclaunchpad.room8.model.User;
+import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 
 public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseDatabase database;
@@ -45,7 +46,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
-        userRef = myRef.child("Users");
+        userRef = myRef.child(FirebaseEndpoint.USERS);
         mAuth = FirebaseAuth.getInstance();
         currUser = mAuth.getCurrentUser();
         currUserUID = mAuth.getCurrentUser().getUid();
@@ -98,8 +99,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             throw new PasswordsNotMatch("Your Passwords doesn't match!", enter_password);
         }
 
-
-        userRef.child(currUserUID).setValue(currentUser);
+        UserService.writeUser(myRef, currentUser);
         currUser.updatePassword(firstPassword)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

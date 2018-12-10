@@ -10,16 +10,17 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/product_sans_regular"
         android:labelFor="@id/create_group_et_groupname"
         android:text="Group Name"
-        android:textColor="@color/colorBlack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textColor="@color/colorBlack" />
 
     <EditText
-        android:inputType="text"
         android:id="@+id/create_group_et_groupname"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"/>
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
 
 </LinearLayout>

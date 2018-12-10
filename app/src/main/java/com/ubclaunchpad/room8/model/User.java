@@ -7,8 +7,9 @@ public class User {
     public String FirstName;
     public String LastName;
     public String Email;
+    public String Status;
+    public String Group;
     public HashMap<String, String> PendingInvites;
-    public Group Group;
 
     public User(){}
 
@@ -18,14 +19,22 @@ public class User {
         this.LastName = lastName;
         this.Email = email;
         this.PendingInvites = pendingInvites;
-        this.Group = null;
     }
 
-    // For editing the profile.
+    // Used when the profile is edited.
     public User(String uid, String firstName, String lastName, String email) {
         this.Uid = uid;
         this.FirstName = firstName;
         this.LastName = lastName;
         this.Email = email;
+    }
+
+    // Used when an account is made.
+    public User(String uid, String firstName, String lastName, String email, String status) {
+        this.Uid = uid;
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.Email = email;
+        this.Status = status;
     }
 }
