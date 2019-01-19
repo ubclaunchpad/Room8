@@ -93,7 +93,8 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
             case R.id.AddMemberButton:
                 inviteExistingUser();
             case R.id.BackToGroupButton:
-//                startActivity(new Intent(this, GroupPageActivity.class));
+                //TODO need to make GroupActivity page
+                //startActivity(new Intent(this, GroupActivityPage.class)); Dummy code for GroupActivityPage
 
         }
 
