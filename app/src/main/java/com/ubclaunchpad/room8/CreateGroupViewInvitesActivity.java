@@ -53,7 +53,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
     private void setRecyclerView() {
         mRecyclerView = findViewById(R.id.rvPendingInvites);
         DatabaseReference userRef = mDatabase.child(FirebaseEndpoint.USERS).child(mAuth.getCurrentUser().getUid());
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
