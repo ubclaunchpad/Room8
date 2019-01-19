@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,38 +48,42 @@ public class SendInvitesActivity extends AppCompatActivity {
     private void inviteExistingUser() {
         EditText mEdit = findViewById(R.id.UsernameEmailEditText);
         final String invitedEmail = mEdit.getText().toString();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if (!mAuth.getCurrentUser().getEmail().equals(invitedEmail)) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final DatabaseReference myRef = database.getReference();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference();
+            final DatabaseReference userRef = myRef.child(FirebaseEndpoint.USERS);
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
-        final DatabaseReference userRef = myRef.child(FirebaseEndpoint.USERS);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Check for existing user by email and invite
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User user = snapshot.getValue(User.class);
-                    if (user.Email.equalsIgnoreCase(invitedEmail)) {
-                        flag = true;
-                        sendInvite(user, userRef);
-                        break;
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    // Check for existing user by email and invite
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        User user = snapshot.getValue(User.class);
+                        if (user.Email.equalsIgnoreCase(invitedEmail)) {
+                            flag = true;
+                            sendInvite(user, userRef);
+                            break;
+                        }
                     }
+
+                    if (!flag) {
+                        Toast.makeText(getApplicationContext(), "Email not associated with an user,\nPlease try again.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
+                    }
+                    flag = false;
                 }
 
-                if (!flag) {
-                    Toast.makeText(getApplicationContext(), "Email not associated with an user,\nPlease try again.", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 }
-                flag = false;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+            });
+        } else {
+            Toast.makeText(getApplicationContext(), "Can't invite yourself!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void sendInvite(User user, DatabaseReference userRef) {
