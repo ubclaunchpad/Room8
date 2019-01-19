@@ -55,36 +55,68 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         final String lastName = mLastName.getText().toString().trim();
 
         // Validate sign-up fields
+        if (validateSignUpFields(email, password, firstName, lastName)) return;
+        // check the password meets correct requirements
+        if (validatePasswordRequirements(password)) return;
+
+        // Attempt to create Firebase Authentication for user
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "DEBUG\nUID: " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+
+                    // Proceed with creating a user in the "Users" child in Firebase
+                    String uid = mAuth.getCurrentUser().getUid();
+                    createUser(uid, firstName, lastName, email);
+                    Toast.makeText(getApplicationContext(), "You've successfully created an account!\nPlease login.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                } else {
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                        Toast.makeText(getApplicationContext(), "You've already registered!\nPlease login.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "DEBUG\n" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Something went wrong.\nPlease try again.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+
+    private boolean validateSignUpFields(String email, String password, String firstName, String lastName) {
         if (firstName.isEmpty()) {
             mFirstName.setError("First name is required");
             mFirstName.requestFocus();
-            return;
+            return true;
         }
 
         if (lastName.isEmpty()) {
             mLastName.setError("Last name is required");
             mLastName.requestFocus();
-            return;
+            return true;
         }
 
         if (email.isEmpty()) {
             mEmail.setError("Email is required");
             mEmail.requestFocus();
-            return;
+            return true;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             mEmail.setError("Valid email address is required");
             mEmail.requestFocus();
-            return;
+            return true;
         }
 
         if (password.isEmpty()) {
             mPassword.setError("Password is required");
             mPassword.requestFocus();
-            return;
+            return true;
         }
-        // check the password meets correct requirements
+        return false;
+    }
+
+    private boolean validatePasswordRequirements(String password) {
         boolean capitalFlag = false;
         boolean lowerCaseFlag = false;
         boolean numberFlag = false;
@@ -112,52 +144,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
         if (!requiredNumber) {
             mPassword.setError("Password must be at least eight characters long");
-            return;
+            return true;
         }
         if (!numberFlag || !capitalFlag || !lowerCaseFlag || !specialCharFlag) {
             mPassword.setError("Must contain a number, capital letter, " +
                     "lowercase letter, and special character. e.g: !#$%&");
-            return;
+            return true;
         }
-//        if (!numberFlag) {
-//            mPassword.setError("Password must contain a number");
-//            return;
-//        }
-//        else if (!capitalFlag) {
-//            mPassword.setError("Password must contain a capital letter");
-//            return;
-//        }
-//        else if (!lowerCaseFlag) {
-//            mPassword.setError("Password must contain a lowercase letter");
-//            return;
-//        }
-//        else if (!specialCharFlag) {
-//            mPassword.setError("Password must contain a special character e.g.!#$%&");
-//            return;
-//        }
-
-        // Attempt to create Firebase Authentication for user
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "DEBUG\nUID: " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
-
-                    // Proceed with creating a user in the "Users" child in Firebase
-                    String uid = mAuth.getCurrentUser().getUid();
-                    createUser(uid, firstName, lastName, email);
-                    Toast.makeText(getApplicationContext(), "You've successfully created an account!\nPlease login.", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                } else {
-                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                        Toast.makeText(getApplicationContext(), "You've already registered!\nPlease login.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "DEBUG\n" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getApplicationContext(), "Something went wrong.\nPlease try again.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
+        return false;
     }
 
     // Creates a new user object in the "Users" child in Firebase
