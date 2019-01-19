@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+// Obsolete
 public class GroupPageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
