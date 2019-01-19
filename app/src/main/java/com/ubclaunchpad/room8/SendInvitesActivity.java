@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 
-public class SendInvitesActivity extends AppCompatActivity {
+public class SendInvitesActivity extends AppCompatActivity implements View.OnClickListener {
     Boolean flag = false;
     TextView groupName, email;
     String groupNameText;
@@ -36,13 +36,9 @@ public class SendInvitesActivity extends AppCompatActivity {
         groupNameText = intent.getStringExtra("name");
         groupName.setText(groupNameText);
 
-        Button addMemberButton = (Button) findViewById(R.id.AddMemberButton);
-        addMemberButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inviteExistingUser();
-            }
-        });
+        //findViewById(R.id.btnEditProfile).setOnClickListener(this);
+        findViewById(R.id.AddMemberButton).setOnClickListener(this);
+        findViewById(R.id.BackToGroupButton).setOnClickListener(this);
     }
 
     private void inviteExistingUser() {
@@ -94,5 +90,18 @@ public class SendInvitesActivity extends AppCompatActivity {
         }
         DatabaseReference newPendingInvRef = invitesRef.push();
         newPendingInvRef.setValue(groupNameText);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.AddMemberButton:
+                inviteExistingUser();
+            case R.id.BackToGroupButton:
+                //TODO need to make GroupActivity page
+                //startActivity(new Intent(this, GroupActivityPage.class)); Dummy code for GroupActivityPage
+
+        }
+
     }
 }

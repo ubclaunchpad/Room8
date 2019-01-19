@@ -117,7 +117,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         String currUserUid = mAuth.getCurrentUser().getUid();
 
         // Update user status
-        UserService.updateUserStatus(mDatabase, currUserUid, UserStatus.CREATING);
+        UserService.updateUserStatus(mDatabase, currUserUid, UserStatus.IN_GROUP);
         UserService.updateUserGroup(mDatabase, currUserUid, groupName);
 
         // Create the group
@@ -126,6 +126,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         newGroup.UserUIds.add(currUserUid);
         groupsRef.setValue(newGroup);
 
+        // Change the page to SendInvitesActivity
         Intent intent = new Intent(this, SendInvitesActivity.class);
         intent.putExtra("name", groupName);
 
