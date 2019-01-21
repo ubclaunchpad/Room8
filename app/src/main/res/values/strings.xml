@@ -12,6 +12,7 @@
     <string name="btn_text_log_in">Log In</string>
     <string name="btn_text_create_group">Create Group</string>
     <string name="btn_text_edit_profile">Edit Profile</string>
+    <string name="btn_text_Review_Rules"><u>Review General House Rules</u></string>
 
     <!-- TextView Text -->
     <string name="txt_create_account">Create an account</string>

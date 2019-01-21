@@ -52,7 +52,7 @@ public class GroupPageActivity extends AppCompatActivity implements View.OnClick
         FirebaseUser currentUser = mAuth.getCurrentUser();
 //        usersReference = mDatabase.child("Users").child(currentUser.getUid()).child("Group"); // Dynamic Version
         usersReference = mDatabase.child("Users"); // Hardcoded version
-        usersReference.child(testUid).addListenerForSingleValueEvent(userGroupListener());
+        //usersReference.child(testUid).addListenerForSingleValueEvent(userGroupListener());
     }
 
     private void setGroupName() {

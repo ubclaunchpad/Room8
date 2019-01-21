@@ -112,6 +112,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             startActivity(intent);
                         } else if (user.Status.equals(UserStatus.IN_GROUP)) {
                             // TODO: Proceed to group page
+                            startActivity(new Intent(LoginActivity.this, GroupActivity.class));
                         }
                     }
                 }
