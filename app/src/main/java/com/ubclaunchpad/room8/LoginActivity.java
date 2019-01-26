@@ -108,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         } else if (user.Status.equals(UserStatus.CREATING)) {
                             Intent intent = new Intent(LoginActivity.this, SendInvitesActivity.class);
                             intent.putExtra("name", user.Group);
+                            intent.putExtra("User ID", user.Uid);
 
                             startActivity(intent);
                         } else if (user.Status.equals(UserStatus.IN_GROUP)) {
