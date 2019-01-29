@@ -3,7 +3,7 @@ android:
     components:
         - tools
         - platform-tools
-        - build-tools-27.1.1
+        - build-tools-28.0.3
         - android-22
         - sys-img-armeabi-v7a-android-22
 
@@ -21,6 +21,7 @@ before_script:
   - adb shell input keyevent 82 &
 
 before_install:
+  - yes | sdkmanager "platforms;android-27"
   - chmod +x gradlew
 
 script:

@@ -25,12 +25,14 @@ import com.ubclaunchpad.room8.adapter.PendingInvAdapter;
 import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class SendInvitesActivity extends AppCompatActivity {
+
+public class SendInvitesActivity extends AppCompatActivity implements View.OnClickListener {
     Boolean flag = false;
     TextView groupName, email;
     String groupNameText;
@@ -54,6 +56,7 @@ public class SendInvitesActivity extends AppCompatActivity {
         userID = intent.getStringExtra("User ID");
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
         Button addMemberButton = (Button) findViewById(R.id.AddMemberButton);
         addMemberButton.setOnClickListener(new View.OnClickListener() {
@@ -90,43 +93,52 @@ public class SendInvitesActivity extends AppCompatActivity {
 
         // changes in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
+
+        //findViewById(R.id.btnEditProfile).setOnClickListener(this);
+        findViewById(R.id.AddMemberButton).setOnClickListener(this);
+        findViewById(R.id.BackToGroupButton).setOnClickListener(this);
+
     }
 
     private void inviteExistingUser() {
         EditText mEdit = findViewById(R.id.UsernameEmailEditText);
         final String invitedEmail = mEdit.getText().toString();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if (!mAuth.getCurrentUser().getEmail().equals(invitedEmail)) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final DatabaseReference myRef = database.getReference();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference();
+            final DatabaseReference userRef = myRef.child(FirebaseEndpoint.USERS);
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
-        final DatabaseReference userRef = myRef.child(FirebaseEndpoint.USERS);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Check for existing user by email and invite
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User user = snapshot.getValue(User.class);
-                    if (user.Email.equalsIgnoreCase(invitedEmail)) {
-                        flag = true;
-                        sendInvite(user, userRef);
-                        break;
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    // Check for existing user by email and invite
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        User user = snapshot.getValue(User.class);
+                        if (user.Email.equalsIgnoreCase(invitedEmail)) {
+                            flag = true;
+                            sendInvite(user, userRef);
+                            break;
+                        }
                     }
+
+                    if (!flag) {
+                        Toast.makeText(getApplicationContext(), "Email not associated with an user,\nPlease try again.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
+                    }
+                    flag = false;
                 }
 
-                if (!flag) {
-                    Toast.makeText(getApplicationContext(), "Email not associated with an user,\nPlease try again.", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 }
-                flag = false;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+            });
+        } else {
+            Toast.makeText(getApplicationContext(), "Can't invite yourself!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void sendInvite(User user, DatabaseReference userRef) {
@@ -137,5 +149,18 @@ public class SendInvitesActivity extends AppCompatActivity {
         }
         DatabaseReference newPendingInvRef = invitesRef.push();
         newPendingInvRef.setValue(groupNameText);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.AddMemberButton:
+                inviteExistingUser();
+            case R.id.BackToGroupButton:
+                //TODO need to make GroupActivity page
+                //startActivity(new Intent(this, GroupActivityPage.class)); Dummy code for GroupActivityPage
+
+        }
+
     }
 }
