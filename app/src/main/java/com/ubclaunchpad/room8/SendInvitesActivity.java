@@ -33,12 +33,12 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
         groupName = findViewById(R.id.GroupNameTextView);
 
         Intent intent = getIntent();
-        groupNameText = intent.getStringExtra("name");
+        groupNameText = intent.getStringExtra("groupName");
         groupName.setText(groupNameText);
 
         //findViewById(R.id.btnEditProfile).setOnClickListener(this);
         findViewById(R.id.AddMemberButton).setOnClickListener(this);
-        findViewById(R.id.BackToGroupButton).setOnClickListener(this);
+        findViewById(R.id.btnGoToGroupPage).setOnClickListener(this);
     }
 
     private void inviteExistingUser() {
@@ -92,16 +92,20 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
         newPendingInvRef.setValue(groupNameText);
     }
 
+    private void goToGroupActivity() {
+        String groupName = groupNameText;
+        Intent groupActivityIntent = new Intent(SendInvitesActivity.this, GroupActivity.class);
+        groupActivityIntent.putExtra("groupName", groupName);
+        startActivity(groupActivityIntent);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.AddMemberButton:
                 inviteExistingUser();
-            case R.id.BackToGroupButton:
-                //TODO need to make GroupActivity page
-                //startActivity(new Intent(this, GroupActivityPage.class)); Dummy code for GroupActivityPage
-
+            case R.id.btnGoToGroupPage:
+                goToGroupActivity();
         }
-
     }
 }
