@@ -22,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ubclaunchpad.room8.adapter.PendingInvAdapter;
-import com.ubclaunchpad.room8.model.Group;
 import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 import com.ubclaunchpad.room8.Room8Utility.UserStatus;
@@ -144,10 +143,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         UserService.updateUserGroup(mDatabase, mCurrUserUid, groupName);
 
         // Create the group
-        DatabaseReference groupsRef = mDatabase.child(FirebaseEndpoint.GROUPS).child(groupName);
-        Group newGroup = new Group(groupName);
-        newGroup.UserUIds.add(mCurrUserUid);
-        groupsRef.setValue(newGroup);
+        GroupService.createNewGroup(mDatabase, groupName, mCurrUserUid);
 
         // Change the page to SendInvitesActivity
         Intent intent = new Intent(this, SendInvitesActivity.class);
