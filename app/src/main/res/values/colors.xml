@@ -8,4 +8,6 @@
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBtnBlue">#4b74ff</color>
+
+    <color name="colorOrange">#ff8d5d</color>
 </resources>

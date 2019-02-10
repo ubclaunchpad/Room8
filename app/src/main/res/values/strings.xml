@@ -12,7 +12,11 @@
     <string name="btn_text_log_in">Log In</string>
     <string name="btn_text_create_group">Create Group</string>
     <string name="btn_text_edit_profile">Edit Profile</string>
-    <string name="btn_text_Review_Rules"><u>Review General House Rules</u></string>
+    <string name="btn_text_Review_Rules"><u>House Rules</u></string>
+    <string name="btn_add_members">Add Members</string>
+    <string name="btn_add_member">Add Member</string>
+    <string name="btn_leave_group">Leave Group</string>
+    <string name="btn_group_page">Group Page</string>
 
     <!-- TextView Text -->
     <string name="txt_create_account">Create an account</string>
@@ -22,9 +26,15 @@
     <string name="txt_edit_account">Edit your account</string>
     <string name="txt_or">or</string>
     <string name="txt_invites">Invites</string>
+    <string name="txt_user_email">User Email</string>
+    <string name="txt_group_name">Group Name</string>
+    <string name="txt_sample_group">Sample Group</string>
 
     <string name="txt_youre_logged_in">You\'re logged in!</string>
     <string name="txt_create_group_view_invite_instruction">You can now create a group or view your invites.</string>
+
+    <string name="txt_tasks">Tasks</string>
+    <string name="txt_chat">Chat</string>
 
     <!-- Content Descriptors -->
     <string name="desc_app_logo">The App Logo</string>
@@ -36,5 +46,6 @@
     <string name="hint_email">E-mail</string>
     <string name="hint_password">Password</string>
     <string name="hint_reenter_password">Re-enter Password</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
 </resources>
