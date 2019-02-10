@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.ubclaunchpad.room8.R;
@@ -25,8 +26,8 @@ public class PendingInvAdapter extends
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView groupNameTextView;
-
+        TextView groupNameTextView;
+        Button acceptBtn;
         // We create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
         public ViewHolder(View itemView) {
@@ -34,6 +35,7 @@ public class PendingInvAdapter extends
             // to access the context from any ViewHolder instance
             super(itemView);
 
+            acceptBtn = (Button) itemView.findViewById(R.id.accept_button);
             groupNameTextView = (TextView) itemView.findViewById(R.id.group_name);
         }
     }
@@ -61,6 +63,14 @@ public class PendingInvAdapter extends
         // Set item views based on your views and data model
         TextView textView = viewHolder.groupNameTextView;
         textView.setText(groupName);
+
+        Button button = viewHolder.acceptBtn;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     // Returns the total count of items in the list
