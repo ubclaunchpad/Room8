@@ -1,108 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
 
-    <ImageView
-        android:id="@+id/imgExpandChat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imgReviewRules"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="151dp"
-        android:layout_marginEnd="21dp"
-        app:srcCompat="@drawable/threedots" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvChats"
+        android:layout_width="325dp"
+        android:layout_height="125dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtChat" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/txtChat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imgReviewRules"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="149dp"
-        android:text="Chat"
-        android:textSize="24sp" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/product_sans_regular"
+        android:text="@string/txt_chat"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvTasks" />
 
-    <ImageView
-        android:id="@+id/imgLogo"
+    <TextView
+        android:id="@+id/txtTasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp"
-        app:srcCompat="@drawable/room8logo" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/product_sans_regular"
+        android:text="@string/txt_tasks"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSendInvites" />
+
+    <Button
+        android:id="@+id/btnSendInvites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/style_button"
+        android:fontFamily="@font/roboto"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/btn_add_members"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/btnEditProfile"
+        app:layout_constraintStart_toEndOf="@+id/btnHouseRules"
+        app:layout_constraintTop_toBottomOf="@+id/txtGroupName" />
+
+
+    <Button
+        android:id="@+id/btnHouseRules"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/style_button"
+        android:fontFamily="@font/roboto"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/btn_text_Review_Rules"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtGroupName" />
 
     <TextView
         android:id="@+id/txtGroupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imgLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:text="GroupName"
-        android:textSize="18sp" />
+        android:fontFamily="@font/product_sans_bold"
+        android:text="@string/txt_sample_group"
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgViewLogo" />
+
+    <ImageView
+        android:id="@+id/imgViewLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/room8logo" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvTasks"
+        android:layout_width="325dp"
+        android:layout_height="125dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTasks" />
+
+    <ImageButton
+        android:id="@+id/imgBtnAddTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSendInvites"
+        app:srcCompat="@mipmap/ic_orange_plus" />
+
+    <ImageButton
+        android:id="@+id/imgBtnAddChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvTasks"
+        app:srcCompat="@mipmap/ic_green_plus" />
 
     <Button
-        android:id="@+id/imgReviewRules"
+        android:id="@+id/btnEditProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtGroupName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="@string/btn_text_Review_Rules"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:typeface="normal" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/style_button"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/btn_text_edit_profile"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtGroupName" />
 
-    <Button
-        android:id="@+id/btnSendInvites"
-        android:text="Add Members"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/imgReviewRules"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnSendInvites"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="27dp"
-        android:text="Current Tasks"
-        android:textSize="24sp" />
-
-    <ImageView
-        android:id="@+id/imgAddTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView5"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="40dp"
-        app:srcCompat="@drawable/orangeplusbutton" />
-
-    <ImageView
-        android:id="@+id/imgAddChat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView6"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="40dp"
-        app:srcCompat="@drawable/greenplusbutton" />
-
-    <ImageView
-        android:id="@+id/imgExpandTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imgLogo"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="21dp"
-        app:srcCompat="@drawable/threedots" />
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

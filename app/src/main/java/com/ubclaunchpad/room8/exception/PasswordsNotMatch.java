@@ -1,11 +1,11 @@
 package com.ubclaunchpad.room8.exception;
 
-import android.widget.TextView;
+import android.widget.EditText;
 
 public class PasswordsNotMatch extends Throwable {
 
-    public PasswordsNotMatch(String errorMessage, TextView textView) {
-        textView.setError(errorMessage);
-        textView.requestFocus();
+    public PasswordsNotMatch(String errorMessage, EditText editText) {
+        editText.setError(errorMessage);
+        editText.requestFocus();
     }
 }
