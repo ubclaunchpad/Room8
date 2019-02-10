@@ -29,7 +29,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     EditText mEmail, mPassword;
     private FirebaseAuth mAuth;
-    private boolean emailEntered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,12 +145,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
         switch (view.getId()) {
-            case R.id.login_et_email:
-                emailEntered = true;
-                break;
             case R.id.login_et_password:
                 mPassword = findViewById(R.id.login_et_password);
-                if (!mPassword.toString().isEmpty() && emailEntered) {
+                mEmail = findViewById(R.id.login_et_email);
+                if (!mPassword.toString().isEmpty() && !mEmail.toString().isEmpty()){
                     mPassword.setText("");
                 }
                 break;
