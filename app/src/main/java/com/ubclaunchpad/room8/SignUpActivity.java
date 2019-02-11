@@ -17,11 +17,20 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ubclaunchpad.room8.model.User;
-import com.ubclaunchpad.room8.Room8Utility.UserStatus;
 
+/*
+ SignUpActivity is where new users sign up. A successful signup creates:
+    - An entry in Firebase Authentication
+    - An entry in the "Users" child in Firebase Database
+
+ The database entry is used to collect information about the user while the authentication
+ entry is used to authenticate the user upon log-in.
+*/
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText mEmail, mPassword, mFirstName, mLastName;
+    private static final int MIN_PASSWORD_LENGTH = 8;
+
+    private EditText etEmail, etPassword, etFirstName, etLastName;
     private FirebaseAuth mAuth;
 
     @Override
@@ -29,10 +38,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        mEmail = findViewById(R.id.sign_up_et_email);
-        mPassword = findViewById(R.id.sign_up_et_password);
-        mFirstName = findViewById(R.id.sign_up_et_firstname);
-        mLastName = findViewById(R.id.sign_up_et_lastname);
+        etEmail = findViewById(R.id.sign_up_et_email);
+        etPassword = findViewById(R.id.sign_up_et_password);
+        etFirstName = findViewById(R.id.sign_up_et_firstname);
+        etLastName = findViewById(R.id.sign_up_et_lastname);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -42,41 +51,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     // Take values of sign-up fields, validate them and try to create Firebase Authentication for user
     private void registerUser() {
-        final String email = mEmail.getText().toString().trim();
-        final String password = mPassword.getText().toString().trim();
-        final String firstName = mFirstName.getText().toString().trim();
-        final String lastName = mLastName.getText().toString().trim();
+        final String email = etEmail.getText().toString().trim();
+        final String password = etPassword.getText().toString().trim();
+        final String firstName = etFirstName.getText().toString().trim();
+        final String lastName = etLastName.getText().toString().trim();
 
         // Validate sign-up fields
-        if (firstName.isEmpty()) {
-            mFirstName.setError("First name is required");
-            mFirstName.requestFocus();
-            return;
-        }
+        if (validateSignUpFields(email, password, firstName, lastName)) return;
 
-        if (lastName.isEmpty()) {
-            mLastName.setError("Last name is required");
-            mLastName.requestFocus();
-            return;
-        }
-
-        if (email.isEmpty()) {
-            mEmail.setError("Email is required");
-            mEmail.requestFocus();
-            return;
-        }
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmail.setError("Valid email address is required");
-            mEmail.requestFocus();
-            return;
-        }
-
-        if (password.isEmpty()) {
-            mPassword.setError("Password is required");
-            mPassword.requestFocus();
-            return;
-        }
+        // Check the password meets correct requirements
+        if (validatePasswordRequirements(password)) return;
 
         // Attempt to create Firebase Authentication for user
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -100,6 +84,77 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
+    }
+
+    private boolean validateSignUpFields(String email, String password, String firstName, String lastName) {
+        if (firstName.isEmpty()) {
+            etFirstName.setError("First name is required");
+            etFirstName.requestFocus();
+            return true;
+        }
+
+        if (lastName.isEmpty()) {
+            etLastName.setError("Last name is required");
+            etLastName.requestFocus();
+            return true;
+        }
+
+        if (email.isEmpty()) {
+            etEmail.setError("Email is required");
+            etEmail.requestFocus();
+            return true;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Valid email address is required");
+            etEmail.requestFocus();
+            return true;
+        }
+
+        if (password.isEmpty()) {
+            etPassword.setError("Password is required");
+            etPassword.requestFocus();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validatePasswordRequirements(String password) {
+        boolean capitalFlag = false;
+        boolean lowerCaseFlag = false;
+        boolean numberFlag = false;
+        boolean specialCharFlag = false;
+        boolean requiredNumber = false;
+        char currentchar;
+        String specialCharacters = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+        for (int i = 0; i < password.length(); i++) {
+            currentchar = password.charAt(i);
+            requiredNumber = i + 1 >= MIN_PASSWORD_LENGTH;
+            if (Character.isDigit(currentchar)) {
+                numberFlag = true;
+            }
+            else if (Character.isUpperCase(currentchar)) {
+                capitalFlag = true;
+            }
+            else if (Character.isLowerCase(currentchar)) {
+                lowerCaseFlag = true;
+            }
+            for (int n = 0; n < specialCharacters.length(); n++) {
+                if (specialCharacters.charAt(n) == currentchar) {
+                    specialCharFlag = true;
+                }
+            }
+        }
+        if (!requiredNumber) {
+            etPassword.setError("Password must be at least eight characters long");
+            return true;
+        }
+        if (!numberFlag || !capitalFlag || !lowerCaseFlag || !specialCharFlag) {
+            etPassword.setError("Must contain a number, capital letter, " +
+                    "lowercase letter, and special character. e.g: !#$%&");
+            return true;
+        }
+        return false;
     }
 
     // Creates a new user object in the "Users" child in Firebase

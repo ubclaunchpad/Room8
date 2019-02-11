@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,41 +21,42 @@ import com.ubclaunchpad.room8.exception.PasswordsNotMatch;
 import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 
+/*
+ EditProfileActivity is where existing users edit their profile. Pretty self explanatory,
+ any change in here should be reflected in the current user's entry in Firebase "Users"
+ and password changes should be reflected in Firebase Authentication.
+*/
 public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
-    private DatabaseReference userRef;
+    private DatabaseReference mDbRef;
+    private DatabaseReference mUserRef;
+    private FirebaseUser mCurrUser;
+    private String mCurrUserUID;
 
-    private FirebaseAuth mAuth;
-    private FirebaseUser currUser;
-    private String currUserUID;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private TextView edit_et_email;
-    private TextView edit_et_firstname;
-    private TextView edit_et_lastname;
-    private TextView enter_password;
-    private TextView re_enter_password;
+    private String firstName, lastName, email;
+    private EditText etEmail, etFirstName, etLastName, etPassword, etReEnterPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
         findViewById(R.id.btnEditProfile).setOnClickListener(this);
 
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-        userRef = myRef.child(FirebaseEndpoint.USERS);
-        mAuth = FirebaseAuth.getInstance();
-        currUser = mAuth.getCurrentUser();
-        currUserUID = mAuth.getCurrentUser().getUid();
+        mDbRef = FirebaseDatabase.getInstance().getReference();
+        mUserRef = mDbRef.child(FirebaseEndpoint.USERS);
+        mCurrUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        edit_et_email = findViewById(R.id.edit_et_email);
-        edit_et_firstname = findViewById(R.id.edit_et_firstname);
-        edit_et_lastname = findViewById(R.id.edit_et_lastname);
-        enter_password = findViewById(R.id.edit_et_password);
-        re_enter_password = findViewById(R.id.edit_et_password2);
+        if (mCurrUser != null) {
+            mCurrUserUID = mCurrUser.getUid();
+        } else {
+            Toast.makeText(this, "Invalid app state. Current user not logged in.", Toast.LENGTH_SHORT).show();
+        }
+
+        etEmail = findViewById(R.id.edit_et_email);
+        etFirstName = findViewById(R.id.edit_et_firstname);
+        etLastName = findViewById(R.id.edit_et_lastname);
+        etPassword = findViewById(R.id.edit_et_password);
+        etReEnterPassword = findViewById(R.id.edit_et_password2);
 
         displayUserInfo();
     }
@@ -72,35 +73,35 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
 
     private void editUserProfile() throws EmptyValueException, PasswordsNotMatch {
-        String firstName = edit_et_firstname.getText().toString().trim();
-        String lastName = edit_et_lastname.getText().toString().trim();
-        String firstPassword = enter_password.getText().toString().trim();
-        String secondPassword = re_enter_password.getText().toString().trim();
+        String firstName = etEmail.getText().toString().trim();
+        String lastName = etLastName.getText().toString().trim();
+        String firstPassword = etPassword.getText().toString().trim();
+        String secondPassword = etReEnterPassword.getText().toString().trim();
 
-        User currentUser = new User(currUserUID, firstName, lastName, email);
+        User currentUser = new User(mCurrUserUID, firstName, lastName, email);
 
         if (firstName.isEmpty()) {
-            throw new EmptyValueException("First name is required.", edit_et_firstname);
+            throw new EmptyValueException("First name is required.", etFirstName);
         }
 
         if (lastName.isEmpty()) {
-            throw new EmptyValueException("Last name is required.", edit_et_lastname);
+            throw new EmptyValueException("Last name is required.", etLastName);
         }
 
         if (firstPassword.isEmpty()) {
-            throw new EmptyValueException("Input the new password.", enter_password);
+            throw new EmptyValueException("Input the new password.", etPassword);
         }
 
         if (secondPassword.isEmpty()) {
-            throw new EmptyValueException("Input the same password with the above.", re_enter_password);
+            throw new EmptyValueException("Input the same password with the above.", etReEnterPassword);
         }
 
         if (!firstPassword.equals(secondPassword)) {
-            throw new PasswordsNotMatch("Your Passwords doesn't match!", enter_password);
+            throw new PasswordsNotMatch("Your Passwords doesn't match!", etPassword);
         }
 
-        UserService.writeUser(myRef, currentUser);
-        currUser.updatePassword(firstPassword)
+        UserService.writeUser(mDbRef, currentUser);
+        mCurrUser.updatePassword(firstPassword)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -112,25 +113,25 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void displayUserInfo() {
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        mUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    if (user.Uid.equals(currUserUID)) {
+
+                    if (user != null && user.Uid.equals(mCurrUserUID)) {
                         email = user.Email;
                         firstName = user.FirstName;
                         lastName = user.LastName;
                     }
                 }
-                edit_et_email.setText(email);
-                edit_et_firstname.setText(firstName);
-                edit_et_lastname.setText(lastName);
+                etEmail.setText(email);
+                etFirstName.setText(firstName);
+                etLastName.setText(lastName);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
     }
 }

@@ -18,14 +18,15 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".GroupPageActivity"></activity>
         <activity android:name=".SendInvitesActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".CreateGroupViewInvitesActivity" />
+        <activity android:name=".GroupActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>
