@@ -1,16 +1,23 @@
 package com.ubclaunchpad.room8.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.ubclaunchpad.room8.CreateGroupViewInvitesActivity;
+import com.ubclaunchpad.room8.GroupActivity;
+import com.ubclaunchpad.room8.LoginActivity;
 import com.ubclaunchpad.room8.R;
 import com.ubclaunchpad.room8.Room8Utility;
 import com.ubclaunchpad.room8.UserService;
@@ -25,12 +32,15 @@ public class PendingInvAdapter extends
     private List<String> mPendingInvites;
     private String mCurrUserUid;
     private DatabaseReference mDbRef;
+    private CreateGroupViewInvitesActivity viewInvitesActivity;
 
     // Pass in the contact array into the constructor
-    public PendingInvAdapter(Map<String, String> pendingInvites, String userUid) {
-        mPendingInvites = new ArrayList<String>(pendingInvites.values());
+    public PendingInvAdapter(Map<String, String> pendingInvites, String userUid,
+                             CreateGroupViewInvitesActivity viewInvitesActivity) {
+        mPendingInvites = new ArrayList<String>(pendingInvites.keySet());
         mCurrUserUid = userUid;
         mDbRef = FirebaseDatabase.getInstance().getReference();
+        this.viewInvitesActivity = viewInvitesActivity;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -77,6 +87,9 @@ public class PendingInvAdapter extends
             @Override
             public void onClick(View v) {
                 acceptInvite(groupName);
+                Intent groupActivityIntent = new Intent(v.getContext(),GroupActivity.class);
+                groupActivityIntent.putExtra("groupName", groupName);
+                v.getContext().startActivity(groupActivityIntent);
             }
         });
     }
@@ -93,7 +106,7 @@ public class PendingInvAdapter extends
         final DatabaseReference userRef = mDbRef.child(Room8Utility.FirebaseEndpoint.USERS);
         DatabaseReference invitesRef = userRef.child(mCurrUserUid).child("PendingInvites");
         invitesRef.child(groupName).removeValue();
-        
+
         // Add user's ID to group
         DatabaseReference acceptedGroupRef  = mDbRef.child(Room8Utility.FirebaseEndpoint.GROUPS).child(groupName);
         acceptedGroupRef.child("UserUIds").child(mCurrUserUid).setValue("test");
