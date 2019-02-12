@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/dialog_create_group"
+    android:id="@+id/dialog_invite_user"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_gravity="center_horizontal"
@@ -13,14 +13,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/product_sans_regular"
-        android:labelFor="@id/create_group_et_groupname"
-        android:text="@string/txt_group_name"
+        android:labelFor="@id/invite_user_et_email"
+        android:text="@string/txt_user_email"
         android:textColor="@color/colorBlack" />
 
     <EditText
-        android:id="@+id/create_group_et_groupname"
+        android:id="@+id/invite_user_et_email"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:inputType="text" />
+        android:ems="10"
+        android:inputType="textEmailAddress" />
 
 </LinearLayout>

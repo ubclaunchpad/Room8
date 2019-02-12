@@ -4,6 +4,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 import com.ubclaunchpad.room8.model.User;
 
+/*
+    Service class to write to the "Users" entity in Firebase.
+*/
 public class UserService {
 
     // Given a reference to the main database, the user to be updated's uid and a status,
