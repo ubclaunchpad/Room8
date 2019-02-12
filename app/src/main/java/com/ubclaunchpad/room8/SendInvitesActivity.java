@@ -150,7 +150,7 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
         // Add an invite to the user's collection of invites
         DatabaseReference invitesRef = userRef.child(user.Uid).child("PendingInvites");
-        invitesRef.child(mGroupName).setValue(true);
+        invitesRef.child(mGroupName).setValue("test");
     }
 
     private void goToGroupActivity() {

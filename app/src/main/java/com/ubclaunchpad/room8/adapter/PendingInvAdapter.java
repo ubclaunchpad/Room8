@@ -8,22 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.ubclaunchpad.room8.R;
 import com.ubclaunchpad.room8.Room8Utility;
 import com.ubclaunchpad.room8.UserService;
-import com.ubclaunchpad.room8.model.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,13 +24,13 @@ public class PendingInvAdapter extends
     // Store a member variable for the invites
     private List<String> mPendingInvites;
     private String mCurrUserUid;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDbRef;
 
     // Pass in the contact array into the constructor
     public PendingInvAdapter(Map<String, String> pendingInvites, String userUid) {
         mPendingInvites = new ArrayList<String>(pendingInvites.values());
         mCurrUserUid = userUid;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDbRef = FirebaseDatabase.getInstance().getReference();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -91,31 +83,20 @@ public class PendingInvAdapter extends
 
     private void acceptInvite(String groupName) {
         // Update group status
-        // UserService.updateUserStatus(mDatabase, mCurrUserUid, Room8Utility.UserStatus.IN_GROUP);
+         UserService.updateUserStatus(mDbRef, mCurrUserUid, Room8Utility.UserStatus.IN_GROUP);
 
         // Update user's group
-        // UserService.updateUserGroup(mDatabase, mCurrUserUid, groupName);
+         UserService.updateUserGroup(mDbRef, mCurrUserUid, groupName);
 
         // Remove group from user's pending invites
         // TODO: ==== TEST =====
-//        DatabaseReference userRef = mDatabase.child(FirebaseEndpoint.USERS).child(mCurrUserUid);
-//        userRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                User user = dataSnapshot.getValue(User.class);
-//                if (user != null) {
-//                    HashMap<String, String> pendingInvites = (user.PendingInvites == null) ? new HashMap<String, String>() : user.PendingInvites;
-//
-//                    mAdapter = new PendingInvAdapter(pendingInvites, mCurrUserUid);
-//                    mRecyclerView.setAdapter(mAdapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {}
-//        });
-
+        final DatabaseReference userRef = mDbRef.child(Room8Utility.FirebaseEndpoint.USERS);
+        DatabaseReference invitesRef = userRef.child(mCurrUserUid).child("PendingInvites");
+        invitesRef.child(groupName).removeValue();
+        
         // Add user's ID to group
+        DatabaseReference acceptedGroupRef  = mDbRef.child(Room8Utility.FirebaseEndpoint.GROUPS).child(groupName);
+        acceptedGroupRef.child("UserUIds").child(mCurrUserUid).setValue("test");
     }
 
     // Returns the total count of items in the list
