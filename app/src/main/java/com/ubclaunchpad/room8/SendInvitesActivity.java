@@ -33,7 +33,7 @@ import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 */
 public class SendInvitesActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String mGroupNameText;
+    private String mGroupName;
     private DatabaseReference mDbRef;
     private String mCurrentUserEmail;
 
@@ -59,8 +59,8 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
         // Set the TextView to this Group's name
         Intent intent = getIntent();
-        mGroupNameText = intent.getStringExtra("groupName");
-        txtGroupName.setText(mGroupNameText);
+        mGroupName = intent.getStringExtra("groupName");
+        txtGroupName.setText(mGroupName);
 
         findViewById(R.id.btnAddMember).setOnClickListener(this);
         findViewById(R.id.btnGoToGroup).setOnClickListener(this);
@@ -143,21 +143,19 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
     // Sends an invite to the specified user
     private void sendInvite(User user, DatabaseReference userRef) {
-        DatabaseReference invitesRef = userRef.child(user.Uid).child("PendingInvites");
-
         // Check if an invite has already been sent
-        if (user.PendingInvites != null && user.PendingInvites.containsValue(mGroupNameText)) {
+        if (user.PendingInvites != null && user.PendingInvites.containsValue(mGroupName)) {
             return;
         }
 
         // Add an invite to the user's collection of invites
-        DatabaseReference newPendingInvRef = invitesRef.push();
-        newPendingInvRef.setValue(mGroupNameText);
+        DatabaseReference invitesRef = userRef.child(user.Uid).child("PendingInvites");
+        invitesRef.child(mGroupName).setValue(true);
     }
 
     private void goToGroupActivity() {
         Intent groupActivityIntent = new Intent(SendInvitesActivity.this, GroupActivity.class);
-        groupActivityIntent.putExtra("groupName", mGroupNameText);
+        groupActivityIntent.putExtra("groupName", mGroupName);
         groupActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(groupActivityIntent);
     }
