@@ -90,6 +90,20 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
         }
         DatabaseReference newPendingInvRef = invitesRef.push();
         newPendingInvRef.setValue(groupNameText);
+
+        // Updating the invitations the group sent out currently
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference groupsRef = database.getReference().child(FirebaseEndpoint.GROUPS).child(groupNameText).child("SentInvitations");
+        DatabaseReference sentInvitation = groupsRef.push();
+
+        DatabaseReference userEmail = sentInvitation.child("Email");
+        DatabaseReference userID = sentInvitation.child("UID");
+
+        userEmail.push();
+        userID.push();
+
+        userEmail.setValue(user.Email);
+        userID.setValue(user.Uid);
     }
 
     @Override
