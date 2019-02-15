@@ -150,6 +150,11 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
             return;
         }
 
+        // Check if invitee is already part of the group
+        if (user.Group != null && user.Group.equals(mGroupNameText)) {
+            return;
+        }
+
         // Add an invite to the user's collection of invites
         DatabaseReference newPendingInvRef = invitesRef.push();
         newPendingInvRef.setValue(mGroupNameText);
