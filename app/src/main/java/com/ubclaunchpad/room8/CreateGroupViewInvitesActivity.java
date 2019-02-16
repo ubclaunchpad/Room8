@@ -15,24 +15,30 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ubclaunchpad.room8.adapter.PendingInvAdapter;
-import com.ubclaunchpad.room8.model.Group;
 import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 import com.ubclaunchpad.room8.Room8Utility.UserStatus;
 
 import java.util.HashMap;
 
+/*
+ CreateGroupViewInvitesActivity is where NO_GROUP users go after logging in.
 
+ In this Activity, users can either create a group they belong in, or view groups
+ that have invited them.
+*/
 public class CreateGroupViewInvitesActivity extends AppCompatActivity implements View.OnClickListener {
+
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    FirebaseAuth mAuth;
+    private String mCurrUserUid;
     private DatabaseReference mDatabase;
 
     @Override
@@ -43,53 +49,67 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         findViewById(R.id.btnCreateGroup).setOnClickListener(this);
         findViewById(R.id.btnEditProfile).setOnClickListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+        // Grab the current user and their uid
+        FirebaseUser currUser = firebaseAuth.getCurrentUser();
+        if (currUser != null) {
+            mCurrUserUid = currUser.getUid();
+        } else {
+            Toast.makeText(this, "Invalid app state. Current user not logged in.", Toast.LENGTH_SHORT).show();
+        }
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // RecyclerView to display pending invites
         setRecyclerView();
     }
 
+    // Set Group invites in the RecyclerView
     private void setRecyclerView() {
         mRecyclerView = findViewById(R.id.rvPendingInvites);
-        DatabaseReference userRef = mDatabase.child(FirebaseEndpoint.USERS).child(mAuth.getCurrentUser().getUid());
+
+        // Set the current user's Group invites in the RecyclerView
+        DatabaseReference userRef = mDatabase.child(FirebaseEndpoint.USERS).child(mCurrUserUid);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                HashMap<String, String> pendingInvites = (user.PendingInvites == null) ? new HashMap<String, String>() : user.PendingInvites;
+                if (user != null) {
+                    HashMap<String, String> pendingInvites = (user.PendingInvites == null) ? new HashMap<String, String>() : user.PendingInvites;
 
-                mAdapter = new PendingInvAdapter(pendingInvites);
-                mRecyclerView.setAdapter(mAdapter);
+                    mAdapter = new PendingInvAdapter(pendingInvites);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
-        // use a linear layout manager
+        // Use a linear layout manager
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // changes in content do not change the layout size of the RecyclerView
+        // Changes in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
     }
 
+    // Trampoline call to start creating a Group
     private void triggerCreateGroupFlow() {
         createGroup();
     }
 
+    // Show a dialog box for the user to name the Group they want to create
     private void createGroup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Create a group");
         LayoutInflater inflater = this.getLayoutInflater();
 
         View viewInflated = inflater.inflate(R.layout.dialog_create_group, (ViewGroup) this.findViewById(R.id.dialog_create_group), false);
-
         final EditText editTextGroupName = viewInflated.findViewById(R.id.create_group_et_groupname);
 
+        // Set what happens for "Confirm" and "Cancel" buttons in the dialog box
         builder.setView(viewInflated)
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
@@ -113,18 +133,17 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         builder.show();
     }
 
+    // Update the user status to IN_GROUP
+    // Update user's group to the group they created
+    // Write the new Group created to the Database
+    // Now redirect to SendInvitesActivity to allow this user to invite other users
     private void writeGroupToDatabase(String groupName) {
-        String currUserUid = mAuth.getCurrentUser().getUid();
-
         // Update user status
-        UserService.updateUserStatus(mDatabase, currUserUid, UserStatus.IN_GROUP);
-        UserService.updateUserGroup(mDatabase, currUserUid, groupName);
+        UserService.updateUserStatus(mDatabase, mCurrUserUid, UserStatus.IN_GROUP);
+        UserService.updateUserGroup(mDatabase, mCurrUserUid, groupName);
 
         // Create the group
-        DatabaseReference groupsRef = mDatabase.child(FirebaseEndpoint.GROUPS).child(groupName);
-        Group newGroup = new Group(groupName);
-        newGroup.UserUIds.add(currUserUid);
-        groupsRef.setValue(newGroup);
+        GroupService.createNewGroup(mDatabase, groupName, mCurrUserUid);
 
         // Change the page to SendInvitesActivity
         Intent intent = new Intent(this, SendInvitesActivity.class);
@@ -139,7 +158,6 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
             case R.id.btnCreateGroup:
                 triggerCreateGroupFlow();
                 break;
-
             case R.id.btnEditProfile:
                 startActivity(new Intent(this, EditProfileActivity.class));
                 break;

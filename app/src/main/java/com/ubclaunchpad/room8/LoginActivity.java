@@ -24,9 +24,17 @@ import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 import com.ubclaunchpad.room8.Room8Utility.UserStatus;
 
+/*
+ LoginActivity is where existing users log in. The next page after logging in depends
+ on the user status (IN_GROUP or NO_GROUP):
+    - If IN_GROUP:
+        - Go to GroupActivity
+    - If NO_GROUP:
+        - Go to CreateGroupViewInvitesActivity
+*/
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText mEmail, mPassword;
+    private EditText etEmail, etPassword;
     private FirebaseAuth mAuth;
 
     @Override
@@ -36,8 +44,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth = FirebaseAuth.getInstance();
 
-        mEmail = findViewById(R.id.login_et_email);
-        mPassword = findViewById(R.id.login_et_password);
+        etEmail = findViewById(R.id.login_et_email);
+        etPassword = findViewById(R.id.login_et_password);
 
         findViewById(R.id.login_btn_login).setOnClickListener(this);
 
@@ -45,25 +53,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         txtSignUp.setOnClickListener(this);
     }
 
+    // Authenticate the user's input credentials
     private void userLogin() {
-        final String email = mEmail.getText().toString().trim();
-        final String password = mPassword.getText().toString().trim();
+        final String email = etEmail.getText().toString().trim();
+        final String password = etPassword.getText().toString().trim();
 
         if (email.isEmpty()) {
-            mEmail.setError("Email is required");
-            mEmail.requestFocus();
+            etEmail.setError("Email is required");
+            etEmail.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmail.setError("Valid email address is required");
-            mEmail.requestFocus();
+            etEmail.setError("Valid email address is required");
+            etEmail.requestFocus();
             return;
         }
 
         if (password.isEmpty()) {
-            mPassword.setError("Password is required");
-            mPassword.requestFocus();
+            etPassword.setError("Password is required");
+            etPassword.requestFocus();
             return;
         }
 
@@ -93,8 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     // Handle the next Activity that opens after the user logs in. Can be one of:
     //  - CreateGroupViewInvitesActivity (if user has status of NO_GROUP)
-    //  - SendInvitesActivity (if user has status of CREATING)
-    //  - TODO: GroupPageActivity (if user has status of IN_GROUP)
+    //  - GroupActivity (if user has status of IN_GROUP)
     private void startNextActivityAfterSuccessfulLogin(final String currUserUid) {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(FirebaseEndpoint.USERS);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -102,17 +110,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    if (user.Uid.equals(currUserUid)) {
+                    if (user != null && user.Uid.equals(currUserUid)) {
                         if (user.Status.equals(UserStatus.NO_GROUP)) {
                             startActivity(new Intent(LoginActivity.this, CreateGroupViewInvitesActivity.class));
-                        } else if (user.Status.equals(UserStatus.CREATING)) {
-                            Intent intent = new Intent(LoginActivity.this, SendInvitesActivity.class);
-                            intent.putExtra("name", user.Group);
-
-                            startActivity(intent);
                         } else if (user.Status.equals(UserStatus.IN_GROUP)) {
-                            // TODO: Proceed to group page
-                            startActivity(new Intent(LoginActivity.this, GroupActivity.class));
+                            Intent groupActivityIntent = new Intent(LoginActivity.this, GroupActivity.class);
+                            groupActivityIntent.putExtra("groupName", user.Group);
+                            startActivity(groupActivityIntent);
                         }
                     }
                 }
