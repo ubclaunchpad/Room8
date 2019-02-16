@@ -1,72 +1,76 @@
 package com.ubclaunchpad.room8;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
+/*
+ GroupActivity is the main page when the user is set up. Members of the group
+ should be able to add tasks to the group.
 
+ Members can go to a separate activity, SendInvitesActivity, to add new members to
+ the group.
+
+ Chat functionality should also be accessible here.
+*/
 public class GroupActivity extends AppCompatActivity implements View.OnClickListener{
 
-    //group name, tabs
-    private TextView groupName;
-    private ImageView makeTaskButton, makeChatButton, expandTasks, expandChat;
-    private Button reviewRules;
+    private String mStrGroupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
-        reviewRules = findViewById(R.id.imgReviewRules);
-        makeTaskButton = findViewById(R.id.imgAddTask);
-        makeChatButton = findViewById(R.id.imgAddChat);
-        expandTasks = findViewById(R.id.imgExpandTask);
-        expandChat = findViewById(R.id.imgExpandChat);
-        groupName = findViewById(R.id.txtGroupName);
+        Intent intent = getIntent();
+        mStrGroupName = intent.getStringExtra("groupName");
 
-        reviewRules.setOnClickListener(this);
-        makeTaskButton.setOnClickListener(this);
-        makeChatButton.setOnClickListener(this);
-        expandChat.setOnClickListener(this);
-        expandTasks.setOnClickListener(this);
-        groupName.setOnClickListener(this);
-    }
-    private void makeNewConversation() {
+        TextView txtGroupName = findViewById(R.id.txtGroupName);
+        txtGroupName.setText(mStrGroupName);
+        txtGroupName.setOnClickListener(this);
 
+        Button btnSendInvites = findViewById(R.id.btnSendInvites);
+        btnSendInvites.setOnClickListener(this);
+        Button btnEditProfile = findViewById(R.id.btnEditProfile);
+        btnEditProfile.setOnClickListener(this);
     }
 
-    private void makeNewTask() {
-
+    private void addNewChat() {
+        // TODO: Implement adding new chat(?).
     }
 
-    //this can be made here
+    private void addNewTask() {
+        // TODO: Implement adding tasks to group.
+    }
+
     private void changeGroupName() {
+        // TODO: Implement change group name.
+    }
 
+    private void goToSendInvites() {
+        Intent sendInvitesIntent = new Intent(GroupActivity.this, SendInvitesActivity.class);
+        sendInvitesIntent.putExtra("groupName", mStrGroupName);
+        sendInvitesIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(sendInvitesIntent);
+    }
+
+    private void goToEditProfile() {
+        Intent editProfileIntent = new Intent(GroupActivity.this, EditProfileActivity.class);
+        startActivity(editProfileIntent);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.imgReviewRules:
-                // open rules page (new activity?)
-            case R.id.imgAddTask:
-                // add a task
-                makeNewTask();
-            case R.id.imgAddChat:
-                // create a new conversation
-                makeNewConversation();
-            case R.id.imgExpandChat:
-                // look at chat in more detail(?) unsure of functionality
-            case R.id.imgExpandTask:
-                // look at tasks in more detail(?) unsure of functionality
-            case R.id.txtGroupName:
-                // change group name
-                changeGroupName();
-
+            case R.id.btnSendInvites:
+                goToSendInvites();
+                break;
+            case R.id.btnEditProfile:
+                goToEditProfile();
+                break;
         }
     }
 }

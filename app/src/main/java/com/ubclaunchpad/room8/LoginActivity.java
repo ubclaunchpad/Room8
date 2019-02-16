@@ -25,9 +25,21 @@ import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 import com.ubclaunchpad.room8.Room8Utility.UserStatus;
 
+/*
+ LoginActivity is where existing users log in. The next page after logging in depends
+ on the user status (IN_GROUP or NO_GROUP):
+    - If IN_GROUP:
+        - Go to GroupActivity
+    - If NO_GROUP:
+        - Go to CreateGroupViewInvitesActivity
+*/
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
+<<<<<<< HEAD
     EditText etEmail, etPassword;
+=======
+    private EditText etEmail, etPassword;
+>>>>>>> 271f2fcae6a382e6fc29300440b6912f41200515
     private FirebaseAuth mAuth;
 
     @Override
@@ -36,6 +48,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 271f2fcae6a382e6fc29300440b6912f41200515
         etEmail = findViewById(R.id.login_et_email);
         etPassword = findViewById(R.id.login_et_password);
 
@@ -47,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         txtSignUp.setOnClickListener(this);
     }
 
+    // Authenticate the user's input credentials
     private void userLogin() {
         final String email = etEmail.getText().toString().trim();
         final String password = etPassword.getText().toString().trim();
@@ -95,8 +112,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     // Handle the next Activity that opens after the user logs in. Can be one of:
     //  - CreateGroupViewInvitesActivity (if user has status of NO_GROUP)
-    //  - SendInvitesActivity (if user has status of CREATING)
-    //  - TODO: GroupPageActivity (if user has status of IN_GROUP)
+    //  - GroupActivity (if user has status of IN_GROUP)
     private void startNextActivityAfterSuccessfulLogin(final String currUserUid) {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(FirebaseEndpoint.USERS);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -104,17 +120,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    if (user.Uid.equals(currUserUid)) {
+                    if (user != null && user.Uid.equals(currUserUid)) {
                         if (user.Status.equals(UserStatus.NO_GROUP)) {
                             startActivity(new Intent(LoginActivity.this, CreateGroupViewInvitesActivity.class));
-                        } else if (user.Status.equals(UserStatus.CREATING)) {
-                            Intent intent = new Intent(LoginActivity.this, SendInvitesActivity.class);
-                            intent.putExtra("name", user.Group);
-
-                            startActivity(intent);
                         } else if (user.Status.equals(UserStatus.IN_GROUP)) {
-                            // TODO: Proceed to group page
-                            startActivity(new Intent(LoginActivity.this, GroupActivity.class));
+                            Intent groupActivityIntent = new Intent(LoginActivity.this, GroupActivity.class);
+                            groupActivityIntent.putExtra("groupName", user.Group);
+                            startActivity(groupActivityIntent);
                         }
                     }
                 }
