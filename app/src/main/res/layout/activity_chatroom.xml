@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChatroomActivity">
+
+    <TextView
+        android:id="@+id/group_name"
+        android:layout_width="149dp"
+        android:layout_height="44dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:text="Group_Name"
+        android:textSize="24sp" />
+
+    <ListView
+        android:id="@+id/list_item"
+        android:layout_width="359dp"
+        android:layout_height="371dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/group_name" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list_item"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="56dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/input_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="hint" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/bsend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/text_input"
+        android:layout_below="@+id/text_input"
+        android:layout_marginTop="-56dp"
+        android:background="@drawable/style_button"
+        android:text="Send"
+        android:textColor="@android:color/background_light"
+        tools:text="Send" />
+
+</RelativeLayout>

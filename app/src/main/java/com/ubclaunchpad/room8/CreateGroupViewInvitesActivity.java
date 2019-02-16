@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ubclaunchpad.room8.adapter.PendingInvAdapter;
+import com.ubclaunchpad.room8.model.Chatroom;
 import com.ubclaunchpad.room8.model.Group;
 import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
@@ -125,7 +126,9 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         Group newGroup = new Group(groupName);
         newGroup.UserUIds.add(currUserUid);
         groupsRef.setValue(newGroup);
-
+        DatabaseReference chatsRef = mDatabase.child(FirebaseEndpoint.CHATROOMS).child(groupName);
+        Chatroom newChat = new Chatroom(groupName);
+        chatsRef.setValue(newChat);
         Intent intent = new Intent(this, SendInvitesActivity.class);
         intent.putExtra("name", groupName);
 

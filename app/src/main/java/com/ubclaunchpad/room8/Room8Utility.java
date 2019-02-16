@@ -15,6 +15,7 @@ public class Room8Utility {
     public static class FirebaseEndpoint {
         public static final String USERS = "Users";
         public static final String GROUPS = "Groups";
+        public static final String CHATROOMS = "Chatrooms";
 
         public static final String STATUS = "Status";
         public static final String GROUP = "Group";
