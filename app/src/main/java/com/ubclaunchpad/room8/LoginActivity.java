@@ -27,7 +27,7 @@ import com.ubclaunchpad.room8.Room8Utility.UserStatus;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
-    EditText mEmail, mPassword;
+    EditText etEmail, etPassword;
     private FirebaseAuth mAuth;
 
     @Override
@@ -37,8 +37,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth = FirebaseAuth.getInstance();
 
-        mEmail = findViewById(R.id.login_et_email);
-        mPassword = findViewById(R.id.login_et_password);
+        etEmail = findViewById(R.id.login_et_email);
+        etPassword = findViewById(R.id.login_et_password);
 
         findViewById(R.id.login_btn_login).setOnClickListener(this);
         findViewById(R.id.login_et_email).setOnTouchListener(this);
@@ -49,24 +49,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void userLogin() {
-        final String email = mEmail.getText().toString().trim();
-        final String password = mPassword.getText().toString().trim();
+        final String email = etEmail.getText().toString().trim();
+        final String password = etPassword.getText().toString().trim();
 
         if (email.isEmpty()) {
-            mEmail.setError("Email is required");
-            mEmail.requestFocus();
+            etEmail.setError("Email is required");
+            etEmail.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmail.setError("Valid email address is required");
-            mEmail.requestFocus();
+            etEmail.setError("Valid email address is required");
+            etEmail.requestFocus();
             return;
         }
 
         if (password.isEmpty()) {
-            mPassword.setError("Password is required");
-            mPassword.requestFocus();
+            etPassword.setError("Password is required");
+            etPassword.requestFocus();
             return;
         }
 
@@ -146,10 +146,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (view.getId()) {
             case R.id.login_et_password:
-                mPassword = findViewById(R.id.login_et_password);
-                mEmail = findViewById(R.id.login_et_email);
-                if (!mPassword.toString().isEmpty() && !mEmail.toString().isEmpty()){
-                    mPassword.setText("");
+                etPassword = findViewById(R.id.login_et_password);
+                etEmail = findViewById(R.id.login_et_email);
+                if (!etPassword.toString().isEmpty() && !etEmail.toString().isEmpty()){
+                    etPassword.setText("");
                 }
                 break;
         }
