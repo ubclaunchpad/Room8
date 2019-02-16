@@ -35,11 +35,7 @@ import com.ubclaunchpad.room8.Room8Utility.UserStatus;
 */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
-<<<<<<< HEAD
-    EditText etEmail, etPassword;
-=======
     private EditText etEmail, etPassword;
->>>>>>> 271f2fcae6a382e6fc29300440b6912f41200515
     private FirebaseAuth mAuth;
 
     @Override
@@ -48,10 +44,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-<<<<<<< HEAD
-=======
-
->>>>>>> 271f2fcae6a382e6fc29300440b6912f41200515
         etEmail = findViewById(R.id.login_et_email);
         etPassword = findViewById(R.id.login_et_password);
 
