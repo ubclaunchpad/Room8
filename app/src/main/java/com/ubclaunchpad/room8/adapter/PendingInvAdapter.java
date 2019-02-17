@@ -31,14 +31,16 @@ public class PendingInvAdapter extends
     // Store a member variable for the invites
     private List<String> mPendingInvites;
     private String mCurrUserUid;
+    private String mCurrUserFirstName;
     private DatabaseReference mDbRef;
     private CreateGroupViewInvitesActivity viewInvitesActivity;
 
     // Pass in the contact array into the constructor
     public PendingInvAdapter(Map<String, String> pendingInvites, String userUid,
-                             CreateGroupViewInvitesActivity viewInvitesActivity) {
+                             String firstName, CreateGroupViewInvitesActivity viewInvitesActivity) {
         mPendingInvites = new ArrayList<String>(pendingInvites.keySet());
         mCurrUserUid = userUid;
+        mCurrUserFirstName = firstName;
         mDbRef = FirebaseDatabase.getInstance().getReference();
         this.viewInvitesActivity = viewInvitesActivity;
     }
@@ -102,14 +104,13 @@ public class PendingInvAdapter extends
          UserService.updateUserGroup(mDbRef, mCurrUserUid, groupName);
 
         // Remove group from user's pending invites
-        // TODO: ==== TEST =====
         final DatabaseReference userRef = mDbRef.child(Room8Utility.FirebaseEndpoint.USERS);
         DatabaseReference invitesRef = userRef.child(mCurrUserUid).child("PendingInvites");
         invitesRef.child(groupName).removeValue();
 
         // Add user's ID to group
         DatabaseReference acceptedGroupRef  = mDbRef.child(Room8Utility.FirebaseEndpoint.GROUPS).child(groupName);
-        acceptedGroupRef.child("UserUIds").child(mCurrUserUid).setValue("test");
+        acceptedGroupRef.child("UserUIds").child(mCurrUserUid).setValue(mCurrUserFirstName);
     }
 
     // Returns the total count of items in the list
