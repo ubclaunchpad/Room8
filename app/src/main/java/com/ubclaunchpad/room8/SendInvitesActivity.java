@@ -131,8 +131,6 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
                 if (!userFound) {
                     Toast.makeText(getApplicationContext(), "Email not associated with an user,\nPlease try again.", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -143,14 +141,25 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
     // Sends an invite to the specified user
     private void sendInvite(User user, DatabaseReference userRef) {
+        DatabaseReference invitesRef = userRef.child(user.Uid).child("PendingInvites");
+        String userFirstName = user.FirstName;
+
         // Check if an invite has already been sent
         if (user.PendingInvites != null && user.PendingInvites.containsValue(mGroupName)) {
+            Toast.makeText(getApplicationContext(), userFirstName + " already has an invite from your group.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check if invitee is already part of the group
+        if (user.Group != null && user.Group.equals(mGroupName)) {
+            Toast.makeText(getApplicationContext(), userFirstName + " is already a member of your group!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Add an invite to the user's collection of invites
-        DatabaseReference invitesRef = userRef.child(user.Uid).child("PendingInvites");
-        invitesRef.child(mGroupName).setValue("test");
+        DatabaseReference newPendingInvRef = invitesRef.push();
+        newPendingInvRef.setValue(mGroupName);
+        Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
     }
 
     private void goToGroupActivity() {
