@@ -46,8 +46,8 @@ public class PendingInvAdapter extends
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView groupNameTextView;
-        Button acceptBtn;
+        TextView txtViewGroupName;
+        Button btnAccept;
         // We create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
         public ViewHolder(View itemView) {
@@ -55,8 +55,8 @@ public class PendingInvAdapter extends
             // to access the context from any ViewHolder instance
             super(itemView);
 
-            acceptBtn = (Button) itemView.findViewById(R.id.accept_button);
-            groupNameTextView = (TextView) itemView.findViewById(R.id.group_name);
+            btnAccept = (Button) itemView.findViewById(R.id.accept_button);
+            txtViewGroupName = (TextView) itemView.findViewById(R.id.group_name);
         }
     }
 
@@ -81,10 +81,10 @@ public class PendingInvAdapter extends
         final String groupName = mPendingInvites.get(position);
 
         // Set item views based on your views and data model
-        TextView textView = viewHolder.groupNameTextView;
+        TextView textView = viewHolder.txtViewGroupName;
         textView.setText(groupName);
 
-        Button button = viewHolder.acceptBtn;
+        Button button = viewHolder.btnAccept;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
