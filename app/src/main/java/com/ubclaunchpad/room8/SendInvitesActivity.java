@@ -157,8 +157,7 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
         }
 
         // Add an invite to the user's collection of invites
-        DatabaseReference newPendingInvRef = invitesRef.push();
-        newPendingInvRef.setValue(mGroupName);
+        invitesRef.child(mGroupName).setValue("test");
         Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
     }
 
