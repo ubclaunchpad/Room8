@@ -71,7 +71,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
 
         // Set the current user's Group invites in the RecyclerView
         DatabaseReference userRef = mDatabase.child(FirebaseEndpoint.USERS).child(mCurrUserUid);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
