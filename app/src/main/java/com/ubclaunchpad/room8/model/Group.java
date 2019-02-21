@@ -7,6 +7,7 @@ public class Group {
 
     public String GroupName;
     public List<String> UserUIds;
+    public List<String> HouseRules;
 
     public Group(String GroupName) {
         this.GroupName = GroupName;
