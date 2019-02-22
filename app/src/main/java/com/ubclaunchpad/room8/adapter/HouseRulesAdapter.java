@@ -4,6 +4,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+/*
+    Populates the RecyclerView. Converts the objects of the to-be-listed collection
+    into list row items that will be inserted into the RecyclerView.
+ */
 import java.util.HashMap;
 
 public class HouseRulesAdapter extends RecyclerView.Adapter {

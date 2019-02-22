@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/*
+    Populates the RecyclerView. Converts the objects of the to-be-listed collection
+    into list row items that will be inserted into the RecyclerView.
+ */
 public class PendingInvAdapter extends
     RecyclerView.Adapter<PendingInvAdapter.ViewHolder> {
     // Store a member variable for the invites
