@@ -38,8 +38,8 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private String mCurrUserUid;
     private DatabaseReference mDatabase;
+    private String mCurrUserUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +88,8 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         });
 
         // Use a linear layout manager
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
 
         // Changes in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
