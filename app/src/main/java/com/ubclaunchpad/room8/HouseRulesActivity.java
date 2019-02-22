@@ -16,16 +16,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ubclaunchpad.room8.adapter.HouseRulesAdapter;
 import com.ubclaunchpad.room8.adapter.PendingInvAdapter;
+import com.ubclaunchpad.room8.model.Group;
 import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class HouseRulesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private HouseRulesAdapter mAdapter;
     private DatabaseReference mDatabase;
     private String mStrGroupName;
     private String mCurrUserUid;
@@ -62,8 +66,32 @@ public class HouseRulesActivity extends AppCompatActivity implements View.OnClic
 
     // Set house rules in the RecyclerView
     private void setRecyclerView() {
-        mRecyclerView = findViewById(R.id.rvPendingInvites);
+        mRecyclerView = findViewById(R.id.rvChats);
 
+        // Set the current user's group house rules in the RecyclerView
+        DatabaseReference groupRef = mDatabase.child(FirebaseEndpoint.GROUPS).child(mStrGroupName);
+        groupRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Group group = dataSnapshot.getValue(Group.class);
+                // Get the group's house rules and use it to construct an adapter for the RecyclerView
+                if (group != null) {
+                    HashMap<String,String> houseRules = (group.HouseRules == null) ? new HashMap<String, String>() : group.HouseRules;
+                    mAdapter = new HouseRulesAdapter(houseRules);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+
+        // Use a linear layout manager
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        // Changes in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
     }
 
     @Override
