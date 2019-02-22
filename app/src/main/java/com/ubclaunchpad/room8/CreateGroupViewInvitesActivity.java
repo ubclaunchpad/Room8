@@ -72,12 +72,13 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         // Set the current user's Group invites in the RecyclerView
         DatabaseReference userRef = mDatabase.child(FirebaseEndpoint.USERS).child(mCurrUserUid);
         userRef.addValueEventListener(new ValueEventListener() {
+            
+            // Get the current user's pending invites and use it to construct an adapter for the RecyclerView
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 if (user != null) {
                     HashMap<String, String> pendingInvites = (user.PendingInvites == null) ? new HashMap<String, String>() : user.PendingInvites;
-
                     mAdapter = new PendingInvAdapter(pendingInvites);
                     mRecyclerView.setAdapter(mAdapter);
                 }
@@ -87,7 +88,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
-        // Use a linear layout manager
+        // Use a linear layout manager to display row items vertically
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 

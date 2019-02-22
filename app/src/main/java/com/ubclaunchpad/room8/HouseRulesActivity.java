@@ -71,10 +71,11 @@ public class HouseRulesActivity extends AppCompatActivity implements View.OnClic
         // Set the current user's group house rules in the RecyclerView
         DatabaseReference groupRef = mDatabase.child(FirebaseEndpoint.GROUPS).child(mStrGroupName);
         groupRef.addValueEventListener(new ValueEventListener() {
+
+            // Get the current group's house rules and use it to construct an adapter for the RecyclerView
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Group group = dataSnapshot.getValue(Group.class);
-                // Get the group's house rules and use it to construct an adapter for the RecyclerView
                 if (group != null) {
                     HashMap<String,String> houseRules = (group.HouseRules == null) ? new HashMap<String, String>() : group.HouseRules;
                     mAdapter = new HouseRulesAdapter(houseRules);
@@ -86,7 +87,7 @@ public class HouseRulesActivity extends AppCompatActivity implements View.OnClic
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
-        // Use a linear layout manager
+        // Use a linear layout manager to display row items vertically
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
