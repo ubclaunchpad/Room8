@@ -59,7 +59,7 @@ public class PendingInvAdapter extends
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(PendingInvAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull PendingInvAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
         String groupName = mPendingInvites.get(position);
 
