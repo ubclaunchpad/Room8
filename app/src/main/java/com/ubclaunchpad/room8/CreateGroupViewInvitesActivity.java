@@ -38,8 +38,9 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private DatabaseReference mDatabase;
     private String mCurrUserUid;
+    private String mCurrUserFName;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,9 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
                 User user = dataSnapshot.getValue(User.class);
                 if (user != null) {
                     HashMap<String, String> pendingInvites = (user.PendingInvites == null) ? new HashMap<String, String>() : user.PendingInvites;
-                    mAdapter = new PendingInvAdapter(pendingInvites);
+
+                    mCurrUserFName = user.FirstName;
+                    mAdapter = new PendingInvAdapter(pendingInvites, mCurrUserUid, mCurrUserFName,CreateGroupViewInvitesActivity.this);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
@@ -144,11 +147,11 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         UserService.updateUserGroup(mDatabase, mCurrUserUid, groupName);
 
         // Create the group
-        GroupService.createNewGroup(mDatabase, groupName, mCurrUserUid);
+        GroupService.createNewGroup(mDatabase, groupName, mCurrUserUid, mCurrUserFName);
 
         // Change the page to SendInvitesActivity
         Intent intent = new Intent(this, SendInvitesActivity.class);
-        intent.putExtra("name", groupName);
+        intent.putExtra("groupName", groupName);
 
         startActivity(intent);
     }

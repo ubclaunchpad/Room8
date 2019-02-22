@@ -4,8 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +33,7 @@ import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 */
 public class SendInvitesActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String mGroupNameText;
+    private String mGroupName;
     private DatabaseReference mDbRef;
     private String mCurrentUserEmail;
 
@@ -59,8 +59,8 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
         // Set the TextView to this Group's name
         Intent intent = getIntent();
-        mGroupNameText = intent.getStringExtra("groupName");
-        txtGroupName.setText(mGroupNameText);
+        mGroupName = intent.getStringExtra("groupName");
+        txtGroupName.setText(mGroupName);
 
         findViewById(R.id.btnAddMember).setOnClickListener(this);
         findViewById(R.id.btnGoToGroup).setOnClickListener(this);
@@ -145,26 +145,25 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
         String userFirstName = user.FirstName;
 
         // Check if an invite has already been sent
-        if (user.PendingInvites != null && user.PendingInvites.containsValue(mGroupNameText)) {
+        if (user.PendingInvites != null && user.PendingInvites.containsValue(mGroupName)) {
             Toast.makeText(getApplicationContext(), userFirstName + " already has an invite from your group.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Check if invitee is already part of the group
-        if (user.Group != null && user.Group.equals(mGroupNameText)) {
+        if (user.Group != null && user.Group.equals(mGroupName)) {
             Toast.makeText(getApplicationContext(), userFirstName + " is already a member of your group!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Add an invite to the user's collection of invites
-        DatabaseReference newPendingInvRef = invitesRef.push();
-        newPendingInvRef.setValue(mGroupNameText);
+        invitesRef.child(mGroupName).setValue("test");
         Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
     }
 
     private void goToGroupActivity() {
         Intent groupActivityIntent = new Intent(SendInvitesActivity.this, GroupActivity.class);
-        groupActivityIntent.putExtra("groupName", mGroupNameText);
+        groupActivityIntent.putExtra("groupName", mGroupName);
         groupActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(groupActivityIntent);
     }
