@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.ubclaunchpad.room8.HouseRulesActivity;
 import com.ubclaunchpad.room8.R;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import java.util.List;
  Populates the RecyclerView. Converts the objects at certain positions of the to-be-listed
  collection into list row items that will be inserted into the RecyclerView.
 */
-public class HouseRulesAdapter extends RecyclerView.Adapter {
+public class HouseRulesAdapter extends RecyclerView.Adapter<HouseRulesAdapter.ViewHolder> {
     private List<String> mHouseRules;
 
     public HouseRulesAdapter(HashMap<String, String> houseRules) {
@@ -27,8 +29,8 @@ public class HouseRulesAdapter extends RecyclerView.Adapter {
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtRule;
-        TextView txtRuleNum;
+        public TextView txtRule;
+        public TextView txtRuleNum;
         // We create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
         ViewHolder(View itemView) {
@@ -43,7 +45,7 @@ public class HouseRulesAdapter extends RecyclerView.Adapter {
     // Creates a ViewHolder used to represent an element
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HouseRulesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -55,8 +57,15 @@ public class HouseRulesAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HouseRulesAdapter.ViewHolder viewHolder, int position) {
+        // Get the data model based on position
+        String groupName = mHouseRules.get(position);
 
+        // Set item views based on views and data model
+        TextView rule = viewHolder.txtRule;
+        rule.setText(groupName);
+        TextView ruleNum = viewHolder.txtRuleNum;
+        ruleNum.setText(String.format("%s.",position));
     }
 
     // Returns the total number of items in the list
