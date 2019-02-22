@@ -71,6 +71,6 @@ public class HouseRulesAdapter extends RecyclerView.Adapter<HouseRulesAdapter.Vi
     // Returns the total number of items in the list
     @Override
     public int getItemCount() {
-        return 0;
+        return mHouseRules.size();
     }
 }
