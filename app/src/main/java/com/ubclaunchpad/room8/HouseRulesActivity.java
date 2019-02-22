@@ -66,7 +66,7 @@ public class HouseRulesActivity extends AppCompatActivity implements View.OnClic
 
     // Set house rules in the RecyclerView
     private void setRecyclerView() {
-        mRecyclerView = findViewById(R.id.rvChats);
+        mRecyclerView = findViewById(R.id.rvHouseRules);
 
         // Set the current user's group house rules in the RecyclerView
         DatabaseReference groupRef = mDatabase.child(FirebaseEndpoint.GROUPS).child(mStrGroupName);

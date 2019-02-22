@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="40dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/txtRuleNumber"
@@ -16,7 +16,7 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/product_sans_bold"
         android:text="rN"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txtRule"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,15 +26,17 @@
 
     <TextView
         android:id="@+id/txtRule"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/product_sans_bold"
         android:text="Rule"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
