@@ -8,13 +8,15 @@ import android.view.ViewGroup;
  Populates the RecyclerView. Converts the objects at certain positions of the to-be-listed
  collection into list row items that will be inserted into the RecyclerView.
 */
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class HouseRulesAdapter extends RecyclerView.Adapter {
-    private HashMap<String, String> mHouseRules;
+    private List<String> mHouseRules;
 
     public HouseRulesAdapter(HashMap<String, String> houseRules) {
-        mHouseRules = houseRules;
+        mHouseRules = new ArrayList<String>(houseRules.values());
     }
 
     @NonNull

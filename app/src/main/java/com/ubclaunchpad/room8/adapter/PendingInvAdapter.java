@@ -29,12 +29,12 @@ public class PendingInvAdapter extends
         mPendingInvites = new ArrayList<String>(pendingInvites.values());
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtViewGroupName;
         Button btnAccept;
         // We create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance
             super(itemView);
@@ -54,8 +54,7 @@ public class PendingInvAdapter extends
         View pendingInviteView = inflater.inflate(R.layout.item_pending_invite, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(pendingInviteView);
-        return viewHolder;
+        return new ViewHolder(pendingInviteView);
     }
 
     // Involves populating data into the item through holder
