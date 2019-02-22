@@ -66,6 +66,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
     private void goToHouseRules() {
         Intent houseRulesIntent = new Intent(GroupActivity.this, HouseRulesActivity.class);
+        houseRulesIntent.putExtra("groupName", mStrGroupName);
         startActivity(houseRulesIntent);
     }
 
