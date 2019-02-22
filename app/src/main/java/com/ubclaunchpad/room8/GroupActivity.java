@@ -37,7 +37,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         Button btnEditProfile = findViewById(R.id.btnEditProfile);
         btnEditProfile.setOnClickListener(this);
         Button btnHouseRules = findViewById(R.id.btnHouseRules);
-        btnEditProfile.setOnClickListener(this);
+        btnHouseRules.setOnClickListener(this);
     }
 
     private void addNewChat() {
