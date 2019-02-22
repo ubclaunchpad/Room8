@@ -5,14 +5,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 /*
-    Populates the RecyclerView. Converts the objects of the to-be-listed collection
-    into list row items that will be inserted into the RecyclerView.
- */
+ Populates the RecyclerView. Converts the objects at certain positions of the to-be-listed
+ collection into list row items that will be inserted into the RecyclerView.
+*/
 import java.util.HashMap;
 
 public class HouseRulesAdapter extends RecyclerView.Adapter {
-    public HouseRulesAdapter(HashMap<String, String> houseRules) {
+    private HashMap<String, String> mHouseRules;
 
+    public HouseRulesAdapter(HashMap<String, String> houseRules) {
+        mHouseRules = houseRules;
     }
 
     @NonNull
