@@ -95,8 +95,17 @@ public class HouseRulesActivity extends AppCompatActivity implements View.OnClic
         mRecyclerView.setHasFixedSize(true);
     }
 
+    private void addRule() {
+        DatabaseReference groupsRef = mDatabase.child(FirebaseEndpoint.GROUPS);
+        groupsRef.child(mStrGroupName).child("HouseRules").child("New Rule").setValue("Rule description describes the rule that we are adding");
+    }
+
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.btnAddRule:
+                addRule();
+                break;
+        }
     }
 }
