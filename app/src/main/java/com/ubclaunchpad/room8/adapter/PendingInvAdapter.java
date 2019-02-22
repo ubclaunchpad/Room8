@@ -24,7 +24,7 @@ public class PendingInvAdapter extends
     // Store a member variable for the invites
     private List<String> mPendingInvites;
 
-    // Pass in the contact array into the constructor
+    // Pass in pending invites to constructor
     public PendingInvAdapter(Map<String,String> pendingInvites) {
         mPendingInvites = new ArrayList<String>(pendingInvites.values());
     }
@@ -44,6 +44,7 @@ public class PendingInvAdapter extends
         }
     }
 
+    // Creates a ViewHolder used to represent an element
     @NonNull
     @Override
     public PendingInvAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -63,7 +64,7 @@ public class PendingInvAdapter extends
         // Get the data model based on position
         String groupName = mPendingInvites.get(position);
 
-        // Set item views based on your views and data model
+        // Set item views based on views and data model
         TextView textView = viewHolder.txtViewGroupName;
         textView.setText(groupName);
 
@@ -76,7 +77,7 @@ public class PendingInvAdapter extends
         });
     }
 
-    // Returns the total count of items in the list
+    // Returns the total number of items in the list
     @Override
     public int getItemCount() {
         return mPendingInvites.size();

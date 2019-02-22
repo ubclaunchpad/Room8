@@ -23,6 +23,7 @@ public class HouseRulesAdapter extends RecyclerView.Adapter {
         mHouseRules = new ArrayList<String>(houseRules.values());
     }
 
+
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtRule;
         TextView txtRuleNum;
@@ -37,6 +38,7 @@ public class HouseRulesAdapter extends RecyclerView.Adapter {
         }
     }
 
+    // Creates a ViewHolder used to represent an element
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,6 +50,7 @@ public class HouseRulesAdapter extends RecyclerView.Adapter {
 
     }
 
+    // Returns the total number of items in the list
     @Override
     public int getItemCount() {
         return 0;
