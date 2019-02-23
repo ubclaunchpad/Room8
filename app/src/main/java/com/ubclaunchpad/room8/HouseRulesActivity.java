@@ -29,9 +29,12 @@ import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+/*
+ HouseRulesActivity can be accessed through the GroupActivity.
 
+ Members can add rules to their group for all members to see.
+*/
 public class HouseRulesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView mRecyclerView;
