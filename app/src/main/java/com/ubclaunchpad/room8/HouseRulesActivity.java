@@ -1,12 +1,17 @@
 package com.ubclaunchpad.room8;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -96,6 +101,37 @@ public class HouseRulesActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void addRule() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Create a rule");
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View viewInflated = inflater.inflate(R.layout.dialog_add_rule, (ViewGroup) this.findViewById(R.id.dialog_add_rule), false);
+        final EditText editTextRule = viewInflated.findViewById(R.id.create_rule);
+
+        // Set what happens for "Confirm" and "Cancel" buttons in the dialog box
+        builder.setView(viewInflated)
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String rule = editTextRule.getText().toString();
+
+                        if (rule.isEmpty()) {
+                            Toast.makeText(getApplicationContext(), "Please enter a valid rule.", Toast.LENGTH_SHORT).show();
+                            dialog.cancel();
+                        } else {
+                            writeRuleToDatabase(rule);
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder.show();
+    }
+
+    private void writeRuleToDatabase(String rule) {
         DatabaseReference groupsRef = mDatabase.child(FirebaseEndpoint.GROUPS);
         groupsRef.child(mStrGroupName).child("HouseRules").child("New Rule").setValue("Rule description describes the rule that we are adding");
     }
