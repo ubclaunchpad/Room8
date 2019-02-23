@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_add_rule"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:paddingTop="15dp"
+    android:paddingStart="25dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/product_sans_regular"
+        android:labelFor="@id/create_rule"
+        android:text="Enter your rule"
+        android:textColor="@color/colorBlack" />
+
+    <EditText
+        android:id="@+id/create_rule"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textLongMessage" />
+
+</LinearLayout>

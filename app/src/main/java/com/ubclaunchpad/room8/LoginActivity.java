@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ import com.ubclaunchpad.room8.Room8Utility.UserStatus;
     - If NO_GROUP:
         - Go to CreateGroupViewInvitesActivity
 */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
     private EditText etEmail, etPassword;
     private FirebaseAuth mAuth;
@@ -43,11 +44,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-
         etEmail = findViewById(R.id.login_et_email);
         etPassword = findViewById(R.id.login_et_password);
 
         findViewById(R.id.login_btn_login).setOnClickListener(this);
+        findViewById(R.id.login_et_email).setOnTouchListener(this);
+        findViewById(R.id.login_et_password).setOnTouchListener(this);
 
         TextView txtSignUp = findViewById(R.id.txtSignUp);
         txtSignUp.setOnClickListener(this);
@@ -140,5 +142,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(signUpActivityIntent);
                 break;
         }
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        switch (view.getId()) {
+            case R.id.login_et_password:
+                etPassword = findViewById(R.id.login_et_password);
+                etEmail = findViewById(R.id.login_et_email);
+                if (!etPassword.toString().isEmpty() && !etEmail.toString().isEmpty()){
+                    etPassword.setText("");
+                }
+                break;
+        }
+        return false;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
