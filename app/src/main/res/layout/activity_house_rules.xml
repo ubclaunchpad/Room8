@@ -18,7 +18,8 @@
     <TextView
         android:id="@+id/txtGroupName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="21dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/product_sans_bold"
         android:text="@string/txt_sample_group"
         android:textColor="@color/colorBlack"
@@ -26,7 +27,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgViewLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/txtHouseRules" />
 
     <TextView
         android:id="@+id/txtHouseRules"
@@ -35,6 +36,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/style_drop_shadow"
+        android:elevation="4dp"
         android:fontFamily="@font/product_sans_bold"
         android:text="House Rules"
         android:textAlignment="center"
@@ -42,18 +45,19 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtGroupName" />
+        app:layout_constraintTop_toBottomOf="@+id/imgViewLogo" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvHouseRules"
         android:layout_width="298dp"
         android:layout_height="308dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHouseRules" />
+        app:layout_constraintTop_toBottomOf="@+id/txtGroupName" />
 
     <Button
         android:id="@+id/btnAddRule"
@@ -65,7 +69,7 @@
         android:layout_marginBottom="8dp"
         android:background="@color/colorOrange"
         android:fontFamily="@font/product_sans_bold"
-        android:text="Button"
+        android:text="Add Rule"
         android:textColor="@color/colorWhite"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
