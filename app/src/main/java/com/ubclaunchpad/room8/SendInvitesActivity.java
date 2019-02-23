@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,8 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
     private String mGroupNameText;
     private DatabaseReference mDbRef;
     private String mCurrentUserEmail;
+
+    private static final String TAG = "Mobug";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,15 +153,19 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
             return;
         }
 
+        Log.d(TAG, "111");
         // Add an invite to the user's collection of invites
         DatabaseReference newPendingInvRef = invitesRef.push();
-<<<<<<< HEAD
-        newPendingInvRef.setValue(groupNameText);
+        newPendingInvRef.setValue(mGroupNameText);
 
         // Updating the invitations the group sent out currently
+        Log.d(TAG, "222");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference groupsRef = database.getReference().child(FirebaseEndpoint.GROUPS).child(groupNameText).child("SentInvitations");
+        DatabaseReference groupsRef = database.getReference().child(FirebaseEndpoint.GROUPS).child(mGroupNameText).child("SentInvitations");
         DatabaseReference sentInvitation = groupsRef.push();
+
+
+        Log.d(TAG, "333");
 
         DatabaseReference userEmail = sentInvitation.child("Email");
         DatabaseReference userID = sentInvitation.child("UID");
@@ -168,7 +175,6 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
         userEmail.setValue(user.Email);
         userID.setValue(user.Uid);
-=======
         newPendingInvRef.setValue(mGroupNameText);
     }
 
@@ -177,7 +183,6 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
         groupActivityIntent.putExtra("groupName", mGroupNameText);
         groupActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(groupActivityIntent);
->>>>>>> 0281e8393115d81e7d2a52dfbdd171e7427a4510
     }
 
     @Override
