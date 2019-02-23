@@ -50,6 +50,16 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         findViewById(R.id.btnCreateGroup).setOnClickListener(this);
         findViewById(R.id.btnEditProfile).setOnClickListener(this);
 
+        validateUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        // RecyclerView to display pending invites
+        setRecyclerView();
+    }
+
+    // Ensure the current user is logged in, grab their uid
+    private void validateUser() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
         // Grab the current user and their uid
@@ -59,11 +69,6 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         } else {
             Toast.makeText(this, "Invalid app state. Current user not logged in.", Toast.LENGTH_SHORT).show();
         }
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        // RecyclerView to display pending invites
-        setRecyclerView();
     }
 
     // Set Group invites in the RecyclerView
@@ -110,7 +115,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         builder.setTitle("Create a group");
         LayoutInflater inflater = this.getLayoutInflater();
 
-        View viewInflated = inflater.inflate(R.layout.dialog_create_group, (ViewGroup) this.findViewById(R.id.dialog_create_group), false);
+        View viewInflated = inflater.inflate(R.layout.dialog_create_group, (ViewGroup) this.findViewById(R.id.dialog_add_rule), false);
         final EditText editTextGroupName = viewInflated.findViewById(R.id.create_group_et_groupname);
 
         // Set what happens for "Confirm" and "Cancel" buttons in the dialog box
