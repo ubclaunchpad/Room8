@@ -22,8 +22,8 @@ import java.util.List;
 public class HouseRulesAdapter extends RecyclerView.Adapter<HouseRulesAdapter.ViewHolder> {
     private List<String> mHouseRules;
 
-    public HouseRulesAdapter(HashMap<String, String> houseRules) {
-        mHouseRules = new ArrayList<String>(houseRules.values());
+    public HouseRulesAdapter(List<String> houseRules) {
+        mHouseRules = houseRules;
     }
 
 
@@ -64,7 +64,7 @@ public class HouseRulesAdapter extends RecyclerView.Adapter<HouseRulesAdapter.Vi
         TextView rule = viewHolder.txtRule;
         rule.setText(groupName);
         TextView ruleNum = viewHolder.txtRuleNum;
-        ruleNum.setText(String.format("%s.",position));
+        ruleNum.setText(String.format("%s.",position+1));
     }
 
     // Returns the total number of items in the list

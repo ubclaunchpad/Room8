@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +39,7 @@ public class HouseRulesActivity extends AppCompatActivity implements View.OnClic
     private DatabaseReference mDatabase;
     private String mStrGroupName;
     private String mCurrUserUid;
+    private Integer mRuleCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,8 @@ public class HouseRulesActivity extends AppCompatActivity implements View.OnClic
         // Set the TextView to this Group's name
         Intent intent = getIntent();
         mStrGroupName = intent.getStringExtra("groupName");
-
+        TextView groupName = findViewById(R.id.txtGroupName);
+        groupName.setText(mStrGroupName);
         // RecyclerView to display house rules
         setRecyclerView();
     }
@@ -82,7 +85,16 @@ public class HouseRulesActivity extends AppCompatActivity implements View.OnClic
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Group group = dataSnapshot.getValue(Group.class);
                 if (group != null) {
-                    HashMap<String,String> houseRules = (group.HouseRules == null) ? new HashMap<String, String>() : group.HouseRules;
+                    List<String> houseRules;
+                    if (group.HouseRules == null) {
+                        houseRules =  new ArrayList<>();
+                        DatabaseReference groupsRef = mDatabase.child(FirebaseEndpoint.GROUPS);
+                        mRuleCount = 0;
+                    } else {
+                         houseRules =  group.HouseRules;
+                         mRuleCount = houseRules.size();
+                    }
+
                     mAdapter = new HouseRulesAdapter(houseRules);
                     mRecyclerView.setAdapter(mAdapter);
                 }
@@ -120,6 +132,7 @@ public class HouseRulesActivity extends AppCompatActivity implements View.OnClic
                             dialog.cancel();
                         } else {
                             writeRuleToDatabase(rule);
+
                         }
                     }
                 })
@@ -132,8 +145,8 @@ public class HouseRulesActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void writeRuleToDatabase(String rule) {
-        DatabaseReference groupsRef = mDatabase.child(FirebaseEndpoint.GROUPS);
-        groupsRef.child(mStrGroupName).child("HouseRules").child("New Rule").setValue("Rule description describes the rule that we are adding");
+        DatabaseReference rulesRef = mDatabase.child(FirebaseEndpoint.GROUPS).child(mStrGroupName).child("HouseRules");
+        rulesRef.child(String.format("%s",mRuleCount)).setValue(rule);
     }
 
     @Override
