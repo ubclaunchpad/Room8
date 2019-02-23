@@ -8,7 +8,7 @@ public class Group {
 
     public String GroupName;
     public HashMap<String,String> UserUIds;
-    public HashMap<String,String> HouseRules;
+    public List<String> HouseRules;
 
     public Group(){}
 
