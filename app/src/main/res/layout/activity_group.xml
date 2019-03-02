@@ -126,6 +126,7 @@
 
     <ImageButton
         android:id="@+id/imgBtnAddChat"
+        android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"

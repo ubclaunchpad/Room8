@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 /*
@@ -36,6 +37,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         btnSendInvites.setOnClickListener(this);
         Button btnEditProfile = findViewById(R.id.btnEditProfile);
         btnEditProfile.setOnClickListener(this);
+        ImageButton imgBtnAddChat = findViewById(R.id.imgBtnAddChat);
+        imgBtnAddChat.setOnClickListener(this);
     }
 
     private void addNewChat() {
@@ -62,6 +65,11 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         startActivity(editProfileIntent);
     }
 
+    private void goToChat() {
+        Intent chatRoomIntent = new Intent(GroupActivity.this, ChatroomActivity.class);
+        startActivity(chatRoomIntent);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -71,6 +79,10 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnEditProfile:
                 goToEditProfile();
                 break;
+            case R.id.imgBtnAddChat:
+                goToChat();
+                break;
+
         }
     }
 }
