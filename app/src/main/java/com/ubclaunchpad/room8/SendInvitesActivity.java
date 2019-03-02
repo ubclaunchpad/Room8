@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,8 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
     private String mGroupName;
     private DatabaseReference mDbRef;
     private String mCurrentUserEmail;
+
+    private static final String TAG = "Mobug";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +160,23 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
         }
 
         // Add an invite to the user's collection of invites
+        DatabaseReference newPendingInvRef = invitesRef.push();
+        newPendingInvRef.setValue(mGroupName);
+
+        // Updating the invitations the group sent out currently
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference groupsRef = database.getReference().child(FirebaseEndpoint.GROUPS).child(mGroupName).child("SentInvitations");
+        DatabaseReference sentInvitation = groupsRef.push();
+
+        DatabaseReference userEmail = sentInvitation.child("Email");
+        DatabaseReference userID = sentInvitation.child("UID");
+
+        userEmail.push();
+        userID.push();
+
+        userEmail.setValue(user.Email);
+        userID.setValue(user.Uid);
+        newPendingInvRef.setValue(mGroupName);
         invitesRef.child(mGroupName).setValue("test");
         Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
     }
