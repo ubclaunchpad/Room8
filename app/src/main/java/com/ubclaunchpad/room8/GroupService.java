@@ -8,12 +8,11 @@ import com.ubclaunchpad.room8.model.Group;
 */
 public class GroupService {
 
-    // Given a reference to the main database, create a new group given the new group's name
-    // and the user that created it
-    public static void createNewGroup (DatabaseReference dbRef, String groupName, String userUid) {
-        DatabaseReference groupsRef = dbRef.child(Room8Utility.FirebaseEndpoint.GROUPS).child(groupName);
-        Group newGroup = new Group(groupName);
-        newGroup.UserUIds.add(userUid);
-        groupsRef.setValue(newGroup);
+    // Given a reference to the main database, add the new group as a child under Groups,
+    // with the group creator's user ID and name added to it.
+    public static void createNewGroup(DatabaseReference dbRef, String groupName, String userUid, String userFirstName) {
+        DatabaseReference groupsRef = dbRef.child(Room8Utility.FirebaseEndpoint.GROUPS);
+        groupsRef.child(groupName).child("GroupName").setValue(groupName);
+        groupsRef.child(groupName).child("UserUIds").child(userUid).setValue(userFirstName);
     }
 }

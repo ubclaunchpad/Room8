@@ -42,6 +42,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         btnSendInvites.setOnClickListener(this);
         Button btnEditProfile = findViewById(R.id.btnEditProfile);
         btnEditProfile.setOnClickListener(this);
+        Button btnHouseRules = findViewById(R.id.btnHouseRules);
+        btnHouseRules.setOnClickListener(this);
     }
 
     private void addNewChat() {
@@ -69,37 +71,37 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         startActivity(editProfileIntent);
     }
 
-//    private void inputTask() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Input the name of the task");
-//        LayoutInflater inflater = this.getLayoutInflater();
-//
-//        View viewInflated = inflater.inflate(R.layout.dialog_create_task, (ViewGroup) this.findViewById(R.id.dialog_create_task), false);
-//        final EditText etTask = viewInflated.findViewById(R.id.create_task_et_taskname);
-//
-//        builder.setView(viewInflated)
-//                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        String groupTask = etTask.getText().toString();
-//
-//                        if (groupTask.isEmpty()) {
-//                            Toast.makeText(getApplicationContext(), "Please enter a name of the task", Toast.LENGTH_SHORT).show();
-//                            dialog.cancel();
-//                            inputTask();
-//                        } else {
-//                            addNewTask(groupTask);
-//                        }
-//                    }
-//                })
-//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        dialog.cancel();
-//                    }
-//                });
-//        builder.show();
-//    }
+    private void inputTask() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Input the name of the task");
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View viewInflated = inflater.inflate(R.layout.dialog_create_task, (ViewGroup) this.findViewById(R.id.dialog_create_task), false);
+        final EditText etTask = viewInflated.findViewById(R.id.create_task_et_taskname);
+
+        builder.setView(viewInflated)
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String groupTask = etTask.getText().toString();
+
+                        if (groupTask.isEmpty()) {
+                            Toast.makeText(getApplicationContext(), "Please enter a name of the task", Toast.LENGTH_SHORT).show();
+                            dialog.cancel();
+                            inputTask();
+                        } else {
+                            addNewTask(groupTask);
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder.show();
+    }
 
     @Override
     public void onClick(View v) {
@@ -110,9 +112,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnEditProfile:
                 goToEditProfile();
                 break;
-            case R.id.imgBtnAddTask:
-                inputTask();
-                break;
         }
     }
+
+
 }
