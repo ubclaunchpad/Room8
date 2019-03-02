@@ -159,10 +159,6 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
             return;
         }
 
-        // Add an invite to the user's collection of invites
-        DatabaseReference newPendingInvRef = invitesRef.push();
-        newPendingInvRef.setValue(mGroupName);
-
         // Updating the invitations the group sent out currently
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference groupsRef = database.getReference().child(FirebaseEndpoint.GROUPS).child(mGroupName).child("SentInvitations");
@@ -176,7 +172,6 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
         userEmail.setValue(user.Email);
         userID.setValue(user.Uid);
-        newPendingInvRef.setValue(mGroupName);
         invitesRef.child(mGroupName).setValue("test");
         Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
     }
