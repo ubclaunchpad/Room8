@@ -10,8 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /*
  GroupActivity is the main page when the user is set up. Members of the group
@@ -25,6 +29,7 @@ import android.widget.Toast;
 public class GroupActivity extends AppCompatActivity implements View.OnClickListener{
 
     private String mStrGroupName;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
         Intent intent = getIntent();
         mStrGroupName = intent.getStringExtra("groupName");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         TextView txtGroupName = findViewById(R.id.txtGroupName);
         txtGroupName.setText(mStrGroupName);
@@ -44,6 +50,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         btnEditProfile.setOnClickListener(this);
         Button btnHouseRules = findViewById(R.id.btnHouseRules);
         btnHouseRules.setOnClickListener(this);
+        ImageButton btnAddTask = findViewById(R.id.imgBtnAddTask);
+        btnAddTask.setOnClickListener(this);
     }
 
     private void addNewChat() {
@@ -51,8 +59,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void addNewTask(final String groupTask) {
-        //System.out.println("Test for the task" + groupTask);
-
+        DatabaseReference tasksRef = mDatabase.child(Room8Utility.FirebaseEndpoint.GROUPS).child(mStrGroupName).child("Tasks");
+        tasksRef.child(groupTask).setValue(groupTask);
     }
 
     private void changeGroupName() {
@@ -69,6 +77,12 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     private void goToEditProfile() {
         Intent editProfileIntent = new Intent(GroupActivity.this, EditProfileActivity.class);
         startActivity(editProfileIntent);
+    }
+
+    private void goToHouseRules() {
+        Intent houseRulesIntent = new Intent(GroupActivity.this, HouseRulesActivity.class);
+        houseRulesIntent.putExtra("groupName", mStrGroupName);
+        startActivity(houseRulesIntent);
     }
 
     private void inputTask() {
@@ -111,6 +125,12 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btnEditProfile:
                 goToEditProfile();
+                break;
+            case R.id.btnHouseRules:
+                goToHouseRules();
+                break;
+            case R.id.imgBtnAddTask:
+                inputTask();
                 break;
         }
     }
