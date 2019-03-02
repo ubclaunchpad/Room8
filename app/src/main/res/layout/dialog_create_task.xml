@@ -12,12 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/product_sans_regular"
-        android:labelFor="@id/create_task_et_taskname"
+        android:labelFor="@id/create_group_et_groupname"
         android:text="Task Name"
         android:textColor="@color/colorBlack" />
 
     <EditText
-        android:id="@+id/create_task_et_taskname"
+        android:id="@+id/create_group_et_groupname"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:inputType="text" />

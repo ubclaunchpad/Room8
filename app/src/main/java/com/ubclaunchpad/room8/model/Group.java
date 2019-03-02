@@ -7,14 +7,17 @@ import java.util.List;
 public class Group {
 
     public String GroupName;
-    public List<String> UserUIds;
-    //public List<String> tasks;
+    public HashMap<String,String> UserUIds;
+    public List<String> HouseRules;
+    public List<String> tasks;
 
+    public Group() {
+    }
 
     public Group(String GroupName) {
         this.GroupName = GroupName;
-        this.UserUIds = new ArrayList<>();
-        //this.tasks = new ArrayList<>();
+        this.UserUIds = new HashMap<>();
+        this.tasks = new ArrayList<>();
 
     }
 }

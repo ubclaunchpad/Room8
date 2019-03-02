@@ -77,7 +77,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         LayoutInflater inflater = this.getLayoutInflater();
 
         View viewInflated = inflater.inflate(R.layout.dialog_create_task, (ViewGroup) this.findViewById(R.id.dialog_create_task), false);
-        final EditText etTask = viewInflated.findViewById(R.id.create_task_et_taskname);
+        final EditText etTask = viewInflated.findViewById(R.id.create_group_et_groupname);
 
         builder.setView(viewInflated)
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
