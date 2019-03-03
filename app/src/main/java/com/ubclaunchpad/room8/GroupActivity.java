@@ -61,9 +61,18 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         // TODO: Implement change group name.
     }
 
+    // Removes user from the group, changing their status to "No group"
     private void leaveGroup() {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+        // Removes the group from the user
         UserService.removeUserGroup(dbRef, mStrUID);
+
+        // Set user's status to no group
+        UserService.updateUserStatus(dbRef, mStrUID, Room8Utility.UserStatus.NO_GROUP);
+
+        // Remove user ID from their group
+        DatabaseReference groupUIDRef = dbRef.child("Groups").child(mStrGroupName).child("UserUIds");
+        groupUIDRef.child(mStrUID).removeValue();
     }
 
     private void goToSendInvites() {
