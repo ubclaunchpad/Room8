@@ -23,6 +23,13 @@ public class UserService {
         userGroupRef.setValue(group);
     }
 
+    // Given a reference to the main database and the user to be updated's uid,
+    // remove the user's group
+    public static void removeUserGroup (DatabaseReference dbRef, String uid) {
+        DatabaseReference userGroupRef = dbRef.child(FirebaseEndpoint.USERS).child(uid).child(FirebaseEndpoint.GROUP);
+        userGroupRef.removeValue();
+    }
+
     // Given a reference to the main database, write a user to its UID
     public static void writeUser (DatabaseReference dbRef, User user) {
         DatabaseReference userRef = dbRef.child(FirebaseEndpoint.USERS);
