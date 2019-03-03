@@ -118,6 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         } else if (user.Status.equals(UserStatus.IN_GROUP)) {
                             Intent groupActivityIntent = new Intent(LoginActivity.this, GroupActivity.class);
                             groupActivityIntent.putExtra("groupName", user.Group);
+                            groupActivityIntent.putExtra("uid", user.Uid);
                             startActivity(groupActivityIntent);
                         }
                     }
