@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.ubclaunchpad.room8.model.Group;
+import com.ubclaunchpad.room8.model.User;
+
 /*
  GroupActivity is the main page when the user is set up. Members of the group
  should be able to add tasks to the group.
@@ -19,6 +24,7 @@ import android.widget.TextView;
 public class GroupActivity extends AppCompatActivity implements View.OnClickListener{
 
     private String mStrGroupName;
+    private String mStrUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
         Intent intent = getIntent();
         mStrGroupName = intent.getStringExtra("groupName");
+        mStrUID = intent.getStringExtra("uid");
 
         TextView txtGroupName = findViewById(R.id.txtGroupName);
         txtGroupName.setText(mStrGroupName);
@@ -38,6 +45,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         btnEditProfile.setOnClickListener(this);
         Button btnHouseRules = findViewById(R.id.btnHouseRules);
         btnHouseRules.setOnClickListener(this);
+        Button btnLeaveGroup = findViewById(R.id.btnLeaveGroup);
+        btnLeaveGroup.setOnClickListener(this);
     }
 
     private void addNewChat() {
@@ -50,6 +59,11 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
     private void changeGroupName() {
         // TODO: Implement change group name.
+    }
+
+    private void leaveGroup() {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+        UserService.removeUserGroup(dbRef, mStrUID);
     }
 
     private void goToSendInvites() {
@@ -70,6 +84,10 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         startActivity(houseRulesIntent);
     }
 
+    private void goToCreateGroupViewInvites() {
+        startActivity(new Intent(GroupActivity.this, CreateGroupViewInvitesActivity.class));
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -82,8 +100,11 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnHouseRules:
                 goToHouseRules();
                 break;
+            case R.id.btnLeaveGroup:
+                leaveGroup();
+                goToCreateGroupViewInvites();
+                break;
         }
     }
-
 
 }
