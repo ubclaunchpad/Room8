@@ -1,16 +1,21 @@
 package com.ubclaunchpad.room8;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.ubclaunchpad.room8.model.Group;
-import com.ubclaunchpad.room8.model.User;
 
 /*
  GroupActivity is the main page when the user is set up. Members of the group
@@ -25,6 +30,10 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
     private String mStrGroupName;
     private String mStrUID;
+
+    public static void startGroupActivity() {
+        // TODO: Refactor all locations where group activity is started.
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +70,32 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         // TODO: Implement change group name.
     }
 
+    // Asks the user to confirm leaving the group
+    private void confirmLeaveGroup() {
+        AlertDialog.Builder confirmLeaveDialog = new AlertDialog.Builder(this);
+        confirmLeaveDialog.setCancelable(true);
+        confirmLeaveDialog.setTitle("Leave Group");
+        confirmLeaveDialog.setMessage("Are you sure you want to leave " + mStrGroupName + "?");
+        confirmLeaveDialog.setPositiveButton("Leave",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        leaveGroup();
+                        goToCreateGroupViewInvites();
+                    }
+                });
+
+        confirmLeaveDialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog dialog = confirmLeaveDialog.create();
+        dialog.show();
+    }
+
     // Removes user from the group, changing their status to "No group"
     private void leaveGroup() {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
@@ -71,8 +106,26 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         UserService.updateUserStatus(dbRef, mStrUID, Room8Utility.UserStatus.NO_GROUP);
 
         // Remove user ID from their group
-        DatabaseReference groupUIDRef = dbRef.child("Groups").child(mStrGroupName).child("UserUIds");
-        groupUIDRef.child(mStrUID).removeValue();
+        final DatabaseReference groupRef = dbRef.child("Groups").child(mStrGroupName);
+        groupRef.child("UserUIds").child(mStrUID).removeValue();
+
+        groupRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Group group = dataSnapshot.getValue(Group.class);
+                if (group != null) {
+                    if (group.UserUIds == null) {
+                        groupRef.removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void goToSendInvites() {
@@ -110,8 +163,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                 goToHouseRules();
                 break;
             case R.id.btnLeaveGroup:
-                leaveGroup();
-                goToCreateGroupViewInvites();
+                confirmLeaveGroup();
                 break;
         }
     }

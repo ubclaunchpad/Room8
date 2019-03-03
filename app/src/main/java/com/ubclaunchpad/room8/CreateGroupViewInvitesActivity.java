@@ -157,7 +157,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
         // Change the page to SendInvitesActivity
         Intent intent = new Intent(this, SendInvitesActivity.class);
         intent.putExtra("groupName", groupName);
-
+        intent.putExtra("uid", mCurrUserUid);
         startActivity(intent);
     }
 
