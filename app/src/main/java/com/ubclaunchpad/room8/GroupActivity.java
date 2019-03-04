@@ -76,6 +76,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         // TODO: Implement change group name.
     }
 
+
     // Asks the user to confirm leaving the group
     private void confirmLeaveGroup() {
         AlertDialog.Builder confirmLeaveDialog = new AlertDialog.Builder(this);
@@ -153,7 +154,9 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void goToCreateGroupViewInvites() {
-        startActivity(new Intent(GroupActivity.this, CreateGroupViewInvitesActivity.class));
+        Intent createGroupViewInvIntent = new Intent(GroupActivity.this, CreateGroupViewInvitesActivity.class);
+        createGroupViewInvIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(createGroupViewInvIntent);
     }
 
     @Override
