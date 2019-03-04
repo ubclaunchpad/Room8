@@ -1,5 +1,6 @@
 package com.ubclaunchpad.room8;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,11 +29,16 @@ import com.ubclaunchpad.room8.model.Group;
 */
 public class GroupActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private String mStrGroupName;
-    private String mStrUID;
+    private String mGroupName;
+    private String mCurrUserUID;
 
-    public static void startGroupActivity() {
-        // TODO: Refactor all locations where group activity is started.
+    public static Intent createIntent(Context activity, String groupName, String uid) {
+        // TODO: Refactor locations where group activity is started to pass required user data.
+        Intent groupActivityIntent = new Intent(activity, GroupActivity.class);
+        groupActivityIntent.putExtra("groupName", groupName);
+        groupActivityIntent.putExtra("uid", uid);
+        groupActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return groupActivityIntent;
     }
 
     @Override
@@ -41,11 +47,11 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_group);
 
         Intent intent = getIntent();
-        mStrGroupName = intent.getStringExtra("groupName");
-        mStrUID = intent.getStringExtra("uid");
+        mGroupName = intent.getStringExtra("groupName");
+        mCurrUserUID = intent.getStringExtra("uid");
 
         TextView txtGroupName = findViewById(R.id.txtGroupName);
-        txtGroupName.setText(mStrGroupName);
+        txtGroupName.setText(mGroupName);
         txtGroupName.setOnClickListener(this);
 
         Button btnSendInvites = findViewById(R.id.btnSendInvites);
@@ -75,7 +81,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         AlertDialog.Builder confirmLeaveDialog = new AlertDialog.Builder(this);
         confirmLeaveDialog.setCancelable(true);
         confirmLeaveDialog.setTitle("Leave Group");
-        confirmLeaveDialog.setMessage("Are you sure you want to leave " + mStrGroupName + "?");
+        confirmLeaveDialog.setMessage("Are you sure you want to leave " + mGroupName + "?");
         confirmLeaveDialog.setPositiveButton("Leave",
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -100,14 +106,14 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     private void leaveGroup() {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         // Removes the group from the user
-        UserService.removeUserGroup(dbRef, mStrUID);
+        UserService.removeUserGroup(dbRef, mCurrUserUID);
 
         // Set user's status to no group
-        UserService.updateUserStatus(dbRef, mStrUID, Room8Utility.UserStatus.NO_GROUP);
+        UserService.updateUserStatus(dbRef, mCurrUserUID, Room8Utility.UserStatus.NO_GROUP);
 
         // Remove user ID from their group
-        final DatabaseReference groupRef = dbRef.child("Groups").child(mStrGroupName);
-        groupRef.child("UserUIds").child(mStrUID).removeValue();
+        final DatabaseReference groupRef = dbRef.child("Groups").child(mGroupName);
+        groupRef.child("UserUIds").child(mCurrUserUID).removeValue();
 
         groupRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -130,7 +136,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
     private void goToSendInvites() {
         Intent sendInvitesIntent = new Intent(GroupActivity.this, SendInvitesActivity.class);
-        sendInvitesIntent.putExtra("groupName", mStrGroupName);
+        sendInvitesIntent.putExtra("groupName", mGroupName);
         sendInvitesIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(sendInvitesIntent);
     }
@@ -142,7 +148,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
     private void goToHouseRules() {
         Intent houseRulesIntent = new Intent(GroupActivity.this, HouseRulesActivity.class);
-        houseRulesIntent.putExtra("groupName", mStrGroupName);
+        houseRulesIntent.putExtra("groupName", mGroupName);
         startActivity(houseRulesIntent);
     }
 
