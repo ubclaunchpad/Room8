@@ -32,12 +32,14 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     private String mGroupName;
     private String mCurrUserUID;
 
+    
     public static Intent createIntent(Context activity, String groupName, String uid) {
         // TODO: Refactor locations where group activity is started to pass required user data.
         Intent groupActivityIntent = new Intent(activity, GroupActivity.class);
         groupActivityIntent.putExtra("groupName", groupName);
         groupActivityIntent.putExtra("uid", uid);
-        groupActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        // Clear activity stack
+        groupActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return groupActivityIntent;
     }
 
