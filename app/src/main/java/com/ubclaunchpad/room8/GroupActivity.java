@@ -32,9 +32,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     private String mGroupName;
     private String mCurrUserUID;
 
-    
+    // Creates an intent with all the necessary data needed for this activity
     public static Intent createIntent(Context activity, String groupName, String uid) {
-        // TODO: Refactor locations where group activity is started to pass required user data.
         Intent groupActivityIntent = new Intent(activity, GroupActivity.class);
         groupActivityIntent.putExtra("groupName", groupName);
         groupActivityIntent.putExtra("uid", uid);
