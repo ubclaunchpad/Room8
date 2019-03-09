@@ -32,7 +32,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private FirebaseUser mCurrUser;
     private String mCurrUserUID;
 
-    private String firstName, lastName, email;
+    private String firstName, lastName, email, group, status;
     private EditText etEmail, etFirstName, etLastName, etPassword, etReEnterPassword;
 
     @Override
@@ -73,7 +73,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
 
     private void editUserProfile() throws EmptyValueException, PasswordsNotMatch {
-        String firstName = etEmail.getText().toString().trim();
+        String firstName = etFirstName.getText().toString().trim();
         String lastName = etLastName.getText().toString().trim();
         String firstPassword = etPassword.getText().toString().trim();
         String secondPassword = etReEnterPassword.getText().toString().trim();
