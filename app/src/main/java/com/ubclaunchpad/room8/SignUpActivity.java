@@ -18,6 +18,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ubclaunchpad.room8.model.User;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.CountDownLatch;
+
 /*
  SignUpActivity is where new users sign up. A successful signup creates:
     - An entry in Firebase Authentication
@@ -86,7 +96,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    private boolean validateSignUpFields(String email, String password, String firstName, String lastName) {
+    private boolean validateSignUpFields(final String email, String password, String firstName, String lastName) {
         if (firstName.isEmpty()) {
             etFirstName.setError("First name is required");
             etFirstName.requestFocus();
@@ -106,14 +116,36 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Valid email address is required");
+            etEmail.setError("Incorrect email address format");
             etEmail.requestFocus();
             return true;
         }
 
+        if (checkIfEmailExists(email)) return true;
+
+
         if (password.isEmpty()) {
             etPassword.setError("Password is required");
             etPassword.requestFocus();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkIfEmailExists(String email) {
+        EmailValidator emailValidator = new EmailValidator();
+        emailValidator.setEmail(email);
+        Thread EmailValidatorThread = new Thread(emailValidator);
+        EmailValidatorThread.start();
+        try {
+            EmailValidatorThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (!emailValidator.getValid()){
+            etEmail.setError("Email address does not exist");
+            etEmail.requestFocus();
             return true;
         }
         return false;
