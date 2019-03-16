@@ -1,11 +1,21 @@
 package com.ubclaunchpad.room8;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /*
  GroupActivity is the main page when the user is set up. Members of the group
@@ -19,6 +29,7 @@ import android.widget.TextView;
 public class GroupActivity extends AppCompatActivity implements View.OnClickListener{
 
     private String mStrGroupName;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +38,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
         Intent intent = getIntent();
         mStrGroupName = intent.getStringExtra("groupName");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         TextView txtGroupName = findViewById(R.id.txtGroupName);
         txtGroupName.setText(mStrGroupName);
@@ -38,14 +50,17 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         btnEditProfile.setOnClickListener(this);
         Button btnHouseRules = findViewById(R.id.btnHouseRules);
         btnHouseRules.setOnClickListener(this);
+        ImageButton btnAddTask = findViewById(R.id.imgBtnAddTask);
+        btnAddTask.setOnClickListener(this);
     }
 
     private void addNewChat() {
         // TODO: Implement adding new chat(?).
     }
 
-    private void addNewTask() {
-        // TODO: Implement adding tasks to group.
+    private void addNewTask(final String groupTask) {
+        DatabaseReference tasksRef = mDatabase.child(Room8Utility.FirebaseEndpoint.GROUPS).child(mStrGroupName).child("Tasks");
+        tasksRef.child(groupTask).setValue(groupTask);
     }
 
     private void changeGroupName() {
@@ -70,6 +85,38 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         startActivity(houseRulesIntent);
     }
 
+    private void inputTask() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Input the name of the task");
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View viewInflated = inflater.inflate(R.layout.dialog_create_task, (ViewGroup) this.findViewById(R.id.dialog_create_task), false);
+        final EditText etTask = viewInflated.findViewById(R.id.create_group_et_groupname);
+
+        builder.setView(viewInflated)
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String groupTask = etTask.getText().toString();
+
+                        if (groupTask.isEmpty()) {
+                            Toast.makeText(getApplicationContext(), "Please enter a name of the task", Toast.LENGTH_SHORT).show();
+                            dialog.cancel();
+                            inputTask();
+                        } else {
+                            addNewTask(groupTask);
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder.show();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -81,6 +128,9 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btnHouseRules:
                 goToHouseRules();
+                break;
+            case R.id.imgBtnAddTask:
+                inputTask();
                 break;
         }
     }
