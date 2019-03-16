@@ -73,6 +73,6 @@ public class SentInvAdapter extends RecyclerView.Adapter<SentInvAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mSentInvites.size();
     }
 }
