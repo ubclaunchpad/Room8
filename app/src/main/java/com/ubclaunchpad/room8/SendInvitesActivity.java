@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -21,8 +23,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ubclaunchpad.room8.adapter.PendingInvAdapter;
+import com.ubclaunchpad.room8.adapter.SentInvAdapter;
+import com.ubclaunchpad.room8.model.Group;
 import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
+
+import java.util.HashMap;
 
 /*
  SendInvitesActivity is where users invite other users to their Group. A successful invite sent:
@@ -37,6 +44,10 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
     private String mGroupName;
     private DatabaseReference mDbRef;
     private String mCurrentUserEmail;
+    private DatabaseReference mDatabase;
+    private RecyclerView mRecyclerView;
+    private String mCurrUserUid;
+    private RecyclerView.Adapter mAdapter;
 
     private static final String TAG = "Mobug";
 
@@ -50,7 +61,7 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
         // Grab the current user and their email
         if (currUser != null) {
-            mCurrentUserEmail = currUser.getUid();
+            mCurrentUserEmail = currUser.getEmail();
         } else {
             Toast.makeText(this, "Invalid app state. Current user not logged in.", Toast.LENGTH_SHORT).show();
         }
@@ -67,6 +78,54 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
         findViewById(R.id.btnAddMember).setOnClickListener(this);
         findViewById(R.id.btnGoToGroup).setOnClickListener(this);
+        validateUser();
+        populateSentInvites();
+    }
+
+    private void populateSentInvites() {
+        mRecyclerView = findViewById(R.id.rvSendInvites);
+
+        // Set the current groups's User invites in the RecyclerView
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userRef = mDatabase.child(FirebaseEndpoint.GROUPS).child(mGroupName);
+        userRef.addValueEventListener(new ValueEventListener() {
+
+            // Get the current group's pending invites and use it to construct an adapter for the RecyclerView
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Group group = dataSnapshot.getValue(Group.class);
+                if (group != null) {
+                    HashMap<String, String> sendInvites = (group.UserUIds == null) ? new HashMap<String, String>() : group.UserUIds;
+
+                    mAdapter = new SentInvAdapter(sendInvites, mCurrUserUid, mCurrentUserEmail, SendInvitesActivity.this);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+        // Use a linear layout manager to display row items vertically
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        // Changes in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+    }
+
+    private void validateUser() {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+        // Grab the current user and their uid
+        FirebaseUser currUser = firebaseAuth.getCurrentUser();
+        if (currUser != null) {
+            mCurrUserUid = currUser.getUid();
+        } else {
+            Toast.makeText(this, "Invalid app state. Current user not logged in.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void triggerInviteUserFlow() {
@@ -98,7 +157,7 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
                             Toast.makeText(getApplicationContext(), "Can't invite yourself.", Toast.LENGTH_SHORT).show();
                             dialog.cancel();
                             inviteUser();
-                        }else {
+                        } else {
                             inviteExistingUser(userEmail);
                         }
                     }
@@ -138,7 +197,8 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
         });
     }
 
@@ -159,6 +219,10 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
             return;
         }
 
+        // Add an invite to the user's collection of invites
+        DatabaseReference newPendingInvRef = invitesRef.push();
+        newPendingInvRef.setValue(mGroupName);
+
         // Updating the invitations the group sent out currently
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference groupsRef = database.getReference().child(FirebaseEndpoint.GROUPS).child(mGroupName).child("SentInvitations");
@@ -172,6 +236,7 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
         userEmail.setValue(user.Email);
         userID.setValue(user.Uid);
+        newPendingInvRef.setValue(mGroupName);
         invitesRef.child(mGroupName).setValue("test");
         Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
     }

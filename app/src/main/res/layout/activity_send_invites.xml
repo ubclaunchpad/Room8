@@ -7,7 +7,7 @@
     android:background="@color/colorWhite">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvPendingInvites"
+        android:id="@+id/rvSendInvites"
         android:layout_width="335dp"
         android:layout_height="292dp"
         app:layout_constraintBottom_toBottomOf="parent"
