@@ -32,7 +32,6 @@ public class ChatroomActivity extends AppCompatActivity {
     private FirebaseUser user;
     private String group;
     private TextView groupNameText;
-    private Chatroom chatroom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

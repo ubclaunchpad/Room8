@@ -22,4 +22,10 @@ public class Room8Utility {
         public static final String STATUS = "Status";
         public static final String GROUP = "Group";
     }
+
+    public static class ChatTypes {
+        public static final String MAIN_CHAT = "Main Chat";
+        public static final String GROUP_CHAT = "Group Chat";
+        public static final String DIRECT_MESSAGE = "Direct Message";
+    }
 }

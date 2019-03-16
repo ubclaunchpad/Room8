@@ -6,16 +6,21 @@ import java.util.List;
 public class Chatroom {
 
     public String GroupName;
-    public List<ChatMessage> Messages;
+    public String MainChat;
+    public List<Chat> Chats;
 
     public Chatroom(String GroupName) {
         this.GroupName = GroupName;
-        this.Messages = new ArrayList<>();
+        this.Chats = new ArrayList<Chat>();
     }
     public Chatroom(){}
 
-    public void addMessage(ChatMessage message) {
-        Messages.add(message);
+    public void setMainChat(String main) {
+        this.MainChat = main;
+    }
+
+    public void addChat(Chat chat) {
+        this.Chats.add(chat);
     }
 
 

@@ -145,10 +145,10 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
 
         // Create the group
         GroupService.createNewGroup(mDatabase, groupName, mCurrUserUid);
-        DatabaseReference chatsRef = mDatabase.child(FirebaseEndpoint.CHATROOMS).child(groupName);
-        Chatroom newChat = new Chatroom(groupName);
-        chatsRef.setValue(newChat);
-
+        ChatService.createNewChatroom(mDatabase, groupName, mCurrUserUid);
+//        DatabaseReference chatsRef = mDatabase.child(FirebaseEndpoint.CHATROOMS).child(groupName);
+//        Chatroom newChat = new Chatroom(groupName);
+//        chatsRef.setValue(newChat);
         Intent intent = new Intent(this, SendInvitesActivity.class);
         intent.putExtra("name", groupName);
 
