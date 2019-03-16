@@ -37,8 +37,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         btnSendInvites.setOnClickListener(this);
         Button btnEditProfile = findViewById(R.id.btnEditProfile);
         btnEditProfile.setOnClickListener(this);
-        ImageButton imgBtnAddChat = findViewById(R.id.imgBtnAddChat);
-        imgBtnAddChat.setOnClickListener(this);
+        Button btnHouseRules = findViewById(R.id.btnHouseRules);
+        btnHouseRules.setOnClickListener(this);
     }
 
     private void addNewChat() {
@@ -69,6 +69,11 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         Intent chatRoomIntent = new Intent(GroupActivity.this, ChatroomActivity.class);
         startActivity(chatRoomIntent);
     }
+    private void goToHouseRules() {
+        Intent houseRulesIntent = new Intent(GroupActivity.this, HouseRulesActivity.class);
+        houseRulesIntent.putExtra("groupName", mStrGroupName);
+        startActivity(houseRulesIntent);
+    }
 
     @Override
     public void onClick(View v) {
@@ -82,7 +87,11 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
             case R.id.imgBtnAddChat:
                 goToChat();
                 break;
-
+            case R.id.btnHouseRules:
+                goToHouseRules();
+                break;
         }
     }
+
+
 }
