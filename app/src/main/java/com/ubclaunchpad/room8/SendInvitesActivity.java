@@ -29,7 +29,9 @@ import com.ubclaunchpad.room8.model.Group;
 import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /*
  SendInvitesActivity is where users invite other users to their Group. A successful invite sent:
@@ -48,6 +50,7 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
     private RecyclerView mRecyclerView;
     private String mCurrUserUid;
     private RecyclerView.Adapter mAdapter;
+    private List<String> mInvitedUserEmails;
 
     private static final String TAG = "Mobug";
 
@@ -84,20 +87,28 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
     private void populateSentInvites() {
         mRecyclerView = findViewById(R.id.rvSendInvites);
+        mInvitedUserEmails = new ArrayList<>();
 
         // Set the current groups's User invites in the RecyclerView
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference userRef = mDatabase.child(FirebaseEndpoint.GROUPS).child(mGroupName);
+        DatabaseReference userRef = mDatabase.child(FirebaseEndpoint.GROUPS).child(mGroupName).child("SentInvitations");
         userRef.addValueEventListener(new ValueEventListener() {
 
             // Get the current group's pending invites and use it to construct an adapter for the RecyclerView
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("Email") != null) {
+                        String email = snapshot.child("Email").getValue(String.class);
+                        mInvitedUserEmails.add(email);
+                    }
+                }
+
                 Group group = dataSnapshot.getValue(Group.class);
                 if (group != null) {
-                    HashMap<String, String> sendInvites = (group.UserUIds == null) ? new HashMap<String, String>() : group.UserUIds;
+                    //HashMap<String, String> sendInvites = (group.UserUIds == null) ? new HashMap<String, String>() : group.UserUIds;
 
-                    mAdapter = new SentInvAdapter(sendInvites, mCurrUserUid, mCurrentUserEmail, SendInvitesActivity.this);
+                    mAdapter = new SentInvAdapter(mInvitedUserEmails, mCurrUserUid, mCurrentUserEmail, SendInvitesActivity.this);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
