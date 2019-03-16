@@ -30,7 +30,7 @@ public class SentInvAdapter extends RecyclerView.Adapter<SentInvAdapter.ViewHold
     // Pass in pending invites to constructor
     public SentInvAdapter(List<String> sentInvites, String userId,
                           String email, SendInvitesActivity sendInvitesActivity) {
-        mSentInvites = new ArrayList<String>();
+        mSentInvites = sentInvites;
         mCurrGroupUid = userId;
         mCurrUserEmail = email;
         mDbRef = FirebaseDatabase.getInstance().getReference();
