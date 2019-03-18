@@ -22,11 +22,13 @@ public class User {
     }
 
     // Used when the profile is edited.
-    public User(String uid, String firstName, String lastName, String email) {
+    public User(String uid, String firstName, String lastName, String email, String group, String status) {
         this.Uid = uid;
         this.FirstName = firstName;
         this.LastName = lastName;
         this.Email = email;
+        this.Status = status;
+        this.Group = group;
     }
 
     // Used when an account is made.

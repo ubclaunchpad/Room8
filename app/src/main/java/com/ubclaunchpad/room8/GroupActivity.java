@@ -61,6 +61,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
     private void goToEditProfile() {
         Intent editProfileIntent = new Intent(GroupActivity.this, EditProfileActivity.class);
+        editProfileIntent.putExtra("groupName", mStrGroupName);
+        editProfileIntent.putExtra("groupStatus", Room8Utility.UserStatus.IN_GROUP);
         startActivity(editProfileIntent);
     }
 

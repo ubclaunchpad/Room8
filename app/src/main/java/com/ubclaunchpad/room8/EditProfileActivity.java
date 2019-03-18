@@ -1,5 +1,6 @@
 package com.ubclaunchpad.room8;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +17,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ubclaunchpad.room8.adapter.PendingInvAdapter;
 import com.ubclaunchpad.room8.exception.EmptyValueException;
 import com.ubclaunchpad.room8.exception.PasswordsNotMatch;
 import com.ubclaunchpad.room8.model.User;
 import com.ubclaunchpad.room8.Room8Utility.FirebaseEndpoint;
+
+import java.util.HashMap;
 
 /*
  EditProfileActivity is where existing users edit their profile. Pretty self explanatory,
@@ -39,6 +43,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+        // Pass group name and status
+        Intent intent = getIntent();
+        group = intent.getStringExtra("groupName");
+        status = intent.getStringExtra("groupStatus");
 
         findViewById(R.id.btnEditProfile).setOnClickListener(this);
 
@@ -78,7 +86,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         String firstPassword = etPassword.getText().toString().trim();
         String secondPassword = etReEnterPassword.getText().toString().trim();
 
-        User currentUser = new User(mCurrUserUID, firstName, lastName, email);
+        User currentUser = new User(mCurrUserUID, firstName, lastName, email, group, status);
 
         if (firstName.isEmpty()) {
             throw new EmptyValueException("First name is required.", etFirstName);
