@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.org/ubclaunchpad/room8">
+  <a href="https://travis-ci.org/ubclaunchpad/Room8">
     <img src="https://travis-ci.com/ubclaunchpad/Room8.svg?branch=master"
       alt="Travis Build Status" />
   </a>

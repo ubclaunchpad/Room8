@@ -8,7 +8,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -86,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    private boolean validateSignUpFields(String email, String password, String firstName, String lastName) {
+    private boolean validateSignUpFields(final String email, String password, String firstName, String lastName) {
         if (firstName.isEmpty()) {
             etFirstName.setError("First name is required");
             etFirstName.requestFocus();
@@ -106,14 +105,36 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Valid email address is required");
+            etEmail.setError("Incorrect email address format");
             etEmail.requestFocus();
             return true;
         }
 
+        if (checkIfEmailExists(email)) return true;
+
+
         if (password.isEmpty()) {
             etPassword.setError("Password is required");
             etPassword.requestFocus();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkIfEmailExists(String email) {
+        EmailValidator emailValidator = new EmailValidator();
+        emailValidator.setEmail(email);
+        Thread EmailValidatorThread = new Thread(emailValidator);
+        EmailValidatorThread.start();
+        try {
+            EmailValidatorThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (!emailValidator.getValid()){
+            etEmail.setError("Email address does not exist");
+            etEmail.requestFocus();
             return true;
         }
         return false;
