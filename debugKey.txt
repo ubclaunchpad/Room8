@@ -1,0 +1,32 @@
+keystore
+Enter keystore password: android
+Alias name: androiddebugkey
+Creation date: 25-Mar-2018
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: CN=Android Debug, O=Android, C=US
+Issuer: CN=Android Debug, O=Android, C=US
+Serial number: 421d3585
+Valid from: Sun Mar 25 21:16:11 PDT 2018 until: Mon Mar 25 21:16:11 PDT 2019
+Certificate fingerprints:
+         MD5:  39:87:99:F4:2C:E3:41:C0:72:AB:9A:D6:53:2F:6C:8D
+         SHA1: 0B:7E:AC:79:70:BF:90:7B:97:DD:E7:39:C8:AB:3D:B4:92:5D:29:29
+         SHA256: 06:4F:C7:91:F3:30:C0:CD:52:6B:4E:5F:92:94:63:4A:DA:14:05:F0:E6:09:DC:E1:D5:58:02:87:35:68:54:2D
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 3
+
+Extensions:
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: 7C 56 CA 04 42 5B 5E BB   5D 12 F7 1A CF 2F 0F C4  .V..B[^.]..../..
+0010: 7D E5 7A 5E                                        ..z^
+]
+]
+
+
+Warning:
+The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using "keytool -importkeystore -srckeystore C:\Users\ylin0\.android\debug.keystore -destkeystore C:\Users\ylin0\.android\debug.keystore -deststoretype pkcs12".
