@@ -38,7 +38,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         groupActivityIntent.putExtra("groupName", groupName);
         groupActivityIntent.putExtra("uid", uid);
         // Clear activity stack
-        groupActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+         groupActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return groupActivityIntent;
     }
 
@@ -156,7 +156,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
     private void goToCreateGroupViewInvites() {
         Intent createGroupViewInvIntent = new Intent(GroupActivity.this, CreateGroupViewInvitesActivity.class);
-        createGroupViewInvIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        createGroupViewInvIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(createGroupViewInvIntent);
     }
 
