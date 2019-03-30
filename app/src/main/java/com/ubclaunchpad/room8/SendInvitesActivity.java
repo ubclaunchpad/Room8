@@ -91,8 +91,8 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
         mInvitedUserEmails = new ArrayList<>();
 
         // Set the current groups's User invites in the RecyclerView
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference userRef = mDatabase.child(FirebaseEndpoint.GROUPS).child(mGroupName).child("SentInvitations");
+        mDbRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userRef = mDbRef.child(FirebaseEndpoint.GROUPS).child(mGroupName).child("SentInvitations");
         userRef.addValueEventListener(new ValueEventListener() {
 
             // Get the current group's pending invites and use it to construct an adapter for the RecyclerView

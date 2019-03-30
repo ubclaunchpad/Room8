@@ -38,7 +38,7 @@ import com.ubclaunchpad.room8.model.Group;
 public class GroupActivity extends AppCompatActivity implements View.OnClickListener{
 
     private String mStrGroupName;
-    private DatabaseReference mDatabase;  
+    private DatabaseReference mDatabase;
     private String mCurrUserUID;
 
     // Creates an intent with all the necessary data needed for this activity
@@ -62,7 +62,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         TextView txtGroupName = findViewById(R.id.txtGroupName);
-        txtGroupName.setText(mGroupName);
+        txtGroupName.setText(mStrGroupName);
         txtGroupName.setOnClickListener(this);
 
         Button btnSendInvites = findViewById(R.id.btnSendInvites);
@@ -96,7 +96,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         AlertDialog.Builder confirmLeaveDialog = new AlertDialog.Builder(this);
         confirmLeaveDialog.setCancelable(true);
         confirmLeaveDialog.setTitle("Leave Group");
-        confirmLeaveDialog.setMessage("Are you sure you want to leave " + mGroupName + "?");
+        confirmLeaveDialog.setMessage("Are you sure you want to leave " + mStrGroupName + "?");
         confirmLeaveDialog.setPositiveButton("Leave",
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -127,7 +127,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         UserService.updateUserStatus(dbRef, mCurrUserUID, Room8Utility.UserStatus.NO_GROUP);
 
         // Remove user ID from their group
-        final DatabaseReference groupRef = dbRef.child("Groups").child(mGroupName);
+        final DatabaseReference groupRef = dbRef.child("Groups").child(mStrGroupName);
         groupRef.child("UserUIds").child(mCurrUserUID).removeValue();
 
         groupRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -151,7 +151,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
     private void goToSendInvites() {
         Intent sendInvitesIntent = new Intent(GroupActivity.this, SendInvitesActivity.class);
-        sendInvitesIntent.putExtra("groupName", mGroupName);
+        sendInvitesIntent.putExtra("groupName", mStrGroupName);
         sendInvitesIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(sendInvitesIntent);
     }
@@ -163,7 +163,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
     private void goToHouseRules() {
         Intent houseRulesIntent = new Intent(GroupActivity.this, HouseRulesActivity.class);
-        houseRulesIntent.putExtra("groupName", mGroupName);
+        houseRulesIntent.putExtra("groupName", mStrGroupName);
         startActivity(houseRulesIntent);
     }
 
