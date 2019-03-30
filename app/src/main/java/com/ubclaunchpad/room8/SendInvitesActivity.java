@@ -235,7 +235,7 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference groupsRef = database.getReference().child(FirebaseEndpoint.GROUPS).child(mGroupName).child("SentInvitations");
         groupsRef.child(user.Uid).setValue(user.Email);
-        
+
         populateSentInvites();
         Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
     }

@@ -87,7 +87,7 @@ public class CreateGroupViewInvitesActivity extends AppCompatActivity implements
                     HashMap<String, String> pendingInvites = (user.PendingInvites == null) ? new HashMap<String, String>() : user.PendingInvites;
 
                     mCurrUserFName = user.FirstName;
-                    mAdapter = new PendingInvAdapter(pendingInvites, mCurrUserUid, mCurrUserFName,CreateGroupViewInvitesActivity.this);
+                    mAdapter = new PendingInvAdapter(pendingInvites, mCurrUserUid, mCurrUserFName);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
