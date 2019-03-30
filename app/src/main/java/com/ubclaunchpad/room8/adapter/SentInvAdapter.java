@@ -21,20 +21,10 @@ import java.util.Map;
 
 public class SentInvAdapter extends RecyclerView.Adapter<SentInvAdapter.ViewHolder>{
     private List<String> mSentInvites;
-    private String mCurrGroupUid;
-    private String mCurrUserEmail;
-    private DatabaseReference mDbRef;
-    private SendInvitesActivity sendInvitesActivity;
-
 
     // Pass in pending invites to constructor
-    public SentInvAdapter(List<String> sentInvites, String userId,
-                          String email, SendInvitesActivity sendInvitesActivity) {
+    public SentInvAdapter(List<String> sentInvites) {
         mSentInvites = sentInvites;
-        mCurrGroupUid = userId;
-        mCurrUserEmail = email;
-        mDbRef = FirebaseDatabase.getInstance().getReference();
-        this.sendInvitesActivity = sendInvitesActivity;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

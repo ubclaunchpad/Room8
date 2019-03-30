@@ -37,16 +37,14 @@ public class PendingInvAdapter extends
     private String mCurrUserUid;
     private String mCurrUserFirstName;
     private DatabaseReference mDbRef;
-    private CreateGroupViewInvitesActivity viewInvitesActivity;
 
     // Pass in pending invites to constructor
     public PendingInvAdapter(Map<String, String> pendingInvites, String userUid,
-                             String firstName, CreateGroupViewInvitesActivity viewInvitesActivity) {
+                             String firstName) {
         mPendingInvites = new ArrayList<String>(pendingInvites.keySet());
         mCurrUserUid = userUid;
         mCurrUserFirstName = firstName;
         mDbRef = FirebaseDatabase.getInstance().getReference();
-        this.viewInvitesActivity = viewInvitesActivity;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -114,6 +112,9 @@ public class PendingInvAdapter extends
         // Add user's ID to group
         DatabaseReference acceptedGroupRef  = mDbRef.child(Room8Utility.FirebaseEndpoint.GROUPS).child(groupName);
         acceptedGroupRef.child("UserUIds").child(mCurrUserUid).setValue(mCurrUserFirstName);
+
+        // Remove user from SentInvitations of group
+        acceptedGroupRef.child("SentInvitations").child(mCurrUserUid).removeValue();
     }
 
     // Returns the total count of items in the list

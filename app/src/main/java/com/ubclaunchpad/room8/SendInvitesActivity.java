@@ -99,17 +99,15 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if (snapshot.child("Email") != null) {
-                        String email = snapshot.child("Email").getValue(String.class);
+                    String email = snapshot.getValue(String.class);
+                    if (!mInvitedUserEmails.contains(email)) {
                         mInvitedUserEmails.add(email);
                     }
                 }
 
                 Group group = dataSnapshot.getValue(Group.class);
                 if (group != null) {
-                    //HashMap<String, String> sendInvites = (group.UserUIds == null) ? new HashMap<String, String>() : group.UserUIds;
-
-                    mAdapter = new SentInvAdapter(mInvitedUserEmails, mCurrUserUid, mCurrentUserEmail, SendInvitesActivity.this);
+                    mAdapter = new SentInvAdapter(mInvitedUserEmails);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
@@ -125,7 +123,6 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
         // Changes in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-
     }
 
     private void validateUser() {
@@ -232,24 +229,23 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
         }
 
         // Add an invite to the user's collection of invites
-        DatabaseReference newPendingInvRef = invitesRef.push();
-        newPendingInvRef.setValue(mGroupName);
+        invitesRef.child(mGroupName).setValue("test");
 
         // Updating the invitations the group sent out currently
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference groupsRef = database.getReference().child(FirebaseEndpoint.GROUPS).child(mGroupName).child("SentInvitations");
-        DatabaseReference sentInvitation = groupsRef.push();
-
-        DatabaseReference userEmail = sentInvitation.child("Email");
-        DatabaseReference userID = sentInvitation.child("UID");
-
-        userEmail.push();
-        userID.push();
-
-        userEmail.setValue(user.Email);
-        userID.setValue(user.Uid);
-        newPendingInvRef.setValue(mGroupName);
-        invitesRef.child(mGroupName).setValue("test");
+        groupsRef.child(user.Uid).setValue(user.Email);
+//        DatabaseReference sentInvitation = groupsRef.push();
+//
+//        DatabaseReference userEmail = sentInvitation.child("Email");
+//        DatabaseReference userID = sentInvitation.child("UID");
+//
+//        userEmail.push();
+//        userID.push();
+//
+//        userEmail.setValue(user.Email);
+//        userID.setValue(user.Uid);
+        populateSentInvites();
         Toast.makeText(getApplicationContext(), "Success! Invitation sent.", Toast.LENGTH_SHORT).show();
     }
 

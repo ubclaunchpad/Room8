@@ -219,6 +219,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btnLeaveGroup:
                 confirmLeaveGroup();
+                break;
             case R.id.imgBtnAddTask:
                 inputTask();
                 break;
