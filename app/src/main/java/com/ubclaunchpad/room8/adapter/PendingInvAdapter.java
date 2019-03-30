@@ -93,9 +93,8 @@ public class PendingInvAdapter extends
             @Override
             public void onClick(View v) {
                 acceptInvite(groupName);
-                Intent groupActivityIntent = new Intent(v.getContext(),GroupActivity.class);
-                groupActivityIntent.putExtra("groupName", groupName);
-                v.getContext().startActivity(groupActivityIntent);
+                Intent groupIntent = GroupActivity.createIntent(v.getContext(), groupName, mCurrUserUid);
+                v.getContext().startActivity(groupIntent);
             }
         });
     }

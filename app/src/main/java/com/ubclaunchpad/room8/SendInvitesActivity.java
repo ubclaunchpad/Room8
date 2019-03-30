@@ -44,9 +44,9 @@ import java.util.List;
 public class SendInvitesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String mGroupName;
-    private DatabaseReference mDbRef;
+    private String mCurrUserID;
     private String mCurrentUserEmail;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDbRef;
     private RecyclerView mRecyclerView;
     private String mCurrUserUid;
     private RecyclerView.Adapter mAdapter;
@@ -64,6 +64,7 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
 
         // Grab the current user and their email
         if (currUser != null) {
+            mCurrUserID = currUser.getUid();
             mCurrentUserEmail = currUser.getEmail();
         } else {
             Toast.makeText(this, "Invalid app state. Current user not logged in.", Toast.LENGTH_SHORT).show();
@@ -253,9 +254,7 @@ public class SendInvitesActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void goToGroupActivity() {
-        Intent groupActivityIntent = new Intent(SendInvitesActivity.this, GroupActivity.class);
-        groupActivityIntent.putExtra("groupName", mGroupName);
-        groupActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent groupActivityIntent = GroupActivity.createIntent(SendInvitesActivity.this, mGroupName, mCurrUserID);
         startActivity(groupActivityIntent);
     }
 
