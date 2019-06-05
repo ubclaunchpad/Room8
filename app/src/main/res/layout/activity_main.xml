@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_light">
 
+
     <ImageView
         android:id="@+id/imgViewLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="95dp"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
         android:layout_marginStart="95dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="95dp"
         android:contentDescription="@string/desc_app_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,46 +22,83 @@
 
     <ImageView
         android:id="@+id/imgViewSplash"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="375dp"
+        android:layout_height="351dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
         android:contentDescription="@string/desc_app_splash_art"
+        app:layout_constraintBottom_toTopOf="@+id/LoginBg"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgViewLogo"
         app:srcCompat="@drawable/roommate_splash" />
 
-    <Button
-        android:id="@+id/btnSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+    <View
+        android:id="@+id/LoginBg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgViewSplash"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="310dp"
+        android:layout_height="55dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/style_button"
-        android:fontFamily="@font/roboto"
-        android:text="@string/btn_text_sign_up"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgViewSplash" />
 
     <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnSignUp"
+        style="@android:style/Widget.Button"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/style_button"
+        android:fontFamily="@font/roboto"
+        android:text="@string/btn_text_sign_up"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        style="@android:style/Widget.Button"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/style_button"
         android:fontFamily="@font/roboto"
         android:text="@string/btn_text_log_in"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnSignUp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
