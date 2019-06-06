@@ -50,9 +50,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.login_btn_login).setOnClickListener(this);
         findViewById(R.id.login_et_email).setOnTouchListener(this);
         findViewById(R.id.login_et_password).setOnTouchListener(this);
+        findViewById(R.id.btnSignUp).setOnClickListener(this);
 
-        TextView txtSignUp = findViewById(R.id.txtSignUp);
-        txtSignUp.setOnClickListener(this);
     }
 
     // Authenticate the user's input credentials
@@ -136,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.login_btn_login:
                 userLogin();
                 break;
-            case R.id.txtSignUp:
+            case R.id.btnSignUp:
                 Intent signUpActivityIntent = new Intent(this, SignUpActivity.class);
                 signUpActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(signUpActivityIntent);
