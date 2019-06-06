@@ -7,23 +7,20 @@
 
     <ImageView
         android:id="@+id/imgViewLogo"
-        android:layout_width="160dp"
+        android:layout_width="0dp"
         android:layout_height="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="8dp"
         android:contentDescription="@string/desc_app_logo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/room_8_logo" />
+        app:srcCompat="@drawable/room8logo" />
 
     <EditText
         android:id="@+id/login_et_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:fontFamily="@font/roboto"
@@ -33,7 +30,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgViewLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/imgViewSplash2" />
 
     <EditText
         android:id="@+id/login_et_password"
@@ -45,6 +42,7 @@
         android:inputType="textPassword"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/login_et_email"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/login_et_email"
         app:layout_constraintTop_toBottomOf="@+id/login_et_email" />
 
@@ -53,7 +51,7 @@
         android:layout_width="0dp"
         android:layout_height="42dp"
         android:layout_marginStart="45dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="45dp"
         android:background="@drawable/style_button"
         android:fontFamily="@font/comfortaa"
@@ -70,7 +68,7 @@
         android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginStart="45dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="45dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -82,7 +80,7 @@
         android:layout_width="0dp"
         android:layout_height="42dp"
         android:layout_marginStart="45dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="45dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/style_button"
@@ -117,7 +115,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:background="@color/colorHintGray"
         android:visibility="visible"
@@ -125,6 +123,20 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/imgViewSplash2"
+        android:layout_width="200dp"
+        android:layout_height="157dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/desc_app_splash_art"
+        app:layout_constraintBottom_toTopOf="@+id/LoginBg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgViewLogo"
+        app:srcCompat="@drawable/roommate_splash" />
 
 
 </android.support.constraint.ConstraintLayout>
